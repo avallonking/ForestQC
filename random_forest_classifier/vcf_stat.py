@@ -2,6 +2,7 @@
 
 import numpy as np
 import statistics
+from operator import itemgetter
 
 DP_GQ_START_IDX = 9
 GENOTYPE_IDX = 0
@@ -16,6 +17,7 @@ FAMILY_ID_IDX = 0
 INDIVIDUAL_ID_IDX = 1
 FATHER_ID_IDX = 2
 MOTHER_ID_IDX = 3
+PHENOTYPE_IDX = 5
 SAMPLE_ID_IDX = -1
 
 def isHomozygous(genotype):
@@ -166,8 +168,42 @@ def getMissing(variant_info):
     missing_rate = round(missing_allele / total_allele, 6)
     return missing_rate
 
+def getHWE_Direct(hwe_file):
+  # get HWE p-value directly from the file provided by users
+  # input: a file have 2 tab-separated columns: SNP_ID and HWE_p-value
+  # output: a dictionary contianing the information
+  hwe_dict = {}
+  with open(hwe_file, 'r') as h:
+    for line in h:
+      info = line.strip().split('\t')
+      snp = info[0]
+      hwe = info[1]
+      hwe_dict[snp] = float(hwe)
+  return hwe_dict
 
-def getHWE(variant_info):
+def getControlSamples(ped_file, sample_list):
+  # get sample information (control, case or missing) from pedigree file
+  # we only need the control samples
+  # output: the index of control samples in sample list
+  control_samples = []
+  control_samples_idx = []
+  with open(ped_file, 'r') as p:
+    for line in p:
+      info = line.strip().split('\t')
+      sample_id = info[SAMPLE_ID_IDX]
+      if sample_id == 'NA':
+        continue
+      phenotype_id = info[PHENOTYPE_IDX]
+      if phenotype_id == '1':
+        control_samples.append(sample_id)
+  
+  for i in range(len(sample_list)):
+    if sample_list[i] in control_samples:
+      control_samples_idx.append(i)
+  
+  return control_samples_idx
+
+def getHWE(variant_info, control_samples_idx):
     # get Hardy-Weinberg Equilibrium P-value from a line of variant
     hom0 = 0  # homozygous
     hom1 = 0
@@ -177,6 +213,8 @@ def getHWE(variant_info):
     hwe = 0.0
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    if len(control_samples_idx) > 0:
+      individual_info = itemgetter(*control_samples_idx)(individual_info)
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
         if '.' not in genotype:
@@ -261,7 +299,6 @@ def getFamilyRelation(ped_file, sample_list):
                 continue
             relationship[individual_sample_id] = [father_sample_id, mother_sample_id]
     return relationship
-
 
 def getMendel(variant_info, sample_list, relationship):
     # get mendel error of a variant from one line of variant information
