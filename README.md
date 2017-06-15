@@ -17,6 +17,8 @@ Before doing the classification, we should set the Outlier_GQ and Outlier_DP
 $ python3 $YOUR_PATH/classifier/random_forest_classifier/setOutlier.py [vcf_file1] [vcf_file2] [...]
 ```
 
+Then go to vcf_stat.py, change DP_THRESHOLD and GQ_THRESHOLD to Outlier_DP and Outlier_GQ given by the previous step, respectively.
+
 First, we need to calculate ths statistics from vcf file. Note the vcf file should have the information of each individual.
 
 ```sh
