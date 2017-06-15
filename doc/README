@@ -4,7 +4,14 @@ Requirements
  - Software: python > 3.3
  - Packages: scikit-learn, pandas, numpy
 
+To install the packages
+pip3 install -r $YOUR_PATH/classifier/requirements.txt
+
 Workflow
+Before doing the classification, we should set the Outlier_GQ and Outlier_DP
+
+python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py [vcf_file] [output_file] [ped_file] [discordant_genotype_file (optional)]
+
 First, we need to calculate ths statistics from vcf file. Note the vcf file should have the information of each individual.
 
 python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py [vcf_file] [output_file] [ped_file] [discordant_genotype_file (optional)]

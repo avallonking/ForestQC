@@ -6,7 +6,17 @@ This classifier uses random forest model to identify good or bad variants from g
  - Software: python > 3.3
  - Packages: scikit-learn, pandas, numpy
 
+To install the packages
+```sh
+$ pip3 install -r $YOUR_PATH/classifier/requirements.txt
+```
+
 ### Workflow
+Before doing the classification, we should set the Outlier_GQ and Outlier_DP
+```sh
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/setOutlier.py [vcf_file1] [vcf_file2] [...]
+```
+
 First, we need to calculate ths statistics from vcf file. Note the vcf file should have the information of each individual.
 
 ```sh

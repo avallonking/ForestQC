@@ -28,6 +28,8 @@ def main():
             gq.append(float(idv_info[GQ_IDX]))
   DP_THRESHOLD = np.percentile(dp, 25, interpolation = 'lower')
   GQ_THRESHOLD = np.percentile(gq, 25, interpolation = 'lower')
+  print('Outlier_DP: ' + str(DP_THRESHOLD))
+  print('Outlier_GQ: ' + str(GQ_THRESHOLD))
 
 if __name__ == '__main__':
   main()
