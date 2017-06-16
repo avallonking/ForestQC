@@ -173,12 +173,15 @@ def getHWE_Direct(hwe_file):
   # input: a file have 2 tab-separated columns: SNP_ID and HWE_p-value
   # output: a dictionary contianing the information
   hwe_dict = {}
-  with open(hwe_file, 'r') as h:
-    for line in h:
-      info = line.strip().split('\t')
-      snp = info[0]
-      hwe = info[1]
-      hwe_dict[snp] = float(hwe)
+  try:
+    with open(hwe_file, 'r') as h:
+      for line in h:
+        info = line.strip().split('\t')
+        snp = info[0]
+        hwe = info[1]
+        hwe_dict[snp] = float(hwe)
+  except OSError:
+    pass
   return hwe_dict
 
 def getControlSamples(ped_file, sample_list):
@@ -187,19 +190,22 @@ def getControlSamples(ped_file, sample_list):
   # output: the index of control samples in sample list
   control_samples = []
   control_samples_idx = []
-  with open(ped_file, 'r') as p:
-    for line in p:
-      info = line.strip().split('\t')
-      sample_id = info[SAMPLE_ID_IDX]
-      if sample_id == 'NA':
-        continue
-      phenotype_id = info[PHENOTYPE_IDX]
-      if phenotype_id == '1':
-        control_samples.append(sample_id)
-  
-  for i in range(len(sample_list)):
-    if sample_list[i] in control_samples:
-      control_samples_idx.append(i)
+  try:
+    with open(ped_file, 'r') as p:
+      for line in p:
+        info = line.strip().split('\t')
+        sample_id = info[SAMPLE_ID_IDX]
+        if sample_id == 'NA':
+          continue
+        phenotype_id = info[PHENOTYPE_IDX]
+        if phenotype_id == '1':
+          control_samples.append(sample_id)
+    
+    for i in range(len(sample_list)):
+      if sample_list[i] in control_samples:
+        control_samples_idx.append(i)
+  except OSError:
+    pass
   
   return control_samples_idx
 
@@ -277,32 +283,38 @@ def getFamilyRelation(ped_file, sample_list):
     # final output format: { individual_sample_id: [ father_sample_id, mother_sample_id ] }
     pedigree = {}
     relationship = {}
-    with open(ped_file, 'r') as ped:
-        for line in ped:
-            if line.startswith('Family'):
-                continue
-            id_set = line.strip().split('\t')
-            family_id = id_set[FAMILY_ID_IDX]
-            individual_id = id_set[INDIVIDUAL_ID_IDX]
-            father_id = id_set[FATHER_ID_IDX]
-            mother_id = id_set[MOTHER_ID_IDX]
-            sample_id = id_set[SAMPLE_ID_IDX] if id_set[SAMPLE_ID_IDX] in sample_list else 'NA'
-            if family_id not in pedigree:
-                pedigree[family_id] = {}
-            pedigree[family_id][individual_id] = [father_id, mother_id, sample_id]
-    for member in pedigree.values():
-        for individual_relation in member.values():
-            individual_sample_id = individual_relation[-1]
-            father_sample_id = 'NA' if individual_relation[0] not in member else member[individual_relation[0]][-1]
-            mother_sample_id = 'NA' if individual_relation[1] not in member else member[individual_relation[1]][-1]
-            if [father_sample_id, mother_sample_id].count('NA') > 1 or individual_sample_id == 'NA':
-                continue
-            relationship[individual_sample_id] = [father_sample_id, mother_sample_id]
+    try:
+      with open(ped_file, 'r') as ped:
+          for line in ped:
+              if line.startswith('Family'):
+                  continue
+              id_set = line.strip().split('\t')
+              family_id = id_set[FAMILY_ID_IDX]
+              individual_id = id_set[INDIVIDUAL_ID_IDX]
+              father_id = id_set[FATHER_ID_IDX]
+              mother_id = id_set[MOTHER_ID_IDX]
+              sample_id = id_set[SAMPLE_ID_IDX] if id_set[SAMPLE_ID_IDX] in sample_list else 'NA'
+              if family_id not in pedigree:
+                  pedigree[family_id] = {}
+              pedigree[family_id][individual_id] = [father_id, mother_id, sample_id]
+      for member in pedigree.values():
+          for individual_relation in member.values():
+              individual_sample_id = individual_relation[-1]
+              father_sample_id = 'NA' if individual_relation[0] not in member else member[individual_relation[0]][-1]
+              mother_sample_id = 'NA' if individual_relation[1] not in member else member[individual_relation[1]][-1]
+              if [father_sample_id, mother_sample_id].count('NA') > 1 or individual_sample_id == 'NA':
+                  continue
+              relationship[individual_sample_id] = [father_sample_id, mother_sample_id]
+    except OSError:
+      pass
     return relationship
 
 def getMendel(variant_info, sample_list, relationship):
     # get mendel error of a variant from one line of variant information
     # sample_list is a list of sample names
+    if not relationship:
+      return 'NA'
+
     genotype_set = []
     mendel_error = 0
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
@@ -338,5 +350,5 @@ def getDiscordantGenotype(variant_info, discordant_genotype_dict):
     try:
         return discordant_genotype_dict[rsid]
     except KeyError:
-        return np.NaN
+        return 'NA'
 

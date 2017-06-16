@@ -16,6 +16,7 @@ def random_forest_classifier(labelled_data, grey_variants):
     pipeline = Pipeline([('scl', StandardScaler()), ('rf', RandomForestClassifier(random_state=1,n_jobs=8,n_estimators=10))])
     pipeline.fit(x_train, y_train)
     precison_recall = precision_recall_fscore_support(y_true=y_test, y_pred=pipeline.predict(x_test))
+    print('\tBad\tGood')
     print('Precision: ' + str(precison_recall[0]))
     print('Recall: ' + str(precison_recall[1]))
     print('F1-score: ' + str(precison_recall[2]))

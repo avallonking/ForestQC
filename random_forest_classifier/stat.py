@@ -10,12 +10,15 @@ from vcf_stat import *
 def getDiscordInfo(discord_geno_file):
     # discordant genotype file processing
     discord_geno_dict = {}
-    d = open(discord_geno_file, 'r')
-    for entry in d:
-        snp_id = entry.split('\t')[0]
-        discord_geno_num = entry.strip().split('\t')[1]
-        discord_geno_dict[snp_id] = discord_geno_num
-    d.close()
+    try:
+      d = open(discord_geno_file, 'r')
+      for entry in d:
+          snp_id = entry.split('\t')[0]
+          discord_geno_num = entry.strip().split('\t')[1]
+          discord_geno_dict[snp_id] = discord_geno_num
+      d.close()
+    except OSError:
+      pass
     return discord_geno_dict
 
 def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
@@ -26,11 +29,9 @@ def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
           sample_list = line.strip().split('\t')[DP_GQ_START_IDX:]
           break
     
-    if ped_file != 'NA':
-      relationship = getFamilyRelation(ped_file, sample_list)
-    if hwe_file != 'NA':
-      hwe_info = getHWE_Direct(hwe_file)
+    relationship = getFamilyRelation(ped_file, sample_list)
     control_samples_idx = getControlSamples(ped_file, sample_list)
+    hwe_info = getHWE_Direct(hwe_file)
     
     for line2 in f:
         if line2.startswith('chr'):
@@ -42,10 +43,10 @@ def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
           rsid = chr + ':' + pos
           maf = getMAF(line2)
           mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq = statDPGQ(line2)
-          discordant_geno = getDiscordantGenotype(line2, discord_geno_dict) if discord_geno_dict != 'NA' else 'NA'
-          mendel_error = getMendel(line2, sample_list, relationship) if ped_file != 'NA' else 'NA'
+          discordant_geno = getDiscordantGenotype(line2, discord_geno_dict)
+          mendel_error = getMendel(line2, sample_list, relationship)
           missing_rate = getMissing(line2)
-          hwe = getHWE(line2, control_samples_idx) if hwe_file == 'NA' else hwe_info[rsid]
+          hwe = getHWE(line2, control_samples_idx) if not hwe_info else hwe_info[rsid]
           abhet, abhom = getAB(line2)
           o.write('\t'.join([rsid, chr, pos, ref, alt, str(maf), str(mean_dp), str(mean_gq), str(sd_dp), str(sd_gq), str(outlier_dp), str(outlier_gq), str(discordant_geno), str(mendel_error), str(missing_rate), str(hwe), str(abhet), str(abhom)]) + '\n')
     o.close()
@@ -71,7 +72,7 @@ def main():
     hwe_file = args.hwe_file
 
     # discordant genotype file processing
-    discord_geno_dict = getDiscordInfo(discord_geno_file) if discord_geno_file != 'NA' else 'NA'
+    discord_geno_dict = getDiscordInfo(discord_geno_file)
 
     # vcf file processing and data recording
     vcfProcessing(target_file, stat_file, ped_file, discord_geno_dict, hwe_file)

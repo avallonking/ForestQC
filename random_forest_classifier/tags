@@ -30,14 +30,27 @@ gzip	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classi
 INDIVIDUAL_ID_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^INDIVIDUAL_ID_IDX = 1$/;"	v	language:Python
 isHomozygous	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def isHomozygous(genotype):$/;"	f	language:Python
 itemgetter	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^from operator import itemgetter$/;"	i	language:Python
+main	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^def main():$/;"	f	language:Python
+main	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def main():$/;"	f	language:Python
 main	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^def main():$/;"	f	language:Python
 main	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/stat.py	/^def main():$/;"	f	language:Python
 MOTHER_ID_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^MOTHER_ID_IDX = 3$/;"	v	language:Python
 np	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^import numpy as np$/;"	i	language:Python
 np	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^import numpy as np$/;"	i	language:Python
+pd	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^import pandas as pd$/;"	i	language:Python
+pd	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^import pandas as pd$/;"	i	language:Python
 PHENOTYPE_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^PHENOTYPE_IDX = 5$/;"	v	language:Python
+Pipeline	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.pipeline import Pipeline$/;"	i	language:Python
+precision_recall_fscore_support	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.metrics import precision_recall_fscore_support$/;"	i	language:Python
+RandomForestClassifier	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.ensemble import RandomForestClassifier$/;"	i	language:Python
+random_forest_classifier	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^def random_forest_classifier(labelled_data, grey_variants):$/;"	f	language:Python
 SAMPLE_ID_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^SAMPLE_ID_IDX = -1$/;"	v	language:Python
+separateData	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def separateData(variants):$/;"	f	language:Python
+StandardScaler	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.preprocessing import StandardScaler$/;"	i	language:Python
 statDPGQ	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def statDPGQ(variant_info):$/;"	f	language:Python
 statistics	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^import statistics$/;"	i	language:Python
+sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^import sys$/;"	i	language:Python
+sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^import sys$/;"	i	language:Python
 sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^import sys$/;"	i	language:Python
+train_test_split	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.model_selection import train_test_split$/;"	i	language:Python
 vcfProcessing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/stat.py	/^def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):$/;"	f	language:Python

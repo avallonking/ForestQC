@@ -58,9 +58,9 @@ def main():
   input_file = sys.argv[1]
   data = pd.read_table(input_file, header=None)
   good, bad, grey = separateData(data)
-  good.to_csv('good' + input_file, index=False, sep='\t')
-  bad.to_csv('bad' + input_file, index=False, sep='\t')
-  grey.to_csv('grey' + input_file, index=False, sep='\t')
+  good.to_csv('good.' + input_file, index=False, sep='\t')
+  bad.to_csv('bad.' + input_file, index=False, sep='\t')
+  grey.to_csv('grey.' + input_file, index=False, sep='\t')
 
 if __name__ == '__main__':
   main()

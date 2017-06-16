@@ -62,3 +62,9 @@ $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good
   chr3:899   1.0
   cgr2:900   0.77
   ```
+
+ - Result file (The variant is a good variant if Good = 1, or a bad variant if Good = 0)
+  ```sh
+  RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom Good
+  chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43  0.23  1 3 0.01  1.0 0.45  0.99  1
+  ```
