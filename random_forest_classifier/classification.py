@@ -33,9 +33,15 @@ def main():
   grey_variants = sys.argv[3]
   output_handle = sys.argv[4] if len(sys.argv) >= 5 else 'variants.tsv'
 
-  good = pd.read_table(good_variants)
-  bad = pd.read_table(bad_variants)
-  grey = pd.read_table(grey_variants)
+  good = pd.read_table(good_variants, header=None)
+  bad = pd.read_table(bad_variants, header=None)
+  grey = pd.read_table(grey_variants, header=None)
+
+  columns1 =  ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'Good']
+  columns2 =  ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom']
+  good.columns = columns1
+  bad.columns = columns1
+  grey.columns = columns2
 
   prediction = random_forest_classifier(pd.concat([good.sample(n=bad.shape[0]), bad]), grey)
   grey['Good'] = prediction
@@ -43,8 +49,8 @@ def main():
   predicted_bad = grey[grey['Good'] == 0]
   print('Predicted good variants: ' + str(predicted_good.shape[0]))
   print('Predicted bad variants: ' + str(predicted_bad.shape[0]))
-  predicted_good.to_csv('predicted_good_' + output_handle, index = False, sep = '\t')
-  predicted_bad.to_csv('predicted_bad_' + output_handle, index = False, sep = '\t')
+  predicted_good.to_csv('predicted_good_' + output_handle, index = False, sep = '\t', na_rep='NA')
+  predicted_bad.to_csv('predicted_bad_' + output_handle, index = False, sep = '\t', na_rep='NA')
 
 if __name__ == '__main__':
   main()

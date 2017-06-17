@@ -13,7 +13,7 @@ def separateData(variants):
     variants.columns = columns
 
     # good variants
-    good = variants[variants['Mendel_Error'] == 0]
+    good = variants[~(variants['Mendel_Error'] > 0)]
     good = good[good['Missing_Rate'] < 0.005]
     good = good[good['HWE'] > 0.01]
     # good = good[good['ABHom'] >= 0.99]
@@ -25,12 +25,12 @@ def separateData(variants):
     # bad variants
     rare_variants = variants[variants['MAF'] < 0.03]
     common_variants = variants[variants['MAF'] >= 0.03]
-    rare_bad = rare_variants[rare_variants['Mendel_Error'] > 3]
+    rare_bad = rare_variants[~(rare_variants['Mendel_Error'] <= 3)]
     rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= 6)]
     rare_bad = rare_bad[rare_bad['Missing_Rate'] > 0.02]
     rare_bad = rare_bad[rare_bad['HWE'] < 5e-3]
     # rare_bad = rare_bad[abs(rare_bad['ABHet'] - 0.5) >= 0.25]
-    common_bad = common_variants[common_variants['Mendel_Error'] > 5]
+    common_bad = common_variants[~(common_variants['Mendel_Error'] <= 5)]
     common_bad = common_bad[~(common_bad['Discordant_Geno'] <= 6)]
     common_bad = common_bad[common_bad['Missing_Rate'] > 0.03]
     common_bad = common_bad[common_bad['HWE'] < 5e-4]
@@ -56,11 +56,15 @@ def separateData(variants):
 
 def main():
   input_file = sys.argv[1]
-  data = pd.read_table(input_file, header=None)
+  output_file = sys.argv[2] if len(sys.argv) > 2 else input_file.split('/')[-1]
+  try:
+    data = pd.read_table(input_file, header=None)
+  except pd.io.common.EmptyDataError:
+    exit(1)
   good, bad, grey = separateData(data)
-  good.to_csv('good.' + input_file, index=False, sep='\t')
-  bad.to_csv('bad.' + input_file, index=False, sep='\t')
-  grey.to_csv('grey.' + input_file, index=False, sep='\t')
+  good.to_csv('good.' + output_file, index=False, sep='\t', na_rep='NA', header=False)
+  bad.to_csv('bad.' + output_file, index=False, sep='\t', na_rep='NA', header=False)
+  grey.to_csv('grey.' + output_file, index=False, sep='\t', na_rep='NA', header=False)
 
 if __name__ == '__main__':
   main()
