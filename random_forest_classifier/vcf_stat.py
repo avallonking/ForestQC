@@ -9,8 +9,8 @@ GENOTYPE_IDX = 0
 GENOTYPE_DEPTH_IDX = 1
 DP_IDX = 2
 GQ_IDX = 3
-DP_THRESHOLD = 34
-GQ_THRESHOLD = 99
+# DP_THRESHOLD = 34
+# GQ_THRESHOLD = 99
 
 # for PED file processing
 FAMILY_ID_IDX = 0
@@ -26,7 +26,7 @@ def isHomozygous(genotype):
     else:
         return False
 
-def statDPGQ(variant_info):
+def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99):
     # get Mean_DP, Mean_GQ, SD_DP, SD_GQ, Outlier_DP, Outlier_GQ from a line of variant information
     dp = []
     gq = []
@@ -41,14 +41,14 @@ def statDPGQ(variant_info):
 
         if idv_info[DP_IDX] != '.' and idv_info[DP_IDX] != '0':
           dp.append(float(idv_info[DP_IDX]))
-          if float(idv_info[DP_IDX]) < DP_THRESHOLD:
+          if float(idv_info[DP_IDX]) < dp_threshold:
             outlier_dp_count += 1
           # if idv_info[DP_IDX] != '0':
             # avg_dp.append(float(idv_info[DP_IDX]))
 
         if idv_info[GQ_IDX] != '.' and idv_info[GQ_IDX] != '0':
           gq.append(float(idv_info[GQ_IDX]))
-          if float(idv_info[GQ_IDX]) < GQ_THRESHOLD:
+          if float(idv_info[GQ_IDX]) < gq_threshold:
             outlier_gq_count += 1
           # if idv_info[GQ_IDX] != '0':
             # avg_gq.append(float(idv_info[GQ_IDX]))
@@ -89,14 +89,40 @@ def computeAB(ref, alt):
     else:
         return round(ref / (ref + alt), 5)
 
+def getSexInfo(ped_file):
+  # read a ped file and return a list of male sample ids and female sample ids
+  male = []
+  female = []
+  with open(ped_file, 'r') as p:
+    for line in p:
+      if not line.startswith('FamilyID'):
+        info = line.strip().split('\t')
+        sample_id = info[-1]
+        if sample_id == 'NA':
+          continue
+        sex = info[4]
+        if sex == 'm':
+          male.append(sample_id)
+        elif sex == 'f':
+          female.append(sample_id)
+  return male, female
 
-def getAB(variant_info, sample_level_AB=False):
+def getTargetIdx(ped_file, sample_list):
+  male, female = getSexInfo(ped_file)
+  male_idx = list(map(sample_list.index, male))
+  female_idx = list(map(sample_list.index, female))
+  return male_idx, female_idx
+
+def getAB(variant_info, sample_level_AB=False, chr=None, target_idx=None):
     # get ABHet and ABHom from a line of variant information
     sampleAB = {}
     variantAB = {'abhet': [0, 0], 'abhom': [0, 0]}
     sample_idx = 1
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    if target_idx and chr == 'chrX':
+      individual_info = itemgetter(*target_idx)(individual_info) 
+
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
 
@@ -150,7 +176,7 @@ def getMAF(variant_info):
     return round(maf, 6)
 
 
-def getMissing(variant_info):
+def getMissing(variant_info, chr=None, male_idx=None):
     # get missing rate from a line of variant
     missing_allele = 0
 
@@ -165,8 +191,17 @@ def getMissing(variant_info):
             missing_allele += 1
         if allele_second == '.':
             missing_allele += 1
+
+    if chr == 'chrX' and male_idx:
+      male_info = itemgetter(*male_idx)(individual_info)
+      for idx in male_info:
+        genotype = idv.split(':')[GENOTYPE_IDX]
+        if '.' not in genotype and not isHomozygous(genotype):
+          missing_allele += 1
+
     missing_rate = round(missing_allele / total_allele, 6)
     return missing_rate
+
 
 def getHWE_Direct(hwe_file):
   # get HWE p-value directly from the file provided by users
@@ -209,7 +244,7 @@ def getControlSamples(ped_file, sample_list):
   
   return control_samples_idx
 
-def getHWE(variant_info, control_samples_idx):
+def getHWE(variant_info, control_samples_idx=None):
     # get Hardy-Weinberg Equilibrium P-value from a line of variant
     hom0 = 0  # homozygous
     hom1 = 0
@@ -219,7 +254,7 @@ def getHWE(variant_info, control_samples_idx):
     hwe = 0.0
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
-    if len(control_samples_idx) > 0:
+    if control_samples_idx:
       individual_info = itemgetter(*control_samples_idx)(individual_info)
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]

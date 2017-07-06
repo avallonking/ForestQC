@@ -43,7 +43,13 @@ def main():
   bad.columns = columns1
   grey.columns = columns2
 
-  prediction = random_forest_classifier(pd.concat([good.sample(n=bad.shape[0]), bad]), grey)
+  if good.shape[0] > bad.shape[0]:
+    prediction = random_forest_classifier(pd.concat([good.sample(n=bad.shape[0]), bad]), grey)
+  elif good.shape[0] == bad.shape:
+    prediction = random_forest_classifier(pd.concat([good, bad]), grey)
+  else:
+    prediction = random_forest_classifier(pd.concat([bad.sample(n=good.shape[0]), good]), grey)
+
   grey['Good'] = prediction
   predicted_good = grey[grey['Good'] == 1]
   predicted_bad = grey[grey['Good'] == 0]
