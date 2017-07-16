@@ -1,5 +1,6 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
 argparse	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/stat.py	/^import argparse$/;"	i	language:Python
+classification	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^def classification(good, bad, grey):$/;"	f	language:Python
 computeAB	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def computeAB(ref, alt):$/;"	f	language:Python
 DP_GQ_START_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^DP_GQ_START_IDX = 9$/;"	v	language:Python
 DP_GQ_START_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^DP_GQ_START_IDX = 9$/;"	v	language:Python
@@ -15,11 +16,11 @@ getControlSamples	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_
 getDiscordantGenotype	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getDiscordantGenotype(variant_info, discordant_genotype_dict):$/;"	f	language:Python
 getDiscordInfo	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/stat.py	/^def getDiscordInfo(discord_geno_file):$/;"	f	language:Python
 getFamilyRelation	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getFamilyRelation(ped_file, sample_list):$/;"	f	language:Python
-getHWE	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getHWE(variant_info, control_samples_idx=None):$/;"	f	language:Python
+getHWE	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getHWE(variant_info, control_samples_idx=None, chr=None, target_idx=None):$/;"	f	language:Python
 getHWE_Direct	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getHWE_Direct(hwe_file):$/;"	f	language:Python
-getMAF	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMAF(variant_info):$/;"	f	language:Python
-getMendel	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMendel(variant_info, sample_list, relationship):$/;"	f	language:Python
-getMissing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMissing(variant_info, chr=None, male_idx=None):$/;"	f	language:Python
+getMAF	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMAF(variant_info, target_idx=None, chr=None):$/;"	f	language:Python
+getMendel	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None):$/;"	f	language:Python
+getMissing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):$/;"	f	language:Python
 getSexInfo	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getSexInfo(ped_file):$/;"	f	language:Python
 getTargetIdx	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getTargetIdx(ped_file, sample_list):$/;"	f	language:Python
 GQ_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^GQ_IDX = 3$/;"	v	language:Python
@@ -42,12 +43,17 @@ pd	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifi
 PHENOTYPE_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^PHENOTYPE_IDX = 5$/;"	v	language:Python
 Pipeline	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.pipeline import Pipeline$/;"	i	language:Python
 precision_recall_fscore_support	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.metrics import precision_recall_fscore_support$/;"	i	language:Python
+preprocessing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def preprocessing(data):$/;"	f	language:Python
 RandomForestClassifier	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.ensemble import RandomForestClassifier$/;"	i	language:Python
-random_forest_classifier	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^def random_forest_classifier(labelled_data, grey_variants):$/;"	f	language:Python
+random_forest_classifierAC	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^def random_forest_classifierAC(labelled_data, grey_variants):$/;"	f	language:Python
+random_forest_classifierB	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^def random_forest_classifierB(labelled_data, grey_variants):$/;"	f	language:Python
 SAMPLE_ID_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^SAMPLE_ID_IDX = -1$/;"	v	language:Python
-separateData	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def separateData(variants):$/;"	f	language:Python
+separateDataA	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def separateDataA(variants):$/;"	f	language:Python
+separateDataB	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def separateDataB(variants):$/;"	f	language:Python
+separateDataC	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^def separateDataC(variants):$/;"	f	language:Python
+SEX_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^SEX_IDX = 4$/;"	v	language:Python
 StandardScaler	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.preprocessing import StandardScaler$/;"	i	language:Python
-statDPGQ	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99):$/;"	f	language:Python
+statDPGQ	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99, target_idx=None, chr=None):$/;"	f	language:Python
 statistics	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^import statistics$/;"	i	language:Python
 sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^import sys$/;"	i	language:Python
 sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^import sys$/;"	i	language:Python

@@ -17,7 +17,7 @@ def getDiscordInfo(discord_geno_file):
     return discord_geno_dict
 
 def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
-    f = gzip.open(vcf_file, 'rt') if 'gz' in vcf_file else open(vcf_file, 'r')
+    f = gzip.open(vcf_file, 'rt') if 'gz' == vcf_file.split('.')[-1] else open(vcf_file, 'r')
     o = open(stat_file, 'w')
     for line in f:
         if line.startswith('#CHROM'):
@@ -26,6 +26,7 @@ def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
     
     relationship = getFamilyRelation(ped_file, sample_list)
     control_samples_idx = getControlSamples(ped_file, sample_list)
+    male_list, female_list = getSexInfo(ped_file)
     male_idx, female_idx = getTargetIdx(ped_file, sample_list)
     hwe_info = getHWE_Direct(hwe_file)
     
@@ -37,13 +38,17 @@ def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
           ref = site_info[3]
           alt = site_info[4]
           rsid = chr + ':' + pos
-          maf = getMAF(line2)
-          mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq = statDPGQ(line2, dp_threshold=dp_threshold, gq_threshold=gq_threshold)
+          maf = getMAF(line2, target_idx=female_idx, chr=chr)
+
+          if maf == 'NA':
+            continue
+
+          mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq = statDPGQ(line2, dp_threshold=dp_threshold, gq_threshold=gq_threshold, chr=chr, target_idx=female_idx)
           discordant_geno = getDiscordantGenotype(line2, discord_geno_dict)
-          mendel_error = getMendel(line2, sample_list, relationship)
-          missing_rate = getMissing(line2, chr=chr, male_idx = male_idx)
+          mendel_error = getMendel(line2, sample_list=sample_list, relationship=relationship, chr=chr, male_list=male_list)
+          missing_rate = getMissing(line2, chr=chr, target_idx=female_idx)
           if not hwe_info:
-            hwe = getHWE(line2, control_samples_idx)
+            hwe = getHWE(line2, control_samples_idx, chr=chr, target_idx=female_idx)
           else:
             try:
               hwe = hwe_info[rsid]
@@ -67,8 +72,8 @@ def main():
     parser.add_argument('-p', '--ped', dest='ped_file', default='NA', help='Pedigree file [optional]')
     parser.add_argument('-d', '--discord_geno_file', dest='discord_geno_file', default='NA', help='Discordant genotype file [optional]')
     parser.add_argument('-w', '--hwe', dest='hwe_file', default='NA', help='HWE p-value file [optional]')
-    parser.add_argument('--dp', dest='dp', default=34, type=float, help='Depth threshold')
-    parser.add_argument('--gq', dest='gq', default=99, type=float, help='Genotype quality threshold')
+    parser.add_argument('--dp', dest='dp', default=34, type=float, help='Depth threshold, default = 34')
+    parser.add_argument('--gq', dest='gq', default=99, type=float, help='Genotype quality threshold, default = 99')
     args = parser.parse_args()
 
     target_file = args.target_file

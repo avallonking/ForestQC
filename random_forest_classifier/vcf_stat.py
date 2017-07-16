@@ -17,6 +17,7 @@ FAMILY_ID_IDX = 0
 INDIVIDUAL_ID_IDX = 1
 FATHER_ID_IDX = 2
 MOTHER_ID_IDX = 3
+SEX_IDX = 4
 PHENOTYPE_IDX = 5
 SAMPLE_ID_IDX = -1
 
@@ -26,7 +27,7 @@ def isHomozygous(genotype):
     else:
         return False
 
-def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99):
+def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99, target_idx=None, chr=None):
     # get Mean_DP, Mean_GQ, SD_DP, SD_GQ, Outlier_DP, Outlier_GQ from a line of variant information
     dp = []
     gq = []
@@ -34,19 +35,22 @@ def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99):
     outlier_gq_count = 0
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    if target_idx and chr == 'chrX':
+      individual_info = itemgetter(*target_idx)(individual_info) 
+
     for idv in individual_info:
         idv_info = idv.split(':')
         if len(idv_info) < 4:
           continue
 
-        if idv_info[DP_IDX] != '.' and idv_info[DP_IDX] != '0':
+        if idv_info[DP_IDX] != '.':
           dp.append(float(idv_info[DP_IDX]))
           if float(idv_info[DP_IDX]) < dp_threshold:
             outlier_dp_count += 1
           # if idv_info[DP_IDX] != '0':
             # avg_dp.append(float(idv_info[DP_IDX]))
 
-        if idv_info[GQ_IDX] != '.' and idv_info[GQ_IDX] != '0':
+        if idv_info[GQ_IDX] != '.':
           gq.append(float(idv_info[GQ_IDX]))
           if float(idv_info[GQ_IDX]) < gq_threshold:
             outlier_gq_count += 1
@@ -93,18 +97,20 @@ def getSexInfo(ped_file):
   # read a ped file and return a list of male sample ids and female sample ids
   male = []
   female = []
-  with open(ped_file, 'r') as p:
-    for line in p:
-      if not line.startswith('FamilyID'):
+  try:
+    with open(ped_file, 'r') as p:
+      for line in p:
         info = line.strip().split('\t')
-        sample_id = info[-1]
+        sample_id = info[SAMPLE_ID_IDX]
         if sample_id == 'NA':
           continue
-        sex = info[4]
+        sex = info[SEX_IDX]
         if sex == 'm':
           male.append(sample_id)
         elif sex == 'f':
           female.append(sample_id)
+  except OSError:
+    pass
   return male, female
 
 def getTargetIdx(ped_file, sample_list):
@@ -156,11 +162,14 @@ def getAB(variant_info, sample_level_AB=False, chr=None, target_idx=None):
         return ABHet, ABHom
 
 
-def getMAF(variant_info):
+def getMAF(variant_info, target_idx=None, chr=None):
     allele_info = {}
     freq = []
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    if target_idx and chr == 'chrX':
+      individual_info = itemgetter(*target_idx)(individual_info) 
+
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
         for i in [0, -1]:
@@ -172,15 +181,23 @@ def getMAF(variant_info):
                 allele_info[genotype[i]] += 1
     for info in allele_info.values():
         freq.append(info / sum(allele_info.values()))
-    maf = sorted(freq)[-2] if len(freq) >= 2 else freq[-1]
-    return round(maf, 6)
+        
+    try:
+      maf = sorted(freq)[-2] if len(freq) >= 2 else freq[-1]
+      maf = round(maf, 6)
+    except IndexError:
+      maf = 'NA'
+    return maf
 
 
-def getMissing(variant_info, chr=None, male_idx=None):
+def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):
     # get missing rate from a line of variant
     missing_allele = 0
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    if target_idx and chr == 'chrX':
+      individual_info = itemgetter(*target_idx)(individual_info) 
+
     total_allele = len(individual_info) * 2
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
@@ -194,7 +211,7 @@ def getMissing(variant_info, chr=None, male_idx=None):
 
     if chr == 'chrX' and male_idx:
       male_info = itemgetter(*male_idx)(individual_info)
-      for idx in male_info:
+      for idv in male_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
         if '.' not in genotype and not isHomozygous(genotype):
           missing_allele += 1
@@ -230,21 +247,17 @@ def getControlSamples(ped_file, sample_list):
       for line in p:
         info = line.strip().split('\t')
         sample_id = info[SAMPLE_ID_IDX]
-        if sample_id == 'NA':
-          continue
         phenotype_id = info[PHENOTYPE_IDX]
-        if phenotype_id == '1':
+        if phenotype_id == '1' and sample_id != 'NA':
           control_samples.append(sample_id)
     
-    for i in range(len(sample_list)):
-      if sample_list[i] in control_samples:
-        control_samples_idx.append(i)
+    control_samples_idx = list(map(sample_list.index, control_samples))
   except OSError:
     pass
   
   return control_samples_idx
 
-def getHWE(variant_info, control_samples_idx=None):
+def getHWE(variant_info, control_samples_idx=None, chr=None, target_idx=None):
     # get Hardy-Weinberg Equilibrium P-value from a line of variant
     hom0 = 0  # homozygous
     hom1 = 0
@@ -254,8 +267,18 @@ def getHWE(variant_info, control_samples_idx=None):
     hwe = 0.0
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+
     if control_samples_idx:
+      female_control = list(set(control_samples_idx).intersection(target_idx))
+
+    if chr == 'chrX':
+      if control_samples_idx:
+        individual_info = itemgetter(*female_control)(individual_info)
+      else:
+        individual_info = itemgetter(*target_idx)(individual_info)
+    elif control_samples_idx:
       individual_info = itemgetter(*control_samples_idx)(individual_info)
+
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
         if '.' not in genotype:
@@ -337,32 +360,42 @@ def getFamilyRelation(ped_file, sample_list):
               individual_sample_id = individual_relation[-1]
               father_sample_id = 'NA' if individual_relation[0] not in member else member[individual_relation[0]][-1]
               mother_sample_id = 'NA' if individual_relation[1] not in member else member[individual_relation[1]][-1]
-              if [father_sample_id, mother_sample_id].count('NA') > 1 or individual_sample_id == 'NA':
+              if 'NA' in [father_sample_id, mother_sample_id] or individual_sample_id == 'NA':
                   continue
               relationship[individual_sample_id] = [father_sample_id, mother_sample_id]
     except OSError:
       pass
     return relationship
 
-def getMendel(variant_info, sample_list, relationship):
+def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None):
     # get mendel error of a variant from one line of variant information
     # sample_list is a list of sample names
     if not relationship:
       return 'NA'
+    if not male_list:
+      male_list = []
 
     genotype_set = []
     mendel_error = 0
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
         genotype_set.append(genotype)
     sample_genotype = dict(zip(sample_list, genotype_set))
+
     for child, parents in relationship.items():
         child_genotype = sample_genotype[child]
-
-        if 'NA' not in parents:
-            father_genotype = sample_genotype[parents[0]]
-            mother_genotype = sample_genotype[parents[1]]
+        father_genotype = sample_genotype[parents[0]]
+        mother_genotype = sample_genotype[parents[1]]
+        if chr == 'chrX':
+          if child in male_list:
+            # if '.' in child_genotype +  mother_genotype:
+              # continue
+            # if isHomozygous(child_genotype) and child_genotype[0] not in mother_genotype:
+              # mendel_error += 1
+            continue
+          else:
             if '.' in child_genotype + father_genotype + mother_genotype:
                 continue
             normal_inherited_genotype = [father_genotype[:2] + mother_genotype[0],
@@ -370,14 +403,16 @@ def getMendel(variant_info, sample_list, relationship):
                                          father_genotype[:0:-1] + mother_genotype[0],
                                          father_genotype[:0:-1] + mother_genotype[-1]]
             if child_genotype not in normal_inherited_genotype and child_genotype[::-1] not in normal_inherited_genotype:
-                mendel_error += 1
+              mendel_error += 1
         else:
-            parent_genotype = sample_genotype[parents[0]] if parents[0] != 'NA' else sample_genotype[parents[1]]
-            if '.' in child_genotype + parent_genotype:
-                continue
-            if isHomozygous(parent_genotype) and isHomozygous(child_genotype) and child_genotype != parent_genotype:
-                mendel_error += 1
-
+          if '.' in child_genotype + father_genotype + mother_genotype:
+              continue
+          normal_inherited_genotype = [father_genotype[:2] + mother_genotype[0],
+                                       father_genotype[:2] + mother_genotype[-1],
+                                       father_genotype[:0:-1] + mother_genotype[0],
+                                       father_genotype[:0:-1] + mother_genotype[-1]]
+          if child_genotype not in normal_inherited_genotype and child_genotype[::-1] not in normal_inherited_genotype:
+            mendel_error += 1
     return mendel_error
 
 def getDiscordantGenotype(variant_info, discordant_genotype_dict):

@@ -27,7 +27,7 @@ First, we need to calculate ths statistics from vcf file. *It will output a file
  - If no pedigree file provided, the mendel errors of all variants will be NA
 
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py -i [input_vcf] -o [output_filename] -p [ped_file(optional)] -d [discordant_genotype_file(optional)] -w [hwe_file(optional)] --GQ [Outlier_GQ] --dp [Outlier_DP]
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py -i [input_vcf] -o [output_filename] -p [ped_file(optional)] -d [discordant_genotype_file(optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP]
 ```
 
 You can check the usage of stat.py with
