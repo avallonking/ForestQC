@@ -26,6 +26,7 @@ def main():
             dp.append(float(idv_info[DP_IDX]))
           if idv_info[GQ_IDX] != '.' and idv_info[GQ_IDX] != '0':
             gq.append(float(idv_info[GQ_IDX]))
+	  f.close()
   DP_THRESHOLD = np.percentile(dp, 25, interpolation = 'lower')
   GQ_THRESHOLD = np.percentile(gq, 25, interpolation = 'lower')
   print('Outlier_DP: ' + str(DP_THRESHOLD))

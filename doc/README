@@ -11,10 +11,10 @@ To install the packages
  pip3 install -r $YOUR_PATH/classifier/requirements.txt
 
 ### Workflow
-Before doing the classification, we should set the Outlier_GQ and Outlier_DP
+Before doing the classification, we should set the Outlier_GQ and Outlier_DP. It would print out Outlier_DP and Outlier_GQ on the screen, which would be used as inputs in the next step. Note that all vcf files in this analysis should be included.
  python3 $YOUR_PATH/classifier/random_forest_classifier/setOutlier.py [vcf_file1] [vcf_file2] [...]
 
-Then go to vcf_stat.py, change DP_THRESHOLD and GQ_THRESHOLD to Outlier_DP and Outlier_GQ given by the previous step, respectively.
+Then go to vcf_stat.py, set Outlier_DP and Outlier_GQ given by the previous step, respectively.
 
 First, we need to calculate ths statistics from vcf file. It will output a file containing all statistics information for each variant. **Note:**
  - The vcf file should have the information of each individual. 
