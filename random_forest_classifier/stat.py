@@ -31,9 +31,9 @@ def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
     hwe_info = getHWE_Direct(hwe_file)
     
     for line2 in f:
-        if line2.startswith('chr'):
+        if not line2.startswith('#'):
           site_info = line2.split('\t')
-          chr = site_info[0]
+          chr = site_info[0] if 'chr' in site_info[0].lower() else 'chr' + site_info[0]
           pos = site_info[1]
           ref = site_info[3]
           alt = site_info[4]

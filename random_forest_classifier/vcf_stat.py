@@ -274,7 +274,7 @@ def getHWE(variant_info, control_samples_idx=None, chr=None, target_idx=None):
     if chr == 'chrX':
       if control_samples_idx:
         individual_info = itemgetter(*female_control)(individual_info)
-      else:
+      elif target_idx:
         individual_info = itemgetter(*target_idx)(individual_info)
     elif control_samples_idx:
       individual_info = itemgetter(*control_samples_idx)(individual_info)
