@@ -49,6 +49,12 @@ $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good
 ```
 
 ### File format
+ -Pedigree file(9 columns, tab separated)
+ ```sh
+ FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPID SampleID SeqID
+ C1  2 3 4 m  1  xxx xxx xxx
+ ```
+
  - Discordant genotype file (2 columns, tab separated)
   ```sh
   SNP_ID  Number_of_Discordant_Genotype
