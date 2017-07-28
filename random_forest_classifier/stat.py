@@ -12,11 +12,11 @@ def getDiscordInfo(discord_geno_file):
           discord_geno_num = entry.strip().split('\t')[1]
           discord_geno_dict[snp_id] = discord_geno_num
       d.close()
-    except OSError:
+    except TypeError:
       pass
     return discord_geno_dict
 
-def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
+def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file, gender_file):
     f = gzip.open(vcf_file, 'rt') if 'gz' == vcf_file.split('.')[-1] else open(vcf_file, 'r')
     o = open(stat_file, 'w')
     for line in f:
@@ -26,10 +26,10 @@ def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):
     
     relationship = getFamilyRelation(ped_file, sample_list)
     control_samples_idx = getControlSamples(ped_file, sample_list)
-    male_list, female_list = getSexInfo(ped_file)
-    male_idx, female_idx = getTargetIdx(ped_file, sample_list)
+    male_list, female_list = getSexInfo(ped_file, gender_file)
+    male_idx, female_idx = getTargetIdx(male_list, female_list, sample_list)
     hwe_info = getHWE_Direct(hwe_file)
-    
+
     for line2 in f:
         if not line2.startswith('#'):
           site_info = line2.split('\t')
@@ -69,9 +69,10 @@ def main():
     parser = argparse.ArgumentParser(description='Calculate statistics for one vcf file')
     parser.add_argument('-i', '--input', dest='target_file', help='Input vcf or vcf.gz file')
     parser.add_argument('-o', '--output', dest='stat_file', help='Output file name')
-    parser.add_argument('-p', '--ped', dest='ped_file', default='NA', help='Pedigree file [optional]')
-    parser.add_argument('-d', '--discord_geno_file', dest='discord_geno_file', default='NA', help='Discordant genotype file [optional]')
-    parser.add_argument('-w', '--hwe', dest='hwe_file', default='NA', help='HWE p-value file [optional]')
+    parser.add_argument('-p', '--ped', dest='ped_file', default=None, help='Pedigree file [optional]')
+    parser.add_argument('-d', '--discord_geno_file', dest='discord_geno_file', default=None, help='Discordant genotype file [optional]')
+    parser.add_argument('-w', '--hwe', dest='hwe_file', default=None, help='HWE p-value file [optional]')
+    parser.add_argument('-g', '--gender', dest='gender_info', default=None, help='Infomation about gender of each individual [optional]')
     parser.add_argument('--dp', dest='dp', default=34, type=float, help='Depth threshold, default = 34')
     parser.add_argument('--gq', dest='gq', default=99, type=float, help='Genotype quality threshold, default = 99')
     args = parser.parse_args()
@@ -81,6 +82,7 @@ def main():
     ped_file = args.ped_file
     discord_geno_file = args.discord_geno_file
     hwe_file = args.hwe_file
+    gender_file = args.gender_info
 
     global dp_threshold, gq_threshold
     dp_threshold = args.dp
@@ -90,7 +92,7 @@ def main():
     discord_geno_dict = getDiscordInfo(discord_geno_file)
 
     # vcf file processing and data recording
-    vcfProcessing(target_file, stat_file, ped_file, discord_geno_dict, hwe_file)
+    vcfProcessing(target_file, stat_file, ped_file, discord_geno_dict, hwe_file, gender_file)
 
 if __name__ == '__main__':
     main()

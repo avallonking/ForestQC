@@ -93,10 +93,26 @@ def computeAB(ref, alt):
     else:
         return round(ref / (ref + alt), 5)
 
-def getSexInfo(ped_file):
+def getSexInfo(ped_file, gender_file):
   # read a ped file and return a list of male sample ids and female sample ids
+  # assume we only have either ped_file or gender_file as input
   male = []
   female = []
+
+  try:
+    with open(gender_file, 'r') as g:
+      next(g)
+      for line in g:
+        info = line.strip().split('\t')
+        sample_id = info[0]
+        gender = info[1]
+        if gender == 'm':
+          male.append(sample_id)
+        elif gender == 'f':
+          female.append(sample_id)
+  except TypeError:
+    pass
+
   try:
     with open(ped_file, 'r') as p:
       for line in p:
@@ -109,12 +125,13 @@ def getSexInfo(ped_file):
           male.append(sample_id)
         elif sex == 'f':
           female.append(sample_id)
-  except OSError:
+  except TypeError:
     pass
+
   return male, female
 
-def getTargetIdx(ped_file, sample_list):
-  male, female = getSexInfo(ped_file)
+def getTargetIdx(male, female, sample_list):
+  # male, female = getSexInfo(ped_file)
   male_idx = list(map(sample_list.index, male))
   female_idx = list(map(sample_list.index, female))
   return male_idx, female_idx
@@ -232,7 +249,7 @@ def getHWE_Direct(hwe_file):
         snp = info[0]
         hwe = info[1]
         hwe_dict[snp] = float(hwe)
-  except OSError:
+  except TypeError:
     pass
   return hwe_dict
 
@@ -252,7 +269,7 @@ def getControlSamples(ped_file, sample_list):
           control_samples.append(sample_id)
     
     control_samples_idx = list(map(sample_list.index, control_samples))
-  except OSError:
+  except TypeError:
     pass
   
   return control_samples_idx
@@ -363,7 +380,7 @@ def getFamilyRelation(ped_file, sample_list):
               if 'NA' in [father_sample_id, mother_sample_id] or individual_sample_id == 'NA':
                   continue
               relationship[individual_sample_id] = [father_sample_id, mother_sample_id]
-    except OSError:
+    except TypeError:
       pass
     return relationship
 

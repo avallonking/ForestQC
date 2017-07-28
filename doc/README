@@ -37,6 +37,11 @@ Third, we can train our random forest model and apply it on the classification o
  python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good_variants] [bad_variants] [grey_variants] [output_filename_suffix]
 
 ### File format
+ - Gender file(2 columns, tab separated. f for female, m for male):
+   SampleID  Gender
+   12312sd12  m
+   4342sd423  f
+
  - Pedigree file(9 columns, tab separated)
    FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPID SampleID SeqID
    C1  2 3 4 m  1  xxx xxx xxx

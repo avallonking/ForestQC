@@ -21,8 +21,8 @@ getHWE_Direct	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_fore
 getMAF	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMAF(variant_info, target_idx=None, chr=None):$/;"	f	language:Python
 getMendel	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None):$/;"	f	language:Python
 getMissing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):$/;"	f	language:Python
-getSexInfo	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getSexInfo(ped_file):$/;"	f	language:Python
-getTargetIdx	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getTargetIdx(ped_file, sample_list):$/;"	f	language:Python
+getSexInfo	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getSexInfo(ped_file, gender_file):$/;"	f	language:Python
+getTargetIdx	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^def getTargetIdx(male, female, sample_list):$/;"	f	language:Python
 GQ_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^GQ_IDX = 3$/;"	v	language:Python
 GQ_IDX	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/vcf_stat.py	/^GQ_IDX = 3$/;"	v	language:Python
 GQ_THRESHOLD	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^GQ_THRESHOLD = 0$/;"	v	language:Python
@@ -61,4 +61,4 @@ sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classif
 sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/data_preprocessing.py	/^import sys$/;"	i	language:Python
 sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/setOutlier.py	/^import sys$/;"	i	language:Python
 train_test_split	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/classification.py	/^from sklearn.model_selection import train_test_split$/;"	i	language:Python
-vcfProcessing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/stat.py	/^def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file):$/;"	f	language:Python
+vcfProcessing	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/random_forest_classifier/stat.py	/^def vcfProcessing(vcf_file, stat_file, ped_file, discord_geno_dict, hwe_file, gender_file):$/;"	f	language:Python

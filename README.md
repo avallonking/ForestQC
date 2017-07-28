@@ -27,7 +27,7 @@ First, we need to calculate ths statistics from vcf file. *It will output a file
  - If no pedigree file provided, the mendel errors of all variants will be NA
 
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py -i [input_vcf] -o [output_filename] -p [ped_file(optional)] -d [discordant_genotype_file(optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP]
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py -i [input_vcf] -o [output_filename] -g [gender_file(optional)] -p [ped_file(optional)] -d [discordant_genotype_file(optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP]
 ```
 
 You can check the usage of stat.py with
@@ -48,8 +48,15 @@ Third, we can train our random forest model and apply it on the classification o
 $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good_variants] [bad_variants] [grey_variants] [output_filename_suffix]
 ```
 
-### File format
- -Pedigree file(9 columns, tab separated)
+###File format
+ - Gender file(2 columns, tab separated. f for female, m for male):
+ ```sh
+ SampleID  Gender
+ 12312sd12  m
+ 4342sd423  f
+ ```
+
+ - Pedigree file(9 columns, tab separated)
  ```sh
  FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPID SampleID SeqID
  C1  2 3 4 m  1  xxx xxx xxx
