@@ -1,7 +1,6 @@
 # Random Forest Classifier
 
 This classifier uses random forest model to identify good or bad variants from grey variants.
-User can read the instruction in text format in doc/README
 
 ### Requirements
  - Software: python > 3.3
@@ -48,7 +47,7 @@ Third, we can train our random forest model and apply it on the classification o
 $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good_variants] [bad_variants] [grey_variants] [output_filename_suffix]
 ```
 
-###File format
+### File format
  - Gender file(2 columns, tab separated. f for female, m for male):
  ```sh
  SampleID  Gender
@@ -92,27 +91,33 @@ This approach can detect samples with abnormal mean and standard deviation of se
  - Packages(python): pandas, numpy
  - Packages(R): car
 
-The program will install R package for you automatically. To install the python packages
+To install python packages:
 ```sh
 $ pip3 install -r $YOUR_PATH/classifier/requirements.txt
 ```
 
+To install R packages:
+```sh
+$ R
+>>> install.packages("car")
+```
+
 ### Usage
-Sample usage is shown in ```sh ./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh``` and ```sh ./abnormal_sample_detection/scripts/outlier.detection.sh```. For simple usage, user can directly use these shell script for analysis on Hoffman2, but make sure to change some specific variables for your purpose. *Change the variables in these shell scripts:*
-  - ```sh ./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh```:
+Sample usage is shown in ```./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh``` and ```./abnormal_sample_detection/scripts/outlier.detection.sh```. For simple usage, user can directly use these shell script for analysis on Hoffman2, but make sure to change some specific variables for your purpose. *Change the variables in these shell scripts:*
+  - ```./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh```:
     - PATH for Hoffman2 log file (line 3)
     - Job array (line 6)
-    - $indexfile (line 13)
-    - $dir for vcf files (line 14)
-    - $file_prefix for the prefix shared by all vcf files (line 15)
-    - $outdir for the directory to store output files (line 16)
-    - $depth_stat_script for the PATH of '''sh poolDP.py''' (line 17)
-    - $abhet_stat_script for the PATH of '''sh calculate_sampleAB.py''' (line 18)
-  - ```sh ./abnormal_sample_detection/scripts/outlier.detection.sh```:
+    - ```$indexfile``` (line 13)
+    - ```$dir``` for vcf files (line 14)
+    - ```$file_prefix``` for the prefix shared by all vcf files (line 15)
+    - ```$outdir``` for the directory to store output files (line 16)
+    - ```$depth_stat_script``` for the PATH of '''poolDP.py''' (line 17)
+    - ```$abhet_stat_script``` for the PATH of '''calculate_sampleAB.py''' (line 18)
+  - ```./abnormal_sample_detection/scripts/outlier.detection.sh```:
     - PATH for Hoffman2 log file (line 3)
-    - $outdir for output directory
-    - $dp_file_list and $abhet_file_list for the file list of all intermediate output files (line 10 and 11)
-    - $find_outlier_abhet_script and $find_outlier_depth_script for the PATH of '''sh find_outlier_abhet.R''' and '''sh find_outlier_dp.R'''
+    - ```$outdir``` for output directory
+    - ```$dp_file_list``` and ```$abhet_file_list``` for the file list of all intermediate output files (line 10 and 11)
+    - ```$find_outlier_abhet_script``` and ```$find_outlier_depth_script``` for the PATH of '''sh find_outlier_abhet.R''' and '''sh find_outlier_dp.R'''
 
 For normal usage, please follow the 2 steps below:
   - Step1: Pool variants depth together into sliding windows of fixed size. And extract allele information from vcf files.
@@ -135,21 +140,29 @@ It will have temporary output and final output:
 
 ### File format
   - file list (files are separated by \n)
+  ```sh
   file1
   file2
   file3
+  ```
 
   - depth file (comma separated, region_size is the number of variants in that region):
+  ```sh
   ,sample1,sample2,sample3,region_size
   1,34.5,24.1,23.3,2423
   2,13,23,14.4,333
+  ```
 
   - abhet file (comma separated):
+  ```sh
   ,sample1,sample2,sample3
   ALT,325,2235,235
   REF,2342,1414,355
+  ```
 
   - final output (tab separated):
+  ```sh
            Mean  SD  ABHet
   sample1  24     8   0.4
   sample2  34     2   0.5
+  ```
