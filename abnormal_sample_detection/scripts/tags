@@ -1,0 +1,33 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+ab	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^ab = pd.DataFrame(sample_ab)$/;"	v	language:Python
+getDP	/u/home/k/k8688933/Jaehoon/scripts/depth_checking/poolDP.py	/^def getDP(sample_info):$/;"	f	language:Python
+getDP	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/abnormal_sample_detection/scripts/poolDP.py	/^def getDP(sample_info):$/;"	f	language:Python
+getSampleIdx	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def getSampleIdx(info_line, sample):$/;"	f	language:Python
+glob	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^import glob$/;"	i	language:Python
+gzip	/u/home/k/k8688933/Jaehoon/scripts/depth_checking/poolDP.py	/^import gzip$/;"	i	language:Python
+gzip	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/abnormal_sample_detection/scripts/poolDP.py	/^import gzip$/;"	i	language:Python
+gzip	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^import gzip$/;"	i	language:Python
+isHeterozygous	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def isHeterozygous(genotype):$/;"	f	language:Python
+isNotMissing	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def isNotMissing(genotype):$/;"	f	language:Python
+main	/u/home/k/k8688933/Jaehoon/scripts/depth_checking/poolDP.py	/^def main():$/;"	f	language:Python
+main	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/abnormal_sample_detection/scripts/poolDP.py	/^def main():$/;"	f	language:Python
+np	/u/home/k/k8688933/Jaehoon/scripts/depth_checking/poolDP.py	/^import numpy as np$/;"	i	language:Python
+np	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/abnormal_sample_detection/scripts/poolDP.py	/^import numpy as np$/;"	i	language:Python
+np	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^import numpy as np$/;"	i	language:Python
+os	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^import os$/;"	i	language:Python
+os	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^import os$/;"	i	language:Python
+outfile	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^outfile = sys.argv[2]$/;"	v	language:Python
+pd	/u/home/k/k8688933/Jaehoon/scripts/depth_checking/poolDP.py	/^import pandas as pd$/;"	i	language:Python
+pd	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/abnormal_sample_detection/scripts/poolDP.py	/^import pandas as pd$/;"	i	language:Python
+pd	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^import pandas as pd$/;"	i	language:Python
+sampleDP	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def sampleDP(vcf_list, sample):$/;"	f	language:Python
+sampleLevelAB	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def sampleLevelAB(vcf_list, subset = None):$/;"	f	language:Python
+sampleMissing	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def sampleMissing(vcf_list, sample, list_=None):$/;"	f	language:Python
+sample_ab	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^sample_ab = sampleLevelAB([vcf_file])$/;"	v	language:Python
+sample_ab_calculation	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def sample_ab_calculation(sample_allele):$/;"	f	language:Python
+scanVCF	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def scanVCF(dir, sample, subset=None):$/;"	f	language:Python
+selectedVariants	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/sample_level_vcf_stat.py	/^def selectedVariants(chr, pos, list_):$/;"	f	language:Python
+sys	/u/home/k/k8688933/Jaehoon/scripts/depth_checking/poolDP.py	/^import sys$/;"	i	language:Python
+sys	/u/scratch2/scratch1/k/k8688933/github_repo/classifier/abnormal_sample_detection/scripts/poolDP.py	/^import sys$/;"	i	language:Python
+sys	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^import sys$/;"	i	language:Python
+vcf_file	/u/scratch2/scratch1/k/k8688933/github_repo/depth_checking/scripts/calculate_sampleAB_only_good_variants.py	/^vcf_file = sys.argv[1]$/;"	v	language:Python

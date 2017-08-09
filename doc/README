@@ -41,6 +41,7 @@ Third, we can train our random forest model and apply it on the classification o
    SampleID  Gender
    12312sd12  m
    4342sd423  f
+   7hi987989  0     # Any samples whose gender is neither m nor f will be ignored
 
  - Pedigree file(9 columns, tab separated)
    FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPID SampleID SeqID

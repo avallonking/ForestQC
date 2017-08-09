@@ -14,16 +14,16 @@ def main():
   file_list = sys.argv[1:]
   gq = []
   dp = []
-  sample_idx = None
+  # sample_idx = None
   for file in file_list:
     f = gzip.open(file, 'rt') if 'gz' in file else open(file, 'r')
     for line in f:
       if not line.startswith('#'):
         variant_info = line
         individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
-        if not sample_idx:
-          sample_idx = random.sample(range(len(individual_info)), int(len(individual_info) / 10))
-        individual_info = itemgetter(*sample_idx)(individual_info)
+        # if not sample_idx:
+          # sample_idx = random.sample(range(len(individual_info)), int(len(individual_info) / 10))
+        # individual_info = itemgetter(*sample_idx)(individual_info)
         for idv in individual_info:
           idv_info = idv.split(':')
           if len(idv_info) < 4:

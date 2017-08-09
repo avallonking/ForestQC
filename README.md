@@ -1,4 +1,4 @@
-# Classifiers
+# Random Forest Classifier
 
 This classifier uses random forest model to identify good or bad variants from grey variants.
 User can read the instruction in text format in doc/README
@@ -54,6 +54,7 @@ $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good
  SampleID  Gender
  12312sd12  m
  4342sd423  f
+ 7hi987989  0     # Any samples whose gender is neither m nor f will be ignored
  ```
 
  - Pedigree file(9 columns, tab separated)
@@ -81,3 +82,74 @@ $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good
   RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom Good
   chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43  0.23  1 3 0.01  1.0 0.45  0.99  1
   ```
+
+# Sample-level QC
+
+This approach can detect samples with abnormal mean and standard deviation of sequencing depth, basd on the linear relationship between them. It can also find sample with extreme value of ABHet (0.4 <= ABHet <= 0.6 is consider as normal in default).
+
+### Requirements
+ - Software: python > 3.3, R >= 3.3.0
+ - Packages(python): pandas, numpy
+ - Packages(R): car
+
+The program will install R package for you automatically. To install the python packages
+```sh
+$ pip3 install -r $YOUR_PATH/classifier/requirements.txt
+```
+
+### Usage
+Sample usage is shown in ```sh ./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh``` and ```sh ./abnormal_sample_detection/scripts/outlier.detection.sh```. For simple usage, user can directly use these shell script for analysis on Hoffman2, but make sure to change some specific variables for your purpose. *Change the variables in these shell scripts:*
+  - ```sh ./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh```:
+    - PATH for Hoffman2 log file (line 3)
+    - Job array (line 6)
+    - $indexfile (line 13)
+    - $dir for vcf files (line 14)
+    - $file_prefix for the prefix shared by all vcf files (line 15)
+    - $outdir for the directory to store output files (line 16)
+    - $depth_stat_script for the PATH of '''sh poolDP.py''' (line 17)
+    - $abhet_stat_script for the PATH of '''sh calculate_sampleAB.py''' (line 18)
+  - ```sh ./abnormal_sample_detection/scripts/outlier.detection.sh```:
+    - PATH for Hoffman2 log file (line 3)
+    - $outdir for output directory
+    - $dp_file_list and $abhet_file_list for the file list of all intermediate output files (line 10 and 11)
+    - $find_outlier_abhet_script and $find_outlier_depth_script for the PATH of '''sh find_outlier_abhet.R''' and '''sh find_outlier_dp.R'''
+
+For normal usage, please follow the 2 steps below:
+  - Step1: Pool variants depth together into sliding windows of fixed size. And extract allele information from vcf files.
+  ```sh
+  $ python3 ./abnormal_sample_detection/scripts/poolDP.py [vcf_file] [output_file] [window_size]
+  $ python3 ./abnormal_sample_detection/scripts/calculate_sampleAB.py [vcf_file] [output_file]
+  ```
+  - Step2: Find outlier samples from mean and sd of depth, and ABHet.
+  ```sh
+  $ Rscript ./abnormal_sample_detection/scripts/find_outlier_dp.R [dp_file_list] [output_file] [png_file]
+  $ Rscript ./abnormal_sample_detection/scripts/find_outlier_abhet.R [abhet_file_list] [output_file]
+  ```
+
+### Output
+It will have temporary output and final output:
+ - Temporary output:
+   CSV files with depth information and CSV files with alllele counts.
+ - Final ouput:
+   TSV files with Mean, SD of depth and ABHet for each sample (need to concatenate output from 2 R programs with command paste). And a png file with a linear regression plot of Mean and SD, where outliers are labeled as red points.
+
+### File format
+  - file list (files are separated by \n)
+  file1
+  file2
+  file3
+
+  - depth file (comma separated, region_size is the number of variants in that region):
+  ,sample1,sample2,sample3,region_size
+  1,34.5,24.1,23.3,2423
+  2,13,23,14.4,333
+
+  - abhet file (comma separated):
+  ,sample1,sample2,sample3
+  ALT,325,2235,235
+  REF,2342,1414,355
+
+  - final output (tab separated):
+           Mean  SD  ABHet
+  sample1  24     8   0.4
+  sample2  34     2   0.5
