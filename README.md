@@ -120,7 +120,7 @@ Sample usage is shown in ```./abnormal_sample_detection/scripts/sample.dp.abhet.
     - ```$find_outlier_abhet_script``` and ```$find_outlier_depth_script``` for the PATH of '''sh find_outlier_abhet.R''' and '''sh find_outlier_dp.R'''
 
 For normal usage, please follow the 2 steps below:
-  - Step1: Pool variants depth together into sliding windows of fixed size. And extract allele information from vcf files.
+  - Step1: Pool variants depth together into sliding windows of fixed size. And extract allele information from vcf files. **It is better to ignore chromosome X**.
   ```sh
   $ python3 ./abnormal_sample_detection/scripts/poolDP.py [vcf_file] [output_file] [window_size]
   $ python3 ./abnormal_sample_detection/scripts/calculate_sampleAB.py [vcf_file] [output_file]

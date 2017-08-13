@@ -3,10 +3,9 @@
 #$ -o /u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc/log/dp.abhet.stat.out
 #$ -j y
 #$ -m n
-#$ -t 1-305:1
-# -l h_data=10G,h_rt=24:00:00,highp
-#$ -l h_data=10G,h_rt=12:30:00,highp
-#$ -q eeskin_pod_16.q,eeskin_pod_12.q
+#$ -t 1-289:1
+#$ -l h_data=3G,h_rt=6:00:00
+# -q eeskin_pod_16.q,eeskin_pod_12.q
 
 region=`expr $SGE_TASK_ID - 1`
 window_size=10000

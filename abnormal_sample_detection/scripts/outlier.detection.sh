@@ -1,9 +1,9 @@
 #$ -N outlier
 #$ -cwd
-#$ -o /u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc/test/log/outlier.detection.out
+#$ -o /u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc/log/outlier.detection.out
 #$ -j y
 #$ -m n
-#$ -l h_data=20G,h_rt=5:00:00,highp
+#$ -l h_data=50G,h_rt=5:00:00,highp
 #$ -q eeskin_pod_16.q,eeskin_pod_12.q
 
 outdir=/u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc

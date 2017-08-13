@@ -248,7 +248,10 @@ def getHWE_Direct(hwe_file):
         info = line.strip().split('\t')
         snp = info[0]
         hwe = info[1]
-        hwe_dict[snp] = float(hwe)
+        try:
+          hwe_dict[snp] = float(hwe)
+        except ValueError:
+          continue
   except TypeError:
     pass
   return hwe_dict
