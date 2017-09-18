@@ -3,7 +3,7 @@
 #$ -o /u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc/log/dp.abhet.stat.out
 #$ -j y
 #$ -m n
-#$ -t 1-289:1
+#$ -t 1-288:1
 #$ -l h_data=3G,h_rt=6:00:00
 # -q eeskin_pod_16.q,eeskin_pod_12.q
 

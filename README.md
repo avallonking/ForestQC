@@ -14,7 +14,13 @@ $ pip3 install -r $YOUR_PATH/classifier/requirements.txt
 ### Workflow
 Before doing the classification, we should set the Outlier_GQ and Outlier_DP. It would print out Outlier_DP and Outlier_GQ on the screen, which would be used as inputs in the next step. *Note that all vcf files in this analysis should be included.*
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/setOutlier.py [vcf_file1] [vcf_file2] [...]
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/scripts/setOutlier.py [vcf_file1] [vcf_file2] [...]
+```
+
+If you use other reference genome other than hg19, please use our script to generate a GC content table for your reference genome. Otherwise, we have prepared hg19 GC content table in ```$YOUR_PATH/classifier/support_files/gc_content_hg19.tsv``` and you can directly use it.
+```sh
+# generate GC content table for your reference genome
+python3 $YOUR_PATH/classifier/random_forest_classifier/scripts/get_ref_genome_GC.py [ref_genome.fasta] [output_file]
 ```
 
 Then go to vcf_stat.py, set Outlier_DP and Outlier_GQ given by the previous step, respectively.
@@ -26,25 +32,25 @@ First, we need to calculate ths statistics from vcf file. *It will output a file
  - If no pedigree file provided, the mendel errors of all variants will be NA
 
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py -i [input_vcf] -o [output_filename] -g [gender_file(optional)] -p [ped_file(optional)] -d [discordant_genotype_file(optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP]
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/scripts/stat.py -i [input_vcf] -o [output_filename] -c [gc_content_file] -g [gender_file(optional)] -p [ped_file(optional)] -d [discordant_genotype_file(optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP]
 ```
 
 You can check the usage of stat.py with
 
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/stat.py -h
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/scripts/stat.py -h
 ```
 
 Second, we need to divide the dataset into good, bad and grey variants. User can easily change the thresholds and output filename in the source. *The output files would be three: good.xx, bad.xx and grey.xx.* **Note that you don't have to merge the input file together**
 
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/data_preprocessing.py [input_file] [output_filename_suffix (optional)]
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/scripts/data_preprocessing.py [input_file] [output_filename_suffix (optional)]
 ```
 
 Third, we can train our random forest model and apply it on the classification of grey variants. *The output files would be predicted_good_xx and predictred_bad_xx.* **Note that you need to merge all good variants into one file, all bad variants into one file and all grey variants into one file**
 
 ```sh
-$ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good_variants] [bad_variants] [grey_variants] [output_filename_suffix]
+$ python3 $YOUR_PATH/classifier/random_forest_classifier/scripts/classification.py [good_variants] [bad_variants] [grey_variants] [output_filename_suffix]
 ```
 
 ### File format
@@ -78,8 +84,8 @@ $ python3 $YOUR_PATH/classifier/random_forest_classifier/classification.py [good
 
  - Result file (The variant is a good variant if Good = 1, or a bad variant if Good = 0, grey variants do not have Good column before it is predicted)
   ```sh
-  RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom Good
-  chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43  0.23  1 3 0.01  1.0 0.45  0.99  1
+  RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC Good
+  chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43  0.23  1 3 0.01  1.0 0.45  0.99 0.435  1
   ```
 
 # Sample-level QC
@@ -89,7 +95,7 @@ This approach can detect samples with abnormal mean and standard deviation of se
 ### Requirements
  - Software: python > 3.3, R >= 3.3.0
  - Packages(python): pandas, numpy
- - Packages(R): car
+ - Packages(R): car, data.table
 
 To install python packages:
 ```sh
@@ -99,7 +105,7 @@ $ pip3 install -r $YOUR_PATH/classifier/requirements.txt
 To install R packages:
 ```sh
 $ R
->>> install.packages("car")
+>>> install.packages(c("car", "data.table"))
 ```
 
 ### Usage

@@ -3,7 +3,7 @@
 #$ -o /u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc/log/outlier.detection.out
 #$ -j y
 #$ -m n
-#$ -l h_data=50G,h_rt=5:00:00,highp
+#$ -l h_data=10G,h_rt=5:00:00,highp
 #$ -q eeskin_pod_16.q,eeskin_pod_12.q
 
 outdir=/u/scratch2/k/k8688933/github_repo/classifier/tests/sample_level_qc
@@ -25,5 +25,3 @@ ls $outdir/*.dp.csv > $dp_file_list
 
 Rscript $find_outlier_depth_script $dp_file_list $output_dp $picfile
 Rscript $find_outlier_abhet_script $abhet_file_list $output_abhet
-paste $output_dp $output_abhet > $output
-rm $output_abhet $output_dp
