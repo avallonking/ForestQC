@@ -41,9 +41,6 @@ def vcfProcessing(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe
           rsid = chr + ':' + pos
           maf = getMAF(line2, target_idx=female_idx, chr=chr)
 
-          if maf == 'NA':
-            continue
-
           mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq = statDPGQ(line2, dp_threshold=dp_threshold, gq_threshold=gq_threshold, chr=chr, target_idx=female_idx)
           discordant_geno = getDiscordantGenotype(line2, discord_geno_dict)
           mendel_error = getMendel(line2, sample_list=sample_list, relationship=relationship, chr=chr, male_list=male_list)

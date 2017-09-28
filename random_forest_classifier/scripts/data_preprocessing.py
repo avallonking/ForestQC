@@ -138,6 +138,7 @@ def separateDataC(variants):
 def preprocessing(data):
   columns = ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC']
   data.columns = columns
+  data.loc[data['MAF'].isnull(), 'MAF'] = data['MAF'].median()
   data.loc[data['Mean_DP'].isnull(), 'Mean_DP'] = data['Mean_DP'].median()
   data.loc[data['Mean_GQ'].isnull(), 'Mean_GQ'] = data['Mean_GQ'].median()
   data.loc[data['SD_DP'].isnull(), 'SD_DP'] = data['SD_DP'].median()
