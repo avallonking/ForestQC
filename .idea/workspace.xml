@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/__pycache__/vcf_stat.cpython-36.pyc.140183902087856" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/classification.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/data_preprocessing.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/get_ref_genome_GC.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/indel_ratio.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/main.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/setOutlier.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/stat.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/tags" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/ti_tv_stat.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/scripts/vcf_stat.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/support_files/gc_content_hg19.tsv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/random_forest_classifier/tags" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
