@@ -2,46 +2,47 @@
 # dataset into 3 datasets containing good variants, bad variants and grey variants, respectively.
 
 import pandas as pd
-import sys
+import os
+
+# deprecated
+# def separateDataA(variants):
+#     # input: all variants with statistics, a pandas dataframe
+#     # output: good, bad and grey variants
+#
+#     # columns names
+#     columns = ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC']
+#     variants.columns = columns
+#
+#     # good variants
+#     good = variants[~(variants['Mendel_Error'] > 0)]
+#     good = good[good['Missing_Rate'] < 0.005]
+#     good = good[good['HWE'] > 0.01]
+#     good = good[~(good['Discordant_Geno'] > 1)]
+#     good['Good'] = 1
+#
+#     # bad variants
+#     rare_variants = variants[variants['MAF'] < 0.03]
+#     common_variants = variants[variants['MAF'] >= 0.03]
+#     rare_bad = rare_variants[~(rare_variants['Mendel_Error'] <= 3)]
+#     rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= 6)]
+#     rare_bad = rare_bad[rare_bad['Missing_Rate'] > 0.02]
+#     rare_bad = rare_bad[rare_bad['HWE'] < 5e-3]
+#     common_bad = common_variants[~(common_variants['Mendel_Error'] <= 5)]
+#     common_bad = common_bad[~(common_bad['Discordant_Geno'] <= 6)]
+#     common_bad = common_bad[common_bad['Missing_Rate'] > 0.03]
+#     common_bad = common_bad[common_bad['HWE'] < 5e-4]
+#
+#     bad = pd.concat([rare_bad, common_bad])
+#     bad.drop_duplicates(inplace=True)
+#     bad['Good'] = 0
+#
+#     # grey variants
+#     grey = variants[~variants['RSID'].isin(good['RSID'])]
+#     grey = grey[~grey['RSID'].isin(bad['RSID'])]
+#
+#     return good, bad, grey
 
 def separateDataA(variants):
-    # input: all variants with statistics, a pandas dataframe
-    # output: good, bad and grey variants
-
-    # columns names
-    columns = ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC']
-    variants.columns = columns
-
-    # good variants
-    good = variants[~(variants['Mendel_Error'] > 0)]
-    good = good[good['Missing_Rate'] < 0.005]
-    good = good[good['HWE'] > 0.01]
-    good = good[~(good['Discordant_Geno'] > 1)]
-    good['Good'] = 1
-
-    # bad variants
-    rare_variants = variants[variants['MAF'] < 0.03]
-    common_variants = variants[variants['MAF'] >= 0.03]
-    rare_bad = rare_variants[~(rare_variants['Mendel_Error'] <= 3)]
-    rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= 6)]
-    rare_bad = rare_bad[rare_bad['Missing_Rate'] > 0.02]
-    rare_bad = rare_bad[rare_bad['HWE'] < 5e-3]
-    common_bad = common_variants[~(common_variants['Mendel_Error'] <= 5)]
-    common_bad = common_bad[~(common_bad['Discordant_Geno'] <= 6)]
-    common_bad = common_bad[common_bad['Missing_Rate'] > 0.03]
-    common_bad = common_bad[common_bad['HWE'] < 5e-4]
-
-    bad = pd.concat([rare_bad, common_bad])
-    bad.drop_duplicates(inplace=True)
-    bad['Good'] = 0
-
-    # grey variants
-    grey = variants[~variants['RSID'].isin(good['RSID'])]
-    grey = grey[~grey['RSID'].isin(bad['RSID'])]
-
-    return good, bad, grey
-
-def separateDataB(variants):
     # input: all variants with statistics, a pandas dataframe
     # output: good, bad and grey variants
 
@@ -88,7 +89,7 @@ def separateDataB(variants):
 
     return good, bad, grey
 
-def separateDataC(variants):
+def separateDataB(variants):
     # input: all variants with statistics, a pandas dataframe
     # output: good, bad and grey variants
 
@@ -148,9 +149,9 @@ def preprocessing(data):
   data.loc[data['GC'].isnull(), 'GC'] = data['GC'].median()
   return data
 
-def main():
-  input_file = sys.argv[1]
-  output_file = sys.argv[2] if len(sys.argv) > 2 else input_file.split('/')[-1]
+def executeSplit(input_file, output_file, model):
+  if not output_file:
+      output_file = input_file.split('/')[-1]
   try:
     print('Loading data...')
     data = pd.read_table(input_file, header=None)
@@ -161,17 +162,18 @@ def main():
 
   print('Data processing...')
   data = preprocessing(data)
-  good, bad, grey = separateDataC(data)
+
+  model_selection = {'A': separateDataA, 'B': separateDataB}
+  good, bad, grey = model_selection[model](data)
+
   print('Done.')
   print('Good variants: ' + str(good.shape[0]))
   print('Bad variants: ' + str(bad.shape[0]))
   print('Grey variants: ' + str(grey.shape[0]))
 
   print('\nWriting data...')
-  good.to_csv('good.' + output_file, index=False, header=False, sep='\t', na_rep='NA')
-  bad.to_csv('bad.' + output_file, index=False, header=False, sep='\t', na_rep='NA')
-  grey.to_csv('grey.' + output_file, index=False, header=False, sep='\t', na_rep='NA')
+  dir = os.path.dirname(input_file)
+  good.to_csv(dir + '/' + 'good.' + output_file, index=False, header=False, sep='\t', na_rep='NA')
+  bad.to_csv(dir + '/' + 'bad.' + output_file, index=False, header=False, sep='\t', na_rep='NA')
+  grey.to_csv(dir + '/' + 'grey.' + output_file, index=False, header=False, sep='\t', na_rep='NA')
   print('Done.')
-
-if __name__ == '__main__':
-  main()

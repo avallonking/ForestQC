@@ -1,17 +1,14 @@
-import sys
 import gzip
 import numpy as np
 import random
 from operator import itemgetter
 
-DP_GQ_START_IDX = 9
-DP_IDX = 2
-GQ_IDX = 3
-DP_THRESHOLD = 0
-GQ_THRESHOLD = 0
-
-def main():
-  file_list = sys.argv[1:]
+def setOutlier(file_list):
+  DP_GQ_START_IDX = 9
+  DP_IDX = 2
+  GQ_IDX = 3
+  DP_THRESHOLD = 0
+  GQ_THRESHOLD = 0
   gq = []
   dp = []
   # sample_idx = None
@@ -39,6 +36,3 @@ def main():
   GQ_THRESHOLD = np.percentile(gq, 25, interpolation = 'lower')
   print('Outlier_DP: ' + str(DP_THRESHOLD))
   print('Outlier_GQ: ' + str(GQ_THRESHOLD))
-
-if __name__ == '__main__':
-  main()

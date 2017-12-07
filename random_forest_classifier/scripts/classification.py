@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import precision_recall_fscore_support
 import pandas as pd
-import sys
+import os
 
 def random_forest_classifierB(labelled_data, grey_variants):
     # input: a dataset that has balanced sample size of good and bad variants
@@ -40,7 +40,7 @@ def random_forest_classifierB(labelled_data, grey_variants):
     return y_pred
 
 # deprecated
-def random_forest_classifierAC(labelled_data, grey_variants):
+def random_forest_classifierA(labelled_data, grey_variants):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
     x, y = labelled_data.loc[:, ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']].values, labelled_data.loc[:, 'Good'].values
@@ -73,23 +73,20 @@ def random_forest_classifierAC(labelled_data, grey_variants):
 
     return y_pred
 
-def classification(good, bad, grey):
+def classification(good, bad, grey, model = 'A'):
+  rf_model = {'A': random_forest_classifierA, 'B': random_forest_classifierB}
   if good.shape[0] > bad.shape[0]:
-    prediction = random_forest_classifierAC(pd.concat([good.sample(n=bad.shape[0],random_state=9), bad]), grey)
+    prediction = rf_model[model](pd.concat([good.sample(n=bad.shape[0],random_state=9), bad]), grey)
   elif good.shape[0] == bad.shape[0]:
-    prediction = random_forest_classifierAC(pd.concat([good, bad]), grey)
+    prediction = rf_model[model](pd.concat([good, bad]), grey)
   else:
-    prediction = random_forest_classifierAC(pd.concat([bad.sample(n=good.shape[0],random_state=9), good]), grey)
+    prediction = rf_model[model](pd.concat([bad.sample(n=good.shape[0],random_state=9), good]), grey)
 
   return prediction
 
 
-def main():
-  good_variants = sys.argv[1]
-  bad_variants = sys.argv[2]
-  grey_variants = sys.argv[3]
-  output_handle = sys.argv[4] if len(sys.argv) >= 5 else 'variants.tsv'
-
+def executeClassification(good_variants, bad_variants, grey_variants, model = 'A', output_handle = 'variants.tsv'):
+  dir = os.path.dirname(good_variants)
   print('Loading data...')
   good = pd.read_table(good_variants, header=None)
   bad = pd.read_table(bad_variants, header=None)
@@ -101,7 +98,7 @@ def main():
   grey.columns = columns2
   print('Done.')
 
-  pred = classification(good, bad, grey)
+  pred = classification(good, bad, grey, model)
   grey['Good'] = pred
   
   predicted_good = grey[grey['Good'] == 1]
@@ -111,9 +108,6 @@ def main():
   print('Number of predicted bad variants: ' + str(predicted_bad.shape[0]))
 
   print('\nWriting data...')
-  predicted_good.to_csv('predicted_good.' + output_handle, index = False, sep = '\t', na_rep='NA')
-  predicted_bad.to_csv('predicted_bad.' + output_handle, index = False, sep = '\t', na_rep='NA')
+  predicted_good.to_csv(dir + '/' + 'predicted_good.' + output_handle, index = False, sep = '\t', na_rep='NA')
+  predicted_bad.to_csv(dir + '/' + 'predicted_bad.' + output_handle, index = False, sep = '\t', na_rep='NA')
   print('Done.')
-
-if __name__ == '__main__':
-  main()

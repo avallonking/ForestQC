@@ -58,42 +58,39 @@ def vcfProcessing(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe
     o.close()
     f.close()
 
-def main():
-    # target_file: the vcf file for processing
-    # stat_file: the output filename
-    # ped_file: the pedigree file
-    # discord_geno_file: the file that has the information about discordant genotype
-    # DP_THRESHOLD: depth threshold for the calculation of Outlier_DP
-    # GQ_THRESHOLD: genotype quality threshold for the calculation of Outlier_GQ
-    parser = argparse.ArgumentParser(description='Calculate statistics for one vcf file')
-    parser.add_argument('-i', '--input', dest='target_file', help='Input vcf or vcf.gz file')
-    parser.add_argument('-o', '--output', dest='stat_file', help='Output file name')
-    parser.add_argument('-c', '--gc', dest='gc_file', help='GC content of reference genome')
-    parser.add_argument('-p', '--ped', dest='ped_file', default=None, help='Pedigree file [optional]')
-    parser.add_argument('-d', '--discord_geno_file', dest='discord_geno_file', default=None, help='Discordant genotype file [optional]')
-    parser.add_argument('-w', '--hwe', dest='hwe_file', default=None, help='HWE p-value file [optional]')
-    parser.add_argument('-g', '--gender', dest='gender_info', default=None, help='Infomation about gender of each individual [optional]')
-    parser.add_argument('--dp', dest='dp', default=34, type=float, help='Depth threshold, default = 34')
-    parser.add_argument('--gq', dest='gq', default=99, type=float, help='Genotype quality threshold, default = 99')
-    args = parser.parse_args()
-
-    target_file = args.target_file
-    stat_file = args.stat_file
-    gc_file = args.gc_file
-    ped_file = args.ped_file
-    discord_geno_file = args.discord_geno_file
-    hwe_file = args.hwe_file
-    gender_file = args.gender_info
-
-    global dp_threshold, gq_threshold
-    dp_threshold = args.dp
-    gq_threshold = args.gq
-
-    # discordant genotype file processing
-    discord_geno_dict = getDiscordInfo(discord_geno_file)
-
-    # vcf file processing and data recording
-    vcfProcessing(target_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file)
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     # target_file: the vcf file for processing
+#     # stat_file: the output filename
+#     # ped_file: the pedigree file
+#     # discord_geno_file: the file that has the information about discordant genotype
+#     # DP_THRESHOLD: depth threshold for the calculation of Outlier_DP
+#     # GQ_THRESHOLD: genotype quality threshold for the calculation of Outlier_GQ
+#     parser = argparse.ArgumentParser(description='Calculate statistics for one vcf file')
+#     parser.add_argument('-i', '--input', dest='target_file', help='Input vcf or vcf.gz file')
+#     parser.add_argument('-o', '--output', dest='stat_file', help='Output file name')
+#     parser.add_argument('-c', '--gc', dest='gc_file', help='GC content of reference genome')
+#     parser.add_argument('-p', '--ped', dest='ped_file', default=None, help='Pedigree file [optional]')
+#     parser.add_argument('-d', '--discord_geno_file', dest='discord_geno_file', default=None, help='Discordant genotype file [optional]')
+#     parser.add_argument('-w', '--hwe', dest='hwe_file', default=None, help='HWE p-value file [optional]')
+#     parser.add_argument('-g', '--gender', dest='gender_info', default=None, help='Infomation about gender of each individual [optional]')
+#     parser.add_argument('--dp', dest='dp', default=34, type=float, help='Depth threshold, default = 34')
+#     parser.add_argument('--gq', dest='gq', default=99, type=float, help='Genotype quality threshold, default = 99')
+#     args = parser.parse_args()
+#
+#     target_file = args.target_file
+#     stat_file = args.stat_file
+#     gc_file = args.gc_file
+#     ped_file = args.ped_file
+#     discord_geno_file = args.discord_geno_file
+#     hwe_file = args.hwe_file
+#     gender_file = args.gender_info
+#
+#     global dp_threshold, gq_threshold
+#     dp_threshold = args.dp
+#     gq_threshold = args.gq
+#
+#     # discordant genotype file processing
+#     discord_geno_dict = getDiscordInfo(discord_geno_file)
+#
+#     # vcf file processing and data recording
+#     vcfProcessing(target_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file)
