@@ -1,19 +1,18 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
 config = {
-    'description': 'Random forest classification on good/bad variants from vcf files',
-    'author': 'Albert Lee',
+    'description': 'ForestQC: Random forest classifier for variant quality control',
+    'author': 'Jiajin Li (Albert Lee)',
     'url': 'None',
-    'download_url': 'None',
+    'download_url': 'https://github.com/avallonking/ForestQC',
     'author_email': 'lijj36@ucla.edu',
-    'version': 'alpha',
-    'install_requires': ['nose','pandas','numpy','sklearn'],
-    'packages': ['machine_learning_project'],
+    'version': '0.1.0',
+    'install_requires': ['pandas','numpy','scikit-learn'],
+    'packages': ['ForestQC'],
     'scripts': [],
-    'name': 'variants_classifier'
+    'setup_requires': [],
+    'entry_points': {'console_scripts': ['ForestQC = ForestQC.__main__:main']},
+    'name': 'ForestQC'
 }
 
 setup(**config)
