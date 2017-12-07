@@ -1,4 +1,4 @@
-# Random Forest Classifier
+# ForestQC
 
 This classifier uses random forest model to identify good or bad variants from grey variants.
 
