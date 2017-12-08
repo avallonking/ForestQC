@@ -1,9 +1,8 @@
 import argparse
-from stat import *
-from vcf_stat import *
-from data_preprocessing import *
-from classification import *
-from setOutlier import *
+from ForestQC.stat import *
+from ForestQC.data_preprocessing import *
+from ForestQC.classification import *
+from ForestQC.setOutlier import *
 
 def parse_args():
     # parse arguments
@@ -47,7 +46,7 @@ def parse_args():
                                  help='the latter part of output filename [optional]. default: variants.tsv')
 
     # arguments for set outlier_gq and outlier_dp
-    setOutlier_parser = subparsers.add_parser('setOutlier', help='set outlier help')
+    setOutlier_parser = subparsers.add_parser('set_outlier', help='set outlier help')
     setOutlier_parser_required = setOutlier_parser.add_argument_group('required arguments')
     setOutlier_parser_required.add_argument('-i', '--input', required=True, dest='file_list',
                                             help='input file(s). please separate the files with comma if there'
@@ -57,7 +56,7 @@ def parse_args():
     command = args.pop('command', None)
     return command, args
 
-def main_setOutlier(**kwargs):
+def main_set_outlier(**kwargs):
     file_list = kwargs['file_list'].split(',')
     setOutlier(file_list)
 
@@ -69,15 +68,13 @@ def main_stat(**kwargs):
     discord_geno_file = kwargs['discord_geno_file']
     hwe_file = kwargs['hwe_file']
     gender_file = kwargs['gender_info']
-
-    global dp_threshold, gq_threshold
-    dp_threshold = kwargs['dp']
-    gq_threshold = kwargs['gq']
+    dp = kwargs['dp']
+    gq = kwargs['gq']
 
     # discordant genotype file processing
-    discord_geno_dict = getDiscordInfo(discord_geno_file)
+    discord_geno_dict = get_discord_info(discord_geno_file)
     # vcf file processing and data recording
-    vcfProcessing(target_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file)
+    vcf_process(target_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file, dp, gq)
 
 def main_split(**kwargs):
     input_file = kwargs['raw_stat_file']
@@ -95,7 +92,7 @@ def main_classify(**kwargs):
 
 def main():
     command_functions = {'stat': main_stat, 'split': main_split, 'classify': main_classify,
-                         'setOutlier': main_setOutlier}
+                         'setOutlier': main_set_outlier}
     command, args = parse_args()
     command_functions[command](**args)
 

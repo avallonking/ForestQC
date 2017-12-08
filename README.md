@@ -2,13 +2,10 @@
 
 This classifier uses random forest model to identify good or bad variants from grey variants.
 
-### Requirements
- - Software: python > 3.3
- - Packages: scikit-learn, pandas, numpy
-
+### Installation
 To install the packages
 ```sh
-$ pip3 install -r $YOUR_PATH/classifier/requirements.txt
+$ conda install forestqc -c avallonking
 ```
 
 ### Workflow
