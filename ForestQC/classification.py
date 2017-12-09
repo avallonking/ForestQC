@@ -106,6 +106,6 @@ def execute_classification(good_variants, bad_variants, grey_variants, model, ou
   print('Number of predicted bad variants: ' + str(predicted_bad.shape[0]))
 
   print('\nWriting data...')
-  predicted_good.to_csv(dir + '/' + 'predicted_good.' + output_handle, index = False, sep = '\t', na_rep='NA')
-  predicted_bad.to_csv(dir + '/' + 'predicted_bad.' + output_handle, index = False, sep = '\t', na_rep='NA')
+  predicted_good.to_csv(dir + '/' + 'predicted_good.' + output_handle, header=None, index = False, sep = '\t', na_rep='NA')
+  predicted_bad.to_csv(dir + '/' + 'predicted_bad.' + output_handle, header=None, index = False, sep = '\t', na_rep='NA')
   print('Done.')

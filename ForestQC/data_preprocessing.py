@@ -159,6 +159,8 @@ def preprocessing(data, user_feature_names):
     data.loc[data['SD_GQ'].isnull(), 'SD_GQ'] = data['SD_GQ'].median()
     data.loc[data['Outlier_DP'].isnull(), 'Outlier_DP'] = data['Outlier_DP'].median()
     data.loc[data['Outlier_GQ'].isnull(), 'Outlier_GQ'] = data['Outlier_GQ'].median()
+    data.loc[data['ABHom'].isnull(), 'ABHom'] = data['ABHom'].median()
+    data.loc[data['ABHet'].isnull(), 'ABHet'] = data['ABHet'].median()
     data.loc[data['GC'].isnull(), 'GC'] = data['GC'].median()
     return data
 

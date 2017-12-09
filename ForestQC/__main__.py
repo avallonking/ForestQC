@@ -63,8 +63,7 @@ def parse_args():
                                  help='the latter part of output filename [optional]. default: variants.tsv')
     classify_parser.add_argument('-af', '--additional_features', dest='user_features', default=None, required=False,
                                  help='names of additional user-defined features used in the model, '
-                                      'can be a tab-separated text file or a comma-separated string. if user-defined '
-                                      'features are included in statistics files, this option is required.')
+                                      'can be a tab-separated text file or a comma-separated string.')
 
     # arguments for set outlier_gq and outlier_dp
     set_outlier_parser = subparsers.add_parser('set_outlier', help='set outlier help')
