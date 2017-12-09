@@ -3,7 +3,7 @@ import numpy as np
 import random
 from operator import itemgetter
 
-def setOutlier(file_list):
+def set_outlier(file_list):
   DP_GQ_START_IDX = 9
   DP_IDX = 2
   GQ_IDX = 3

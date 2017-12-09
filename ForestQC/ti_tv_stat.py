@@ -1,9 +1,9 @@
+# This tool is deprecated
 # only use with a whole vcf file
 # input file can be vcf or vcf.gz files
 
 import sys
 import gzip
-
 def getTiTv(vcf_file):
   ti_count = 0.0
   tv_count = 0.0

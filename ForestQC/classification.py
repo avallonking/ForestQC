@@ -6,10 +6,15 @@ from sklearn.metrics import precision_recall_fscore_support
 import pandas as pd
 import os
 
-def random_forest_classifierB(labelled_data, grey_variants):
+def random_forest_classifierB(labelled_data, grey_variants, user_features):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
-    x, y = labelled_data.loc[:, ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']].values, labelled_data.loc[:, 'Good'].values
+    try:
+        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC'] + \
+                    user_features
+    except TypeError:
+        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']
+    x, y = labelled_data.loc[:, _features].values, labelled_data.loc[:, 'Good'].values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20,random_state=1)
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
 
@@ -18,9 +23,8 @@ def random_forest_classifierB(labelled_data, grey_variants):
     print('Done.\n')
 
     weights = rf.feature_importances_
-    features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']
     print('Feature','Weight')
-    for feature, weight in zip(features, weights):
+    for feature, weight in zip(_features, weights):
       print(feature, weight)
 
     print('\nTesting model...')
@@ -32,29 +36,33 @@ def random_forest_classifierB(labelled_data, grey_variants):
     print('F1-score: ' + str(precison_recall[2]))
     print('Sample size: ' + str(precison_recall[3]))
     
-    x_pred = grey_variants.loc[:, ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']].values
+    x_pred = grey_variants.loc[:, _features].values
     print('\nPredicting variants...')
     y_pred = rf.predict(x_pred)
     print('Done.\n')
 
     return y_pred
 
-# deprecated
-def random_forest_classifierA(labelled_data, grey_variants):
+# just a second choice
+def random_forest_classifierA(labelled_data, grey_variants, user_features):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
-    x, y = labelled_data.loc[:, ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']].values, labelled_data.loc[:, 'Good'].values
+
+    try:
+        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC'] + user_features
+    except TypeError:
+        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
+
+    x, y = labelled_data.loc[:, _features].values, labelled_data.loc[:, 'Good'].values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20,random_state=1)
-    # pipeline = Pipeline([('scl', StandardScaler()), ('rf', RandomForestClassifier(random_state=1,n_jobs=8,n_estimators=10))])
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
     print('\nTraining model...')
     rf.fit(x_train, y_train)
     print('Done.\n')
 
     weights = rf.feature_importances_
-    features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
     print('Feature','Weight')
-    for feature, weight in zip(features, weights):
+    for feature, weight in zip(_features, weights):
       print(feature, weight)
 
     print('\nTesting model...')
@@ -66,39 +74,34 @@ def random_forest_classifierA(labelled_data, grey_variants):
     print('F1-score: ' + str(precison_recall[2]))
     print('Sample size: ' + str(precison_recall[3]))
 
-    x_pred = grey_variants.loc[:, ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']].values
+    x_pred = grey_variants.loc[:, _features].values
     print('\nPredicting variants...')
     y_pred = rf.predict(x_pred)
     print('Done.')
 
     return y_pred
 
-def classification(good, bad, grey, model = 'A'):
+def classification(good, bad, grey, model, user_features):
   rf_model = {'A': random_forest_classifierA, 'B': random_forest_classifierB}
   if good.shape[0] > bad.shape[0]:
-    prediction = rf_model[model](pd.concat([good.sample(n=bad.shape[0],random_state=9), bad]), grey)
+    prediction = rf_model[model](pd.concat([good.sample(n=bad.shape[0],random_state=9), bad]), grey, user_features)
   elif good.shape[0] == bad.shape[0]:
-    prediction = rf_model[model](pd.concat([good, bad]), grey)
+    prediction = rf_model[model](pd.concat([good, bad]), grey, user_features)
   else:
-    prediction = rf_model[model](pd.concat([bad.sample(n=good.shape[0],random_state=9), good]), grey)
+    prediction = rf_model[model](pd.concat([bad.sample(n=good.shape[0],random_state=9), good]), grey, user_features)
 
   return prediction
 
 
-def executeClassification(good_variants, bad_variants, grey_variants, model = 'A', output_handle = 'variants.tsv'):
-  dir = os.path.dirname(good_variants)
+def execute_classification(good_variants, bad_variants, grey_variants, model, output_handle, user_features):
+  dir = os.path.dirname(os.path.realpath(good_variants))
   print('Loading data...')
-  good = pd.read_table(good_variants, header=None)
-  bad = pd.read_table(bad_variants, header=None)
-  grey = pd.read_table(grey_variants, header=None)
-  columns1 =  ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC', 'Good']
-  columns2 =  ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP', 'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC']
-  good.columns = columns1
-  bad.columns = columns1
-  grey.columns = columns2
+  good = pd.read_table(good_variants)
+  bad = pd.read_table(bad_variants)
+  grey = pd.read_table(grey_variants)
   print('Done.')
 
-  pred = classification(good, bad, grey, model)
+  pred = classification(good, bad, grey, model, user_features)
   grey['Good'] = pred
   
   predicted_good = grey[grey['Good'] == 1]

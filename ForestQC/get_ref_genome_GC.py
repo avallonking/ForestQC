@@ -1,4 +1,4 @@
-# get GC content with 1000bp sliding windows.
+# get GC content with default 1000bp sliding windows.
 # usage:
 #   python3 get_ref_genome_GC.py ref_genome.fasta output_filename
 # input: 
@@ -7,8 +7,8 @@
 # output:
 #   a dataframe, which has CHR, Start_Position and GC columns
 
-import sys
 import numpy as np
+
 
 def computeGC(seq):
   try:
@@ -17,11 +17,10 @@ def computeGC(seq):
   except ZeroDivisionError:
     return np.nan
 
-def main():
+
+def execute_compute_gc(ref, out, window_size):
   # get the reference genome
-  ref = sys.argv[1]
-  out = sys.argv[2]
-  r = open(ref,'r')
+  r = open(ref, 'r')
   o = open(out, 'w')
 
   seq_list = []
@@ -32,7 +31,7 @@ def main():
         seq = ''.join(seq_list)
         gc = computeGC(seq)
         seq_list = []
-        o.write('\t'.join([chr,str(start_pos),str(gc)]) + '\n')
+        o.write('\t'.join([chr, str(start_pos), str(gc)]) + '\n')
       chr = line.strip()[1:]
       start_pos = 1
     else:
@@ -41,10 +40,7 @@ def main():
         seq = ''.join(seq_list)
         gc = computeGC(seq)
         seq_list = []
-        o.write('\t'.join([chr,str(start_pos),str(gc)]) + '\n')
-        start_pos += 1000
+        o.write('\t'.join([chr, str(start_pos), str(gc)]) + '\n')
+        start_pos += window_size
   r.close()
   o.close()
-
-if __name__ == '__main__':
-  main()

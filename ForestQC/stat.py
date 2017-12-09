@@ -17,7 +17,7 @@ def get_discord_info(discord_geno_file):
     return discord_geno_dict
 
 
-def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file, dp, gq):
+def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file, dp, gq, feature_file):
     f = gzip.open(vcf_file, 'rt') if vcf_file.endswith('.gz') else open(vcf_file, 'r')
     o = open(stat_file, 'w')
     for line in f:
@@ -25,12 +25,19 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
             sample_list = line.strip().split('\t')[DP_GQ_START_IDX:]
             break
 
+    print('Loading files...')
     relationship = getFamilyRelation(ped_file, sample_list)
     control_samples_idx = getControlSamples(ped_file, sample_list)
     male_list, female_list = getSexInfo(ped_file, gender_file)
     male_idx, female_idx = getTargetIdx(male_list, female_list, sample_list)
     hwe_info = getHWE_Direct(hwe_file)
     gc_table_by_chr = getGC_table(gc_file)
+
+    # load user-defined features
+    if not features:
+        features_df = pd.read_table(feature_file)
+    else:
+        features_df = None
 
     for line2 in f:
         if not line2.startswith('#'):
@@ -41,7 +48,7 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
             alt = site_info[4]
             rsid = chr + ':' + pos
             maf = getMAF(line2, target_idx=female_idx, chr=chr)
-
+            features = get_additional_features(features_df, rsid)
             mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq = statDPGQ(line2, dp_threshold=dp, gq_threshold=gq,
                                                                               chr=chr, target_idx=female_idx)
             discordant_geno = getDiscordantGenotype(line2, discord_geno_dict)
@@ -57,11 +64,22 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
                 except KeyError:
                     hwe = 'NA'
             abhet, abhom = getAB(line2, chr=chr, target_idx=female_idx)
-            o.write('\t'.join([rsid, chr, pos, ref, alt, str(maf), str(mean_dp), str(mean_gq), str(sd_dp), str(sd_gq),
-                               str(outlier_dp), str(outlier_gq), str(discordant_geno), str(mendel_error),
-                               str(missing_rate), str(hwe), str(abhet), str(abhom), str(gc)]) + '\n')
+
+            try:
+                line_to_write = '\t'.join([rsid, chr, pos, ref, alt, str(maf), str(mean_dp), str(mean_gq), str(sd_dp),
+                                           str(sd_gq), str(outlier_dp), str(outlier_gq), str(discordant_geno),
+                                           str(mendel_error), str(missing_rate), str(hwe), str(abhet), str(abhom),
+                                           str(gc)] + features) + '\n'
+            except TypeError:
+                line_to_write = '\t'.join([rsid, chr, pos, ref, alt, str(maf), str(mean_dp), str(mean_gq), str(sd_dp),
+                                           str(sd_gq), str(outlier_dp), str(outlier_gq), str(discordant_geno),
+                                           str(mendel_error), str(missing_rate), str(hwe), str(abhet), str(abhom),
+                                           str(gc)]) + '\n'
+            o.write(line_to_write)
     o.close()
     f.close()
+
+    print('Done.')
 
     # def main():
     #     # target_file: the vcf file for processing

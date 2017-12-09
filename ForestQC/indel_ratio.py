@@ -1,3 +1,5 @@
+# This is tool is deprecated
+
 import sys
 import gzip
 
