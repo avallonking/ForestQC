@@ -13,7 +13,7 @@ After installation, you can check the usage
 $ ForestQC -h
 # and check the usage for each command, for example, stat
 $ ForestQC stat -h
-```sh
+```
 
 ### Workflow
 ```example/example_output/example.script.sh``` provides step-by-step tutorial about how to run this software.
