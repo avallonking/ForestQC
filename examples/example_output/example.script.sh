@@ -14,5 +14,5 @@ ForestQC split -i example.result.tsv -af ../user_features.tsv -t ../user_thresho
 ForestQC classify -g good.example.result.tsv -b bad.example.result.tsv -y gray.example.result.tsv -af ../user_features.tsv
 
 # fifth, combine all bad variants together, and all good variants together. Note that "good.*" should be placed before "predicted.*", which is the same for "bad.*". Because "good.*" and "bad.*" have headers, while "predicted.* do not.
-cat good.example.result.tsv predicted_good.variants.tsv > good.example.variants.tsv
-cat bad.example.result.tsv predicted_bad.variants.tsv > bad.example.variants.tsv
+cat good.example.result.tsv predicted_good.variants.tsv > all.good.variants.tsv
+cat bad.example.result.tsv predicted_bad.variants.tsv > all.bad.variants.tsv
