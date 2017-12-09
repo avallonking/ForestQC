@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/tt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/user_features.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/support_files/gc_content_hg19.tsv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ForestQC/__main__.py" afterPath="$PROJECT_DIR$/ForestQC/__main__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ForestQC/classification.py" afterPath="$PROJECT_DIR$/ForestQC/classification.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ForestQC/data_preprocessing.py" afterPath="$PROJECT_DIR$/ForestQC/data_preprocessing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" afterPath="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ForestQC/stat.py" afterPath="$PROJECT_DIR$/ForestQC/stat.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ForestQC/vcf_stat.py" afterPath="$PROJECT_DIR$/ForestQC/vcf_stat.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/sample_sex.info" afterPath="$PROJECT_DIR$/examples/sample_sex.info" />
-    </list>
+    <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,8 +65,8 @@
       <file leaf-file-name="data_preprocessing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ForestQC/data_preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="154" column="64" lean-forward="false" selection-start-line="154" selection-start-column="64" selection-end-line="154" selection-end-column="64" />
+            <state relative-caret-position="264">
+              <caret line="141" column="8" lean-forward="true" selection-start-line="141" selection-start-column="8" selection-end-line="141" selection-end-column="8" />
               <folding>
                 <element signature="e#221#233#0" expanded="false" />
                 <element signature="e#1852#4757#0" expanded="false" />
@@ -640,8 +628,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/data_preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="154" column="64" lean-forward="false" selection-start-line="154" selection-start-column="64" selection-end-line="154" selection-end-column="64" />
+        <state relative-caret-position="264">
+          <caret line="141" column="8" lean-forward="true" selection-start-line="141" selection-start-column="8" selection-end-line="141" selection-end-column="8" />
           <folding>
             <element signature="e#221#233#0" expanded="false" />
             <element signature="e#1852#4757#0" expanded="false" />
