@@ -139,18 +139,18 @@ def separateDataB(variants, thresholds_setting):
     return good, bad, grey
 
 def preprocessing(data, user_feature_names):
-    if not user_feature_names:
+    try:
         columns = ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP',
                    'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC'] \
                   + user_feature_names
-    else:
+        data.columns = columns
+        # impute missing values
+        for col in user_feature_names:
+            data.loc[data[col].isnull(), col] = data[col].median()
+    except TypeError:
         columns = ['RSID', 'CHR', 'POS', 'REF', 'ALT', 'MAF', 'Mean_DP', 'Mean_GQ', 'SD_DP', 'SD_GQ', 'Outlier_DP',
                    'Outlier_GQ', 'Discordant_Geno', 'Mendel_Error', 'Missing_Rate', 'HWE', 'ABHet', 'ABHom', 'GC']
-    data.columns = columns
-
-    # impute missing values
-    for col in user_feature_names:
-        data.loc[data[col].isnull(), col] = data[col].median()
+        data.columns = columns
 
     data.loc[data['MAF'].isnull(), 'MAF'] = data['MAF'].median()
     data.loc[data['Mean_DP'].isnull(), 'Mean_DP'] = data['Mean_DP'].median()
@@ -162,14 +162,34 @@ def preprocessing(data, user_feature_names):
     data.loc[data['GC'].isnull(), 'GC'] = data['GC'].median()
     return data
 
+def print_thresholds(thresholds, type):
+    # thresholds is a one-demensional dict
+    for _filter, _threshold in thresholds.items():
+        if type == 'good':
+            if _filter == 'ABHet_deviation':
+                print('{} <= {} <= {}'.format(0.5 - _threshold, _filter, 0.5 + _threshold))
+            elif _filter == 'Missing_Rate':
+                print('{} < {}'.format(_filter, _threshold))
+            elif _filter == 'HWE':
+                print('{} > {}'.format(_filter, _threshold))
+            else:
+                print('{} <= {}'.format(_filter, _threshold))
+        else:
+            if _filter == 'ABHet_deviaiton':
+                print('\t{} >= {} or {} <= {}'.format(_filter, 0.5 + _threshold, _filter, 0.5 - _threshold))
+            elif _filter == 'HWE':
+                print('\t{} < {}'.format(_filter, _threshold))
+            else:
+                print('\t{} > {}'.format(_filter, _threshold))
+
 def set_thresholds(thresholds_setting):
-    # input format:
-    #   good,all,filter,threshold
-    #   bad,all,MAF,threshold
-    #   bad,rare,Mendel_Error,threshold
-    #   bad,common,Missing_Rate,threshold
-    #   outlier,rare,Missing_Rate,threshold
-    #   outlier,common,Missing_Rate,threshold
+    # input format (tab-separated):
+    #   good    all filter  threshold
+    #   bad all MAF threshold
+    #   bad rare    Mendel_Error   threshold
+    #   bad common  Missing_Rate    threshold
+    #   outlier rare    Missing_Rate   threshold
+    #   outlier common  Missing_Rate    threshold
 
     good_thresholds = {'Mendel_Error':3, 'Missing_Rate':0.005, 'HWE': 0.01,
                        'Discordant_Geno': 1, 'ABHet_deviation': 0.20}
@@ -185,7 +205,7 @@ def set_thresholds(thresholds_setting):
     try:
         with open(thresholds_setting, 'r') as t:
             for line in t:
-                _info = line.strip().split(',')
+                _info = line.strip().split('\t')
                 _type = _info[0]
                 _scope = _info[1]
                 _filter = _info[2]
@@ -199,6 +219,24 @@ def set_thresholds(thresholds_setting):
     except TypeError:
         pass
     finally:
+        # show the thresholds setting
+        print('\nCurrent filter settings:')
+        print('\nGood variants')
+        print('----------------')
+        print_thresholds(good_thresholds, 'good')
+        print('\nBad variants')
+        print('----------------')
+        print('Rare variants (MAF < {}):'.format(bad_thresholds['all']['MAF']))
+        print_thresholds(bad_thresholds['rare'], 'bad')
+        print('\nCommon variants (MAF >= {}):'.format(bad_thresholds['all']['MAF']))
+        print_thresholds(bad_thresholds['common'], 'bad')
+        print('\nOutlier variants')
+        print('----------------')
+        print('Rare variants (MAF < {}):'.format(bad_thresholds['all']['MAF']))
+        print_thresholds(outlier_thresholds['rare'], 'outlier')
+        print('\nCommon variants (MAF >= {}):'.format(bad_thresholds['all']['MAF']))
+        print_thresholds(outlier_thresholds['common'], 'outlier')
+
         return good_thresholds, bad_thresholds, outlier_thresholds
 
 def execute_split(input_file, output_file, model, user_feature_names, thresholds_setting):
@@ -208,7 +246,6 @@ def execute_split(input_file, output_file, model, user_feature_names, thresholds
     try:
         print('Loading data...')
         data = pd.read_table(input_file, header=None)
-        print('Done.')
     except pd.io.common.EmptyDataError:
         raise FileNotFoundError('No such file: ' + input_file + '\n')
         exit(1)
@@ -219,7 +256,7 @@ def execute_split(input_file, output_file, model, user_feature_names, thresholds
     model_selection = {'A': separateDataA, 'B': separateDataB}
     good, bad, grey = model_selection[model](data, thresholds_setting)
 
-    print('Done.')
+    print('\nNumber of variants')
     print('Good variants: ' + str(good.shape[0]))
     print('Bad variants: ' + str(bad.shape[0]))
     print('Grey variants: ' + str(grey.shape[0]))
@@ -228,5 +265,5 @@ def execute_split(input_file, output_file, model, user_feature_names, thresholds
     dir = os.path.dirname(os.path.realpath(input_file))
     good.to_csv(dir + '/' + 'good.' + output_file, index=False, sep='\t', na_rep='NA')
     bad.to_csv(dir + '/' + 'bad.' + output_file, index=False, sep='\t', na_rep='NA')
-    grey.to_csv(dir + '/' + 'grey.' + output_file, index=False, sep='\t', na_rep='NA')
+    grey.to_csv(dir + '/' + 'gray.' + output_file, index=False, sep='\t', na_rep='NA')
     print('Done.')

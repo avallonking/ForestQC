@@ -31,8 +31,9 @@ def parse_args():
                              help='depth threshold [optional], default = 34')
     stat_parser.add_argument('--gq', dest='gq', default=99, type=float, required=False,
                              help='genotype quality threshold [optional], default = 99')
-    stat_parser.add_argument('-af', '--additional_features', default=None, type=str, required=False,
-                             help='user-defined features in comma-separated file format [optional]')
+    stat_parser.add_argument('-af', '--additional_features', default=None, required=False, dest='feature_file',
+                             help='user-defined features in tab-separated file format [optional]')
+
     # arguments for splitting the variants data to good, bad and gray variants according to the statistics
     split_parser = subparsers.add_parser('split', help='variants splitting help')
     split_parser_required = split_parser.add_argument_group('required arguments')
@@ -44,9 +45,11 @@ def parse_args():
                               help='splitting method for a specific random forest model, A or B [optional]. default: B')
     split_parser.add_argument('-af', '--additional_features', required=False, default=None, dest='user_feature_names',
                               help='names of additional user-defined features, can be a tab-separated text file or '
-                                   'a comma-separated string')
+                                   'a comma-separated string [optional]')
     split_parser.add_argument('-t', '--thresholds', required=False, default=None, dest='thresholds_setting', type=str,
-                              help='thresholds for each filter using in file splitting, should be a text file')
+                              help='thresholds for each filter using in file splitting, should be a tab-separated '
+                                   'file. if user-defined features are included in statistics files, this option is '
+                                   'required.')
 
     # arguments for variant classification
     classify_parser = subparsers.add_parser('classify', help='variants classification help')
@@ -60,13 +63,14 @@ def parse_args():
                                  help='the latter part of output filename [optional]. default: variants.tsv')
     classify_parser.add_argument('-af', '--additional_features', dest='user_features', default=None, required=False,
                                  help='names of additional user-defined features used in the model, '
-                                      'can be a tab-separated text file or a comma-separated string')
+                                      'can be a tab-separated text file or a comma-separated string. if user-defined '
+                                      'features are included in statistics files, this option is required.')
 
     # arguments for set outlier_gq and outlier_dp
     set_outlier_parser = subparsers.add_parser('set_outlier', help='set outlier help')
     set_outlier_parser_required = set_outlier_parser.add_argument_group('required arguments')
     set_outlier_parser_required.add_argument('-i', '--input', required=True, dest='file_list',
-                                            help='input file(s). please separate the files with comma if there'
+                                            help='input file(s). please separate the filenames with comma if there'
                                                  'are multiple files')
 
     # arguments for calculate GC content for reference genome
@@ -76,8 +80,8 @@ def parse_args():
                                             help='reference genome fasta file')
     compute_gc_parser_required.add_argument('-o', '--output', required=True, dest='out_gc',
                                             help='output filename')
-    compute_gc_parser.add_argument('-s', '--window_size', dest='window_size', type=int, default=1000,
-                                   help='sliding window size for calculating GC content, default: 1000')
+    compute_gc_parser.add_argument('-s', '--window_size', dest='window_size', type=int, default=1000, required=False,
+                                   help='sliding window size for calculating GC content [optional], default: 1000')
 
 
     args = vars(parser.parse_args())
@@ -98,11 +102,13 @@ def main_stat(**kwargs):
     gender_file = kwargs['gender_info']
     dp = kwargs['dp']
     gq = kwargs['gq']
+    feature_file = kwargs['feature_file']
 
     # discordant genotype file processing
     discord_geno_dict = get_discord_info(discord_geno_file)
     # vcf file processing and data recording
-    vcf_process(target_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file, dp, gq)
+    vcf_process(target_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_file, gender_file, dp, gq,
+                feature_file)
 
 def main_split(**kwargs):
     input_file = kwargs['raw_stat_file']
@@ -111,14 +117,18 @@ def main_split(**kwargs):
     user_feature_names_unprocessed = kwargs['user_feature_names']
     thresholds_setting = kwargs['thresholds_setting']
 
-    if not user_feature_names_unprocessed:
+    try:
         if os.path.isfile(user_feature_names_unprocessed):
             with open(user_feature_names_unprocessed, 'r') as u:
                 line = u.readline()
                 user_feature_names = line.strip().split('\t')
+                try:
+                    user_feature_names.remove('RSID')
+                except ValueError:
+                    pass
         else:
             user_feature_names = user_feature_names_unprocessed.strip().split(',')
-    else:
+    except TypeError:
         user_feature_names = None
 
     execute_split(input_file, output_file, model, user_feature_names, thresholds_setting)
@@ -131,14 +141,18 @@ def main_classify(**kwargs):
     output_suffix = kwargs['output_suffix']
     user_features_unprocessed = kwargs['user_features']
 
-    if not user_features_unprocessed:
+    try:
         if os.path.isfile(user_features_unprocessed):
             with open(user_features_unprocessed, 'r') as u:
                 line = u.readline()
                 user_features = line.strip().split('\t')
+                try:
+                    user_features.remove('RSID')
+                except ValueError:
+                    pass
         else:
             user_features = user_features_unprocessed.strip().split(',')
-    else:
+    except TypeError:
         user_features = None
 
     execute_classification(good_var, bad_var, gray_var, model, output_suffix, user_features)

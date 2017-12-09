@@ -34,11 +34,12 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
     gc_table_by_chr = getGC_table(gc_file)
 
     # load user-defined features
-    if not features:
+    try:
         features_df = pd.read_table(feature_file)
-    else:
+    except ValueError:
         features_df = None
 
+    print('Computing...')
     for line2 in f:
         if not line2.startswith('#'):
             site_info = line2.split('\t')
@@ -69,7 +70,7 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
                 line_to_write = '\t'.join([rsid, chr, pos, ref, alt, str(maf), str(mean_dp), str(mean_gq), str(sd_dp),
                                            str(sd_gq), str(outlier_dp), str(outlier_gq), str(discordant_geno),
                                            str(mendel_error), str(missing_rate), str(hwe), str(abhet), str(abhom),
-                                           str(gc)] + features) + '\n'
+                                           str(gc)] + list(map(str, features))) + '\n'
             except TypeError:
                 line_to_write = '\t'.join([rsid, chr, pos, ref, alt, str(maf), str(mean_dp), str(mean_gq), str(sd_dp),
                                            str(sd_gq), str(outlier_dp), str(outlier_gq), str(discordant_geno),

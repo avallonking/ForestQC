@@ -20,7 +20,6 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features):
 
     print('\nTraining model...')
     rf.fit(x_train, y_train)
-    print('Done.\n')
 
     weights = rf.feature_importances_
     print('Feature','Weight')
@@ -29,7 +28,6 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features):
 
     print('\nTesting model...')
     precison_recall = precision_recall_fscore_support(y_true=y_test, y_pred=rf.predict(x_test))
-    print('Done')
     print('\n\t\tBad\tGood')
     print('Precision: ' + str(precison_recall[0]))
     print('Recall: ' + str(precison_recall[1]))
@@ -58,7 +56,6 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features):
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
     print('\nTraining model...')
     rf.fit(x_train, y_train)
-    print('Done.\n')
 
     weights = rf.feature_importances_
     print('Feature','Weight')
@@ -67,7 +64,6 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features):
 
     print('\nTesting model...')
     precison_recall = precision_recall_fscore_support(y_true=y_test, y_pred=rf.predict(x_test))
-    print('Done')
     print('\n\t\tBad\tGood')
     print('Precision: ' + str(precison_recall[0]))
     print('Recall: ' + str(precison_recall[1]))
@@ -99,7 +95,6 @@ def execute_classification(good_variants, bad_variants, grey_variants, model, ou
   good = pd.read_table(good_variants)
   bad = pd.read_table(bad_variants)
   grey = pd.read_table(grey_variants)
-  print('Done.')
 
   pred = classification(good, bad, grey, model, user_features)
   grey['Good'] = pred

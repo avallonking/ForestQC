@@ -454,10 +454,9 @@ def getDiscordantGenotype(variant_info, discordant_genotype_dict):
 
 def get_additional_features(features_df, rsid):
     # this input is a pandas dataframe
-    if not features_df:
-        try:
-            return list(features_df[features_df['RSID'] == rsid])
-        except KeyError:
-            return ['NA'] * features_df.shape[1]
-    else:
+    try:
+        return list(features_df[features_df['RSID'] == rsid].iloc[0, 1:])
+    except IndexError:
+        return ['NA'] * (features_df.shape[1] - 1)
+    except TypeError:
         pass

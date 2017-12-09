@@ -23,23 +23,21 @@ def execute_compute_gc(ref, out, window_size):
   r = open(ref, 'r')
   o = open(out, 'w')
 
-  seq_list = []
+  seq = ''
   start_pos = 1
   for line in r:
     if line.startswith('>'):
-      if seq_list:
-        seq = ''.join(seq_list)
+      if len(seq) != 0:
         gc = computeGC(seq)
-        seq_list = []
+        seq = ''
         o.write('\t'.join([chr, str(start_pos), str(gc)]) + '\n')
       chr = line.strip()[1:]
       start_pos = 1
     else:
-      seq_list.append(line.strip().upper())
-      if len(seq_list) == 20:
-        seq = ''.join(seq_list)
+      seq += line.strip().upper()
+      if len(seq) >= window_size:
         gc = computeGC(seq)
-        seq_list = []
+        seq = ''
         o.write('\t'.join([chr, str(start_pos), str(gc)]) + '\n')
         start_pos += window_size
   r.close()
