@@ -52,6 +52,21 @@ $ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [
 ```
 
 ### File format
+#### Output file
+ - Statistics file (tab-separated, assuming that we included user-defined features)
+```sh
+RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2
+chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 2.0 4.3
+chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 NA 4.3
+```
+
+ - Final result file (The variant is a good variant if Good = 1, or a bad variant if Good = 0, grey variants do not have Good column before it is predicted)
+```sh
+RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2 Good
+chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 2.0 4.3 1
+```
+ 
+#### Input file
  - Gender file(2 columns, tab-separated. f for female, m for male):
 ```sh
 SampleID  Gender
@@ -80,12 +95,6 @@ chr3:899   1.0
 cgr2:900   0.77
 ```
 
- - Result file (The variant is a good variant if Good = 1, or a bad variant if Good = 0, grey variants do not have Good column before it is predicted)
-```sh
-RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2 Good
-chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 2.0 4.3 1
-```
- 
 - User-defined features (tab-separated, data are calculated by users in advance. In practice, missing values will be imputed with the median of the sample)
 ```sh
 RSID feature1 feature2 feature3
