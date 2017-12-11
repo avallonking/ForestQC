@@ -30,6 +30,7 @@ $ ForestQC compute_gc -i [ref_genome.fasta] -o [output_file]
 ```
 
 First, we need to calculate ths statistics from vcf file. *It will output a file containing all statistics information for each variant.* **Note:**
+ - **It is highly recommended to calculate the statistics for different regions of the genome at the same time, which can make this procedure much faster**
  - The vcf file should have the information of each individual. 
  - We don't have to merge all vcf files together.
  - If no discordant genotype file provided, the number of discordant genotype of all variants will be NA
