@@ -82,7 +82,7 @@ FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPI
 C1  2 3 4 m  1  xxx xxx xxx
 ```
 
- - Discordant genotype rate file (2 columns, tab-separated)
+ - Discordant genotype rate file (2 columns, tab-separated, gzip-compressed or not)
 ```sh
 SNP_ID  Discordant_Genotype_Rate
 chr1:259   0.01
