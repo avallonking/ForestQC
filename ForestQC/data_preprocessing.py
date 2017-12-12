@@ -79,7 +79,7 @@ def separateDataA(variants, thresholds_setting):
     outliers_4 = pd.concat([rare_variants[rare_variants['HWE'] < outlier_thresholds['rare']['HWE']],
                             common_variants[common_variants['HWE'] < outlier_thresholds['common']['HWE']]])
 
-    bad = pd.concat([rare_bad, common_bad, outliers_1, outliers_2, outliers_3, outliers_4])
+    bad = pd.concat([rare_bad, common_bad, outliers_2, outliers_3, outliers_4])
     bad.drop_duplicates(inplace=True)
     bad['Good'] = 0
 
@@ -128,7 +128,7 @@ def separateDataB(variants, thresholds_setting):
     outliers_4 = pd.concat([rare_variants[rare_variants['HWE'] < outlier_thresholds['rare']['HWE']],
                             common_variants[common_variants['HWE'] < outlier_thresholds['common']['HWE']]])
 
-    bad = pd.concat([rare_bad, common_bad, outliers_1, outliers_2, outliers_3, outliers_4])
+    bad = pd.concat([rare_bad, common_bad, outliers_2, outliers_3, outliers_4])
     bad.drop_duplicates(inplace=True)
     bad['Good'] = 0
 
