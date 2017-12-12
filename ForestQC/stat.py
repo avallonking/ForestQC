@@ -6,11 +6,11 @@ def get_discord_info(discord_geno_file):
     # discordant genotype file processing
     discord_geno_dict = {}
     try:
-        d = open(discord_geno_file, 'r')
+        d = gzip.open(discord_geno_file, 'rt') if discord_geno_file.endswith('.gz') else open(discord_geno_file, 'r')
         for entry in d:
             snp_id = entry.split('\t')[0]
             discord_geno_num = entry.strip().split('\t')[1]
-            discord_geno_dict[snp_id] = discord_geno_num
+            discord_geno_dict[snp_id] = round(float(discord_geno_num), 6)
         d.close()
     except TypeError:
         pass

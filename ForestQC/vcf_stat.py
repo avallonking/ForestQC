@@ -398,7 +398,7 @@ def getFamilyRelation(ped_file, sample_list):
     return relationship
 
 def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None):
-    # get mendel error of a variant from one line of variant information
+    # get mendel error rate of a variant from one line of variant information
     # sample_list is a list of sample names
     if not relationship:
       return 'NA'
@@ -408,6 +408,7 @@ def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None)
     genotype_set = []
     mendel_error = 0
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    sample_size = len(individual_info)
 
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
@@ -443,12 +444,19 @@ def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None)
                                        father_genotype[:0:-1] + mother_genotype[-1]]
           if child_genotype not in normal_inherited_genotype and child_genotype[::-1] not in normal_inherited_genotype:
             mendel_error += 1
-    return mendel_error
+    mendel_error_rate = round(mendel_error / sample_size, 6)
+    return mendel_error_rate
 
 def getDiscordantGenotype(variant_info, discordant_genotype_dict):
     rsid = variant_info.split('\t')[0] + ':' + variant_info.split('\t')[1]
+    snp_id = variant_info.split('\t')[2]
     try:
         return discordant_genotype_dict[rsid]
+    except KeyError:
+        pass
+
+    try:
+        return discordant_genotype_dict[snp_id]
     except KeyError:
         return 'NA'
 
