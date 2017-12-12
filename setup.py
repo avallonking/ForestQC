@@ -6,7 +6,7 @@ config = {
     'url': 'None',
     'download_url': 'https://github.com/avallonking/ForestQC',
     'author_email': 'lijj36@ucla.edu',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'install_requires': ['pandas','numpy','scikit-learn'],
     'packages': ['ForestQC'],
     'scripts': [],
