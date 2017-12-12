@@ -55,23 +55,23 @@ def separateDataA(variants, thresholds_setting):
     good = variants[~(variants['Mendel_Error'] > good_thresholds['Mendel_Error'])]
     good = good[good['Missing_Rate'] < good_thresholds['Missing_Rate']]
     good = good[good['HWE'] > good_thresholds['HWE']]
-    good = good[~(good['Discordant_Geno'] > good_thresholds['Discordant_Geno'])]
+    # good = good[~(good['Discordant_Geno'] > good_thresholds['Discordant_Geno'])]
     good['Good'] = 1
 
     # bad variants
     rare_variants = variants[variants['MAF'] < bad_thresholds['all']['MAF']]
     common_variants = variants[variants['MAF'] >= bad_thresholds['all']['MAF']]
     rare_bad = rare_variants[~(rare_variants['Mendel_Error'] <= bad_thresholds['rare']['Mendel_Error'])]
-    rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= bad_thresholds['rare']['Discordant_Geno'])]
+    # rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= bad_thresholds['rare']['Discordant_Geno'])]
     rare_bad = rare_bad[rare_bad['Missing_Rate'] > bad_thresholds['rare']['Missing_Rate']]
     rare_bad = rare_bad[rare_bad['HWE'] < bad_thresholds['rare']['HWE']]
     common_bad = common_variants[~(common_variants['Mendel_Error'] <= bad_thresholds['common']['Mendel_Error'])]
-    common_bad = common_bad[~(common_bad['Discordant_Geno'] <= bad_thresholds['common']['Discordant_Geno'])]
+    # common_bad = common_bad[~(common_bad['Discordant_Geno'] <= bad_thresholds['common']['Discordant_Geno'])]
     common_bad = common_bad[common_bad['Missing_Rate'] > bad_thresholds['common']['Missing_Rate']]
     common_bad = common_bad[common_bad['HWE'] < bad_thresholds['common']['HWE']]
 
-    outliers_1 = pd.concat([rare_variants[rare_variants['Discordant_Geno'] > outlier_thresholds['rare']['Discordant_Geno']],
-                            common_variants[common_variants['Discordant_Geno'] > outlier_thresholds['common']['Discordant_Geno']]])
+    # outliers_1 = pd.concat([rare_variants[rare_variants['Discordant_Geno'] > outlier_thresholds['rare']['Discordant_Geno']],
+                            # common_variants[common_variants['Discordant_Geno'] > outlier_thresholds['common']['Discordant_Geno']]])
     outliers_2 = pd.concat([rare_variants[rare_variants['Mendel_Error'] > outlier_thresholds['rare']['Mendel_Error']],
                             common_variants[common_variants['Mendel_Error'] > outlier_thresholds['common']['Mendel_Error']]])
     outliers_3 = pd.concat([rare_variants[rare_variants['Missing_Rate'] > outlier_thresholds['rare']['Missing_Rate']],
@@ -99,7 +99,7 @@ def separateDataB(variants, thresholds_setting):
     good = variants[~(variants['Mendel_Error'] > good_thresholds['Mendel_Error'])]
     good = good[good['Missing_Rate'] < good_thresholds['Missing_Rate']]
     good = good[good['HWE'] > good_thresholds['HWE']]
-    good = good[~(good['Discordant_Geno'] > good_thresholds['Discordant_Geno'])]
+    # good = good[~(good['Discordant_Geno'] > good_thresholds['Discordant_Geno'])]
     good = good[abs(good['ABHet'] - 0.5) <= good_thresholds['ABHet_deviation']]
     good['Good'] = 1
 
@@ -108,19 +108,19 @@ def separateDataB(variants, thresholds_setting):
     common_variants = variants[variants['MAF'] >= bad_thresholds['all']['MAF']]
 
     rare_bad = rare_variants[~(rare_variants['Mendel_Error'] <= bad_thresholds['rare']['Mendel_Error'])]
-    rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= bad_thresholds['rare']['Discordant_Geno'])]
+    # rare_bad = rare_bad[~(rare_bad['Discordant_Geno'] <= bad_thresholds['rare']['Discordant_Geno'])]
     rare_bad = rare_bad[rare_bad['Missing_Rate'] > bad_thresholds['rare']['Missing_Rate']]
     rare_bad = rare_bad[rare_bad['HWE'] < bad_thresholds['rare']['HWE']]
     rare_bad = rare_bad[abs(rare_bad['ABHet'] - 0.5) >= bad_thresholds['rare']['ABHet_deviation']]
 
     common_bad = common_variants[~(common_variants['Mendel_Error'] <= bad_thresholds['common']['Mendel_Error'])]
-    common_bad = common_bad[~(common_bad['Discordant_Geno'] <= bad_thresholds['common']['Discordant_Geno'])]
+    # common_bad = common_bad[~(common_bad['Discordant_Geno'] <= bad_thresholds['common']['Discordant_Geno'])]
     common_bad = common_bad[common_bad['Missing_Rate'] > bad_thresholds['common']['Missing_Rate']]
     common_bad = common_bad[common_bad['HWE'] < bad_thresholds['common']['HWE']]
     common_bad = common_bad[abs(common_bad['ABHet'] - 0.5) >= bad_thresholds['common']['ABHet_deviation']]
 
-    outliers_1 = pd.concat([rare_variants[rare_variants['Discordant_Geno'] > outlier_thresholds['rare']['Discordant_Geno']],
-                            common_variants[common_variants['Discordant_Geno'] > outlier_thresholds['common']['Discordant_Geno']]])
+    # outliers_1 = pd.concat([rare_variants[rare_variants['Discordant_Geno'] > outlier_thresholds['rare']['Discordant_Geno']],
+                            # common_variants[common_variants['Discordant_Geno'] > outlier_thresholds['common']['Discordant_Geno']]])
     outliers_2 = pd.concat([rare_variants[rare_variants['Mendel_Error'] > outlier_thresholds['rare']['Mendel_Error']],
                             common_variants[common_variants['Mendel_Error'] > outlier_thresholds['common']['Mendel_Error']]])
     outliers_3 = pd.concat([rare_variants[rare_variants['Missing_Rate'] > outlier_thresholds['rare']['Missing_Rate']],
@@ -193,16 +193,16 @@ def set_thresholds(thresholds_setting):
     #   outlier rare    Missing_Rate   threshold
     #   outlier common  Missing_Rate    threshold
 
-    good_thresholds = {'Mendel_Error':3, 'Missing_Rate':0.005, 'HWE': 0.01,
-                       'Discordant_Geno': 1, 'ABHet_deviation': 0.20}
+    good_thresholds = {'Mendel_Error':3/446, 'Missing_Rate':0.005, 'HWE': 0.01,
+                       'ABHet_deviation': 0.20}
     bad_thresholds = {'all': {'MAF': 0.03},
-                      'rare': {'Mendel_Error': 3, 'Discordant_Geno': 6, 'Missing_Rate': 0.02, 'HWE': 5e-3,
+                      'rare': {'Mendel_Error': 3/446, 'Missing_Rate': 0.02, 'HWE': 5e-3,
                       'ABHet_deviation': 0.25},
-                      'common': {'Mendel_Error': 5, 'Discordant_Geno': 6, 'Missing_Rate': 0.03, 'HWE': 5e-4,
+                      'common': {'Mendel_Error': 5/446, 'Missing_Rate': 0.03, 'HWE': 5e-4,
                       'ABHet_deviation': 0.25}
                      }
-    outlier_thresholds = {'rare': {'Mendel_Error': 8, 'Missing_Rate': 0.08, 'HWE': 1e-3, 'Discordant_Geno': 20},
-                          'common': {'Mendel_Error': 10, 'Missing_Rate': 0.10, 'HWE': 1e-8, 'Discordant_Geno': 20}
+    outlier_thresholds = {'rare': {'Mendel_Error': 8/446, 'Missing_Rate': 0.08, 'HWE': 1e-3},
+                          'common': {'Mendel_Error': 10/446, 'Missing_Rate': 0.10, 'HWE': 1e-8}
                           }
     try:
         with open(thresholds_setting, 'r') as t:

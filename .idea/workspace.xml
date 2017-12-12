@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/example_output/bad.example.variants.tsv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/example_output/good.example.variants.tsv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/example_output/example.script.sh" afterPath="$PROJECT_DIR$/examples/example_output/example.script.sh" />
-    </list>
+    <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,8 +65,8 @@
       <file leaf-file-name="data_preprocessing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ForestQC/data_preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="157" column="70" lean-forward="true" selection-start-line="157" selection-start-column="70" selection-end-line="157" selection-end-column="70" />
+            <state relative-caret-position="447">
+              <caret line="160" column="76" lean-forward="true" selection-start-line="160" selection-start-column="76" selection-end-line="160" selection-end-column="76" />
               <folding>
                 <element signature="e#221#233#0" expanded="false" />
                 <element signature="e#1852#4757#0" expanded="false" />
@@ -631,8 +627,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/data_preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="157" column="70" lean-forward="true" selection-start-line="157" selection-start-column="70" selection-end-line="157" selection-end-column="70" />
+        <state relative-caret-position="447">
+          <caret line="160" column="76" lean-forward="true" selection-start-line="160" selection-start-column="76" selection-end-line="160" selection-end-column="76" />
           <folding>
             <element signature="e#221#233#0" expanded="false" />
             <element signature="e#1852#4757#0" expanded="false" />
