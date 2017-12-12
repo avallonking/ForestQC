@@ -211,7 +211,7 @@ def getMAF(variant_info, target_idx=None, chr=None):
         
     try:
       maf = sorted(freq)[-2] if len(freq) >= 2 else freq[-1]
-      maf = round(maf, 6)
+      maf = round(maf, 5)
     except IndexError:
       maf = 'NA'
     return maf
@@ -243,7 +243,7 @@ def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):
         if '.' not in genotype and not isHomozygous(genotype):
           missing_allele += 1
 
-    missing_rate = round(missing_allele / total_allele, 6)
+    missing_rate = round(missing_allele / total_allele, 5)
     return missing_rate
 
 
@@ -444,7 +444,7 @@ def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None)
                                        father_genotype[:0:-1] + mother_genotype[-1]]
           if child_genotype not in normal_inherited_genotype and child_genotype[::-1] not in normal_inherited_genotype:
             mendel_error += 1
-    mendel_error_rate = round(mendel_error / sample_size, 6)
+    mendel_error_rate = round(mendel_error / sample_size, 5)
     return mendel_error_rate
 
 def getDiscordantGenotype(variant_info, discordant_genotype_dict):

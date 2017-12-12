@@ -10,10 +10,11 @@ def get_discord_info(discord_geno_file):
         for entry in d:
             snp_id = entry.split('\t')[0]
             discord_geno_num = entry.strip().split('\t')[1]
-            discord_geno_dict[snp_id] = round(float(discord_geno_num), 6)
+            discord_geno_dict[snp_id] = round(float(discord_geno_num), 5)
         d.close()
     except TypeError:
         pass
+
     return discord_geno_dict
 
 
