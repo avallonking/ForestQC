@@ -57,14 +57,14 @@ $ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [
  - Statistics file (tab-separated, assuming that we included user-defined features)
 ```sh
 RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2
-chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 2.0 4.3
-chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 NA 4.3
+chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 0.1 0.06 0.01 1.0 0.45 0.99 0.435 2.0 4.3
+chr1:145  1 145 A T 0.03  54.02 52.00 26.00 11.64 0.33 0.43 0.2 0.03 0.03 1.0 0.49 0.98 0.435 NA 4.3
 ```
 
  - Final result file (The variant is a good variant if Good = 1, or a bad variant if Good = 0, grey variants do not have Good column before it is predicted)
 ```sh
 RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2 Good
-chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 1 3 0.01 1.0 0.45 0.99 0.435 2.0 4.3 1
+chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 0.1 0.03 0.01 1.0 0.45 0.99 0.435 2.0 4.3 1
 ```
  
 #### Input file
@@ -82,11 +82,11 @@ FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPI
 C1  2 3 4 m  1  xxx xxx xxx
 ```
 
- - Discordant genotype file (2 columns, tab-separated)
+ - Discordant genotype rate file (2 columns, tab-separated)
 ```sh
-SNP_ID  Number_of_Discordant_Genotype
-chr1:259   1
-chr3:122   2
+SNP_ID  Discordant_Genotype_Rate
+chr1:259   0.01
+chr3:122   0.20
 ```
 
  - HWE p-value file (2 columns, tab-separated):
