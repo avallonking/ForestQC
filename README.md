@@ -53,6 +53,7 @@ $ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [
 ```
 
 ### File format
+**Note that all files are tab-separated. If you came across any *IndexError*, please check your input files and make sure they are all tab-separated.**
 #### Output file
  - Statistics file (tab-separated, assuming that we included user-defined features)
 ```sh
