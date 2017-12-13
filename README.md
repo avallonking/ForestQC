@@ -41,13 +41,13 @@ First, we need to calculate ths statistics from vcf file. *It will output a file
 $ ForestQC stat -i [input_vcf] -o [output_filename] -c [gc_content_file] -g [gender_file(optional)] -p [ped_file (optional)] -d [discordant_genotype_file (optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP] -af [user_defined_features_file (optional)]
 ```
 
-Second, we need to divide the dataset into good, bad and grey variants. User can easily change the thresholds and output filename in the source. *The output files would be three: good.xx, bad.xx and grey.xx.* **Note that you don't have to merge the input file together**
+Second, we need to divide the dataset into good, bad and grey variants. User can easily change the thresholds and output filename in the source. *The output files would be three: good.xx, bad.xx and grey.xx.* **Note that you don't have to merge the input file together. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
 
 ```sh
 $ ForestQC split -i [input_file] -o [output_filename_suffix (optional)] -t [user_defined_threshold_file (optional)] -af [user_defined_features_names (if user-defined features added in last step, this is required)]
 ```
 
-Third, we can train our random forest model and apply it on the classification of grey variants. *The output files would be predicted_good_xx and predictred_bad_xx.* **Note that you need to merge all good variants into one file, all bad variants into one file and all grey variants into one file**
+Third, we can train our random forest model and apply it on the classification of grey variants. *The output files would be predicted_good_xx and predictred_bad_xx.* **Note that you need to merge all good variants into one file, all bad variants into one file and all grey variants into one file. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
 
 ```sh
 $ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [output_filename_suffix (optional)] -af [user_defined_features_names (optional)]
