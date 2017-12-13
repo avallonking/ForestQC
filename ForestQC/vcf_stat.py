@@ -106,6 +106,8 @@ def computeAB(ref, alt):
 def getSexInfo(ped_file, gender_file):
   # read a ped file and return a list of male sample ids and female sample ids
   # assume we only have either ped_file or gender_file as input
+  assert (ped_file is None or gender_file is None), '{} and {} give confusing gender information'.format(ped_file, gender_file)
+  
   male = []
   female = []
 
@@ -120,6 +122,8 @@ def getSexInfo(ped_file, gender_file):
           male.append(sample_id)
         elif gender == 'f':
           female.append(sample_id)
+    assert len(male) > 1, 'There should be at least 2 males.'
+    assert len(female) > 1, 'There should be at least 2 females.'
   except TypeError:
     pass
 
@@ -135,16 +139,18 @@ def getSexInfo(ped_file, gender_file):
           male.append(sample_id)
         elif sex == 'f':
           female.append(sample_id)
+    assert len(male) > 1, 'There should be at least 2 males.'
+    assert len(female) > 1, 'There should be at least 2 females.'
   except TypeError:
     pass
 
   return male, female
 
 def getTargetIdx(male, female, sample_list):
-  # male, female = getSexInfo(ped_file)
-  male_idx = list(map(sample_list.index, male))
-  female_idx = list(map(sample_list.index, female))
-  return male_idx, female_idx
+    # male, female = getSexInfo(ped_file)
+    male_idx = list(map(sample_list.index, male))
+    female_idx = list(map(sample_list.index, female))
+    return male_idx, female_idx
 
 def getAB(variant_info, sample_level_AB=False, chr=None, target_idx=None):
     # get ABHet and ABHom from a line of variant information
@@ -154,7 +160,7 @@ def getAB(variant_info, sample_level_AB=False, chr=None, target_idx=None):
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
     if target_idx and chr == 'chrX':
-      individual_info = itemgetter(*target_idx)(individual_info) 
+      individual_info = itemgetter(*target_idx)(individual_info)
 
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
@@ -195,7 +201,7 @@ def getMAF(variant_info, target_idx=None, chr=None):
 
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
     if target_idx and chr == 'chrX':
-      individual_info = itemgetter(*target_idx)(individual_info) 
+      individual_info = itemgetter(*target_idx)(individual_info)
 
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
@@ -229,12 +235,8 @@ def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
 
-        allele_first = genotype[0]
-        allele_second = genotype[-1]
-        if allele_first == '.':
-            missing_allele += 1
-        if allele_second == '.':
-            missing_allele += 1
+        for i in [0, -1]:
+            missing_allele += genotype[i].count('.')
 
     if chr == 'chrX' and male_idx:
       male_info = itemgetter(*male_idx)(individual_info)
@@ -249,7 +251,7 @@ def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):
 
 def getHWE_Direct(hwe_file):
   # get HWE p-value directly from the file provided by users
-  # input: a file have 2 tab-separated columns: SNP_ID and HWE_p-value
+  # input: a file have 2 tab-separated columns: rsid and HWE_p-value
   # output: a dictionary contianing the information
   hwe_dict = {}
   try:
@@ -259,7 +261,7 @@ def getHWE_Direct(hwe_file):
         snp = info[0]
         hwe = info[1]
         try:
-          hwe_dict[snp] = float(hwe)
+          hwe_dict[snp] = round(float(hwe), 5)
         except ValueError:
           continue
   except TypeError:

@@ -14,6 +14,8 @@ def get_discord_info(discord_geno_file):
         d.close()
     except TypeError:
         pass
+    except AttributeError:
+        pass
 
     return discord_geno_dict
 
@@ -58,13 +60,10 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
                                      male_list=male_list)
             missing_rate = getMissing(line2, chr=chr, target_idx=female_idx)
             gc = getGC(pos, gc_table_by_chr[chr])
-            if not hwe_info:
+            try:
+                hwe = hwe_info[rsid]
+            except KeyError:
                 hwe = getHWE(line2, control_samples_idx, chr=chr, target_idx=female_idx)
-            else:
-                try:
-                    hwe = hwe_info[rsid]
-                except KeyError:
-                    hwe = 'NA'
             abhet, abhom = getAB(line2, chr=chr, target_idx=female_idx)
 
             try:

@@ -6,7 +6,8 @@ from sklearn.metrics import precision_recall_fscore_support
 import pandas as pd
 import os
 
-def random_forest_classifierB(labelled_data, grey_variants, user_features):
+# just a second choice
+def random_forest_classifierA(labelled_data, grey_variants, user_features):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
     try:
@@ -41,8 +42,7 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features):
 
     return y_pred
 
-# just a second choice
-def random_forest_classifierA(labelled_data, grey_variants, user_features):
+def random_forest_classifierB(labelled_data, grey_variants, user_features):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
 
