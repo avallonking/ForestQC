@@ -1,4 +1,5 @@
-import argparse, os
+import argparse
+import os
 from ForestQC.stat import vcf_process, get_discord_info
 from ForestQC.data_preprocessing import execute_split
 from ForestQC.classification import execute_classification
