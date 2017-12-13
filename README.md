@@ -31,10 +31,11 @@ $ ForestQC compute_gc -i [ref_genome.fasta] -o [output_file]
 
 First, we need to calculate ths statistics from vcf file. *It will output a file containing all statistics information for each variant.* **Note:**
  - **It is highly recommended to calculate the statistics for different regions of the genome at the same time, which can make this procedure much faster**
- - The vcf file should have the information of each individual. 
- - We don't have to merge all vcf files together.
+ - The vcf file should have the information of each individual on eahc site
+ - You don't have to merge all vcf files together
  - If no discordant genotype file provided, the number of discordant genotype of all variants will be NA
  - If no pedigree file provided, the mendel errors of all variants will be NA
+ - If no HWE p-value file provided, HWE p-value would be computed by ForestQC. Or if ForestQC cannot find HWE p-value for some sites in the provided HWE p-value file, ForestQC would compute HWE p-value for those sites
 
 ```sh
 $ ForestQC stat -i [input_vcf] -o [output_filename] -c [gc_content_file] -g [gender_file(optional)] -p [ped_file (optional)] -d [discordant_genotype_file (optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP] -af [user_defined_features_file (optional)]
@@ -77,9 +78,9 @@ SampleID  Gender
 7hi987989  0     # Any samples whose gender is neither m nor f will be ignored
 ```
 
- - Pedigree file(9 columns, tab-separated)
+ - Pedigree file(9 columns, tab-separated). **Note that *SeqID* is the sample ID occuring in VCF files**. If control information is provided, ForestQC only calculate HWE p-value for each site with control samples.
 ```sh
-FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPID SampleID SeqID
+FamilyID IndividualID FatherID MotherID Sex PhenotypeID(1 if it is control) DBPID SamID SeqID
 C1  2 3 4 m  1  xxx xxx xxx
 ```
 
