@@ -323,7 +323,13 @@ def getHWE(variant_info, control_samples_idx=None, chr=None, target_idx=None):
                 het += 1
     hom_rare = hom0 if hom0 < hom1 else hom0
     rare_copies = 2 * hom_rare + het
-    mid = int(rare_copies * (2 * total_non_missing_haploid - rare_copies) / (2 * total_non_missing_haploid))
+    
+    try:
+        mid = int(rare_copies * (2 * total_non_missing_haploid - rare_copies) / (2 * total_non_missing_haploid))
+    except ZeroDivisionError:
+        hwe = 0
+        return hwe
+
     for i in range(rare_copies + 1):
         het_probs.append(0.0)
 

@@ -154,7 +154,7 @@ def preprocessing(data, user_feature_names):
         assert len(columns) == data.shape[1], 'Missing names of user-defined features'
         data.columns = columns
 
-    data.loc[data['MAF'].isnull(), 'MAF'] = data['MAF'].median()
+    data = data[~data['MAF'].isnull()]
     data.loc[data['Mean_DP'].isnull(), 'Mean_DP'] = data['Mean_DP'].median()
     data.loc[data['Mean_GQ'].isnull(), 'Mean_GQ'] = data['Mean_GQ'].median()
     data.loc[data['SD_DP'].isnull(), 'SD_DP'] = data['SD_DP'].median()
