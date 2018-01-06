@@ -154,7 +154,6 @@ def preprocessing(data, user_feature_names):
         assert len(columns) == data.shape[1], 'Missing names of user-defined features'
         data.columns = columns
 
-    data = data[~data['MAF'].isnull()]
     data.loc[data['Mean_DP'].isnull(), 'Mean_DP'] = data['Mean_DP'].median()
     data.loc[data['Mean_GQ'].isnull(), 'Mean_GQ'] = data['Mean_GQ'].median()
     data.loc[data['SD_DP'].isnull(), 'SD_DP'] = data['SD_DP'].median()
@@ -164,6 +163,7 @@ def preprocessing(data, user_feature_names):
     # data.loc[data['ABHom'].isnull(), 'ABHom'] = data['ABHom'].median()
     # data.loc[data['ABHet'].isnull(), 'ABHet'] = data['ABHet'].median()
     data.loc[data['GC'].isnull(), 'GC'] = data['GC'].median()
+    data = data[data['MAF'].notnull()]
     return data
 
 def print_thresholds(thresholds, type):
