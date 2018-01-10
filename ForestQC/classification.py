@@ -7,7 +7,7 @@ import pandas as pd
 import os
 
 # just a second choice
-def random_forest_classifierA(labelled_data, grey_variants, user_features):
+def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
     try:
@@ -28,21 +28,21 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features):
       print(feature, weight)
 
     print('\nTesting model...')
-    precison_recall = precision_recall_fscore_support(y_true=y_test, y_pred=rf.predict(x_test))
+    precision_recall = precision_recall_fscore_support(y_true=y_test, y_pred=predict_class(rf, x_test, prob_threshold))
     print('\n\t\tBad\tGood')
-    print('Precision: ' + str(precison_recall[0]))
-    print('Recall: ' + str(precison_recall[1]))
-    print('F1-score: ' + str(precison_recall[2]))
-    print('Sample size: ' + str(precison_recall[3]))
+    print('Precision: ' + str(precision_recall[0]))
+    print('Recall: ' + str(precision_recall[1]))
+    print('F1-score: ' + str(precision_recall[2]))
+    print('Sample size: ' + str(precision_recall[3]))
     
     x_pred = grey_variants.loc[:, _features].values
     print('\nPredicting variants...')
-    y_pred = rf.predict(x_pred)
+    y_pred = predict_class(rf, x_pred, prob_threshold)
     print('Done.\n')
 
     return y_pred
 
-def random_forest_classifierB(labelled_data, grey_variants, user_features):
+def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
 
@@ -52,7 +52,7 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features):
         _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
 
     x, y = labelled_data.loc[:, _features].values, labelled_data.loc[:, 'Good'].values
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20,random_state=1)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
     print('\nTraining model...')
     rf.fit(x_train, y_train)
@@ -63,49 +63,58 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features):
       print(feature, weight)
 
     print('\nTesting model...')
-    precison_recall = precision_recall_fscore_support(y_true=y_test, y_pred=rf.predict(x_test))
+    precision_recall = precision_recall_fscore_support(y_true=y_test, y_pred=predict_class(rf, x_test, prob_threshold))
     print('\n\t\tBad\tGood')
-    print('Precision: ' + str(precison_recall[0]))
-    print('Recall: ' + str(precison_recall[1]))
-    print('F1-score: ' + str(precison_recall[2]))
-    print('Sample size: ' + str(precison_recall[3]))
+    print('Precision: ' + str(precision_recall[0]))
+    print('Recall: ' + str(precision_recall[1]))
+    print('F1-score: ' + str(precision_recall[2]))
+    print('Sample size: ' + str(precision_recall[3]))
 
     x_pred = grey_variants.loc[:, _features].values
     print('\nPredicting variants...')
-    y_pred = rf.predict(x_pred)
+    y_pred = predict_class(rf, x_pred, prob_threshold)
     print('Done.')
 
     return y_pred
 
-def classification(good, bad, grey, model, user_features):
-  rf_model = {'A': random_forest_classifierA, 'B': random_forest_classifierB}
-  if good.shape[0] > bad.shape[0]:
-    prediction = rf_model[model](pd.concat([good.sample(n=bad.shape[0],random_state=9), bad]), grey, user_features)
-  elif good.shape[0] == bad.shape[0]:
-    prediction = rf_model[model](pd.concat([good, bad]), grey, user_features)
-  else:
-    prediction = rf_model[model](pd.concat([bad.sample(n=good.shape[0],random_state=9), good]), grey, user_features)
+def predict_class(rf, dataset, prob_threshold):
+    probs = rf.predict_proba(dataset)
+    pred_class = probs[:, 1]
+    pred_class[pred_class >= prob_threshold] = 1
+    pred_class[pred_class < prob_threshold] = 0
+    return pred_class
 
-  return prediction
+def classification(good, bad, grey, model, user_features, threshold):
+    rf_model = {'A': random_forest_classifierA, 'B': random_forest_classifierB}
+    if good.shape[0] > bad.shape[0]:
+        prediction = rf_model[model](pd.concat([good.sample(n=bad.shape[0], random_state=9), bad]), grey, user_features,
+                                     threshold)
+    elif good.shape[0] == bad.shape[0]:
+        prediction = rf_model[model](pd.concat([good, bad]), grey, user_features, threshold)
+    else:
+        prediction = rf_model[model](pd.concat([bad.sample(n=good.shape[0], random_state=9), good]), grey, user_features,
+                                     threshold)
+
+    return prediction
 
 
-def execute_classification(good_variants, bad_variants, grey_variants, model, output_handle, user_features):
-  dir = os.path.dirname(os.path.realpath(good_variants))
-  print('Loading data...')
-  good = pd.read_table(good_variants)
-  bad = pd.read_table(bad_variants)
-  grey = pd.read_table(grey_variants)
+def execute_classification(good_variants, bad_variants, grey_variants, model, output_handle, user_features, threshold):
+    dir = os.path.dirname(os.path.realpath(good_variants))
+    print('Loading data...')
+    good = pd.read_table(good_variants)
+    bad = pd.read_table(bad_variants)
+    grey = pd.read_table(grey_variants)
 
-  pred = classification(good, bad, grey, model, user_features)
-  grey['Good'] = pred
-  
-  predicted_good = grey[grey['Good'] == 1]
-  predicted_bad = grey[grey['Good'] == 0]
-  
-  print('Number of predicted good variants: ' + str(predicted_good.shape[0]))
-  print('Number of predicted bad variants: ' + str(predicted_bad.shape[0]))
+    pred = classification(good, bad, grey, model, user_features, threshold)
+    grey['Good'] = pred
 
-  print('\nWriting data...')
-  predicted_good.to_csv(dir + '/' + 'predicted_good.' + output_handle, header=None, index = False, sep = '\t', na_rep='NA')
-  predicted_bad.to_csv(dir + '/' + 'predicted_bad.' + output_handle, header=None, index = False, sep = '\t', na_rep='NA')
-  print('Done.')
+    predicted_good = grey[grey['Good'] == 1]
+    predicted_bad = grey[grey['Good'] == 0]
+
+    print('Number of predicted good variants: ' + str(predicted_good.shape[0]))
+    print('Number of predicted bad variants: ' + str(predicted_bad.shape[0]))
+
+    print('\nWriting data...')
+    predicted_good.to_csv(dir + '/' + 'predicted_good.' + output_handle, header=None, index = False, sep = '\t', na_rep='NA')
+    predicted_bad.to_csv(dir + '/' + 'predicted_bad.' + output_handle, header=None, index = False, sep = '\t', na_rep='NA')
+    print('Done.')

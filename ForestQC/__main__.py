@@ -58,6 +58,8 @@ def parse_args():
     classify_parser_required.add_argument('-g', '--good', dest='good_var', required=True, help='good variants')
     classify_parser_required.add_argument('-b', '--bad', dest='bad_var', required=True, help='bad variants')
     classify_parser_required.add_argument('-y', '--gray', dest='gray_var', required=True, help='gray variants')
+    classify_parser.add_argument('-t', '--threshold', dest='prob_threshold', required=False, default=0.50, type = float,
+                                 help='probability threshold for variant classification, default = 0.50')
     classify_parser.add_argument('-m', '--model', dest='model', required=False, default='B',
                                  help='type of random forest model, A or B [optional]. default: B')
     classify_parser.add_argument('-o', '--output', dest='output_suffix', required=False, default='variants.tsv',
@@ -140,6 +142,7 @@ def main_classify(**kwargs):
     model = kwargs['model']
     output_suffix = kwargs['output_suffix']
     user_features_unprocessed = kwargs['user_features']
+    prob_threshold = kwargs['prob_threshold']
 
     try:
         if os.path.isfile(user_features_unprocessed):
@@ -155,7 +158,7 @@ def main_classify(**kwargs):
     except TypeError:
         user_features = None
 
-    execute_classification(good_var, bad_var, gray_var, model, output_suffix, user_features)
+    execute_classification(good_var, bad_var, gray_var, model, output_suffix, user_features, prob_threshold)
 
 def main_compute_gc(**kwargs):
     ref = kwargs['ref_genome']
