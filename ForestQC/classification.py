@@ -28,7 +28,9 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_
       print(feature, weight)
 
     print('\nTesting model...')
-    precision_recall = precision_recall_fscore_support(y_true=y_test, y_pred=predict_class(rf, x_test, prob_threshold))
+    y_test_pred, _ = predict_class(rf, x_test, prob_threshold)
+    precision_recall = precision_recall_fscore_support(y_true=y_test,
+                                                       y_pred=y_test_pred)
     print('\n\t\tBad\tGood')
     print('Precision: ' + str(precision_recall[0]))
     print('Recall: ' + str(precision_recall[1]))
@@ -63,7 +65,9 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_
       print(feature, weight)
 
     print('\nTesting model...')
-    precision_recall = precision_recall_fscore_support(y_true=y_test, y_pred=predict_class(rf, x_test, prob_threshold))
+    y_test_pred, _ = predict_class(rf, x_test, prob_threshold)
+    precision_recall = precision_recall_fscore_support(y_true=y_test,
+                                                       y_pred=y_test_pred)
     print('\n\t\tBad\tGood')
     print('Precision: ' + str(precision_recall[0]))
     print('Recall: ' + str(precision_recall[1]))
@@ -107,8 +111,8 @@ def execute_classification(good_variants, bad_variants, grey_variants, model, ou
     grey = pd.read_table(grey_variants)
 
     pred, prob = classification(good, bad, grey, model, user_features, threshold)
-    grey['Good'] = pred
     grey['Probability'] = prob
+    grey['Good'] = pred
 
     predicted_good = grey[grey['Good'] == 1]
     predicted_bad = grey[grey['Good'] == 0]

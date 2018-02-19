@@ -63,9 +63,9 @@ chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 0.1 0.06 0.01 1.0 0.
 chr1:145  1 145 A T 0.03  54.02 52.00 26.00 11.64 0.33 0.43 0.2 0.03 0.03 1.0 0.49 0.98 0.435 NA 4.3
 ```
 
- - Final result file (The variant is a good variant if Good = 1, or a bad variant if Good = 0, grey variants do not have Good column before it is predicted)
+ - Final result file (Prbability means the probability of a variant being good. The variant is a good variant if Good = 1, or a bad variant if Good = 0, grey variants do not have Good column before it is predicted)
 ```sh
-RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2 Good
+RSID CHR POS REF ALT MAF Mean_DP Mean_GQ SD_DP SD_GQ Outlier_DP Outlier_GQ Discordant_Geno Mendel_Error Missing_Rate HWE ABHet ABHom GC user-defined_feature1 user-defined_feature2 Probability Good
 chr1:144  1 144 A T 0.03  54.00 54.00 23.00 13.24 0.43 0.23 0.1 0.03 0.01 1.0 0.45 0.99 0.435 2.0 4.3 1
 ```
  
