@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import precision_recall_fscore_support
 import pandas as pd
+import numpy as np
 import os
 
 # just a second choice
@@ -83,8 +84,8 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_
 
 def predict_class(rf, dataset, prob_threshold):
     probs = rf.predict_proba(dataset)
-    prob = probs[:, 1]
-    pred_class = probs[:, 1]
+    prob = np.copy(probs[:, 1])
+    pred_class = np.copy(probs[:, 1])
     pred_class[pred_class >= prob_threshold] = 1
     pred_class[pred_class < prob_threshold] = 0
     return pred_class, prob
@@ -92,15 +93,16 @@ def predict_class(rf, dataset, prob_threshold):
 def classification(good, bad, grey, model, user_features, threshold):
     rf_model = {'A': random_forest_classifierA, 'B': random_forest_classifierB}
     if good.shape[0] > bad.shape[0]:
-        prediction = rf_model[model](pd.concat([good.sample(n=bad.shape[0], random_state=9), bad]), grey, user_features,
+        pred, prob = rf_model[model](pd.concat([good.sample(n=bad.shape[0], random_state=9), bad]), grey, user_features,
                                      threshold)
     elif good.shape[0] == bad.shape[0]:
-        prediction = rf_model[model](pd.concat([good, bad]), grey, user_features, threshold)
+        pred, prob = rf_model[model](pd.concat([good, bad]), grey, user_features, threshold)
     else:
-        prediction = rf_model[model](pd.concat([bad.sample(n=good.shape[0], random_state=9), good]), grey, user_features,
+        pred, prob = rf_model[model](pd.concat([bad.sample(n=good.shape[0], random_state=9), good]), grey, user_features,
                                      threshold)
-
-    return prediction
+    # print(pred)
+    # print(prob)
+    return pred, prob
 
 
 def execute_classification(good_variants, bad_variants, grey_variants, model, output_handle, user_features, threshold):
