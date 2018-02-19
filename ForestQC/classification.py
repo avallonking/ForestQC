@@ -37,10 +37,10 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_
     
     x_pred = grey_variants.loc[:, _features].values
     print('\nPredicting variants...')
-    y_pred = predict_class(rf, x_pred, prob_threshold)
+    y_pred, y_prob = predict_class(rf, x_pred, prob_threshold)
     print('Done.\n')
 
-    return y_pred
+    return y_pred, y_prob
 
 def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
@@ -72,17 +72,18 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_
 
     x_pred = grey_variants.loc[:, _features].values
     print('\nPredicting variants...')
-    y_pred = predict_class(rf, x_pred, prob_threshold)
+    y_pred, y_prob = predict_class(rf, x_pred, prob_threshold)
     print('Done.')
 
-    return y_pred
+    return y_pred, y_prob
 
 def predict_class(rf, dataset, prob_threshold):
     probs = rf.predict_proba(dataset)
+    prob = probs[:, 1]
     pred_class = probs[:, 1]
     pred_class[pred_class >= prob_threshold] = 1
     pred_class[pred_class < prob_threshold] = 0
-    return pred_class
+    return pred_class, prob
 
 def classification(good, bad, grey, model, user_features, threshold):
     rf_model = {'A': random_forest_classifierA, 'B': random_forest_classifierB}
@@ -105,8 +106,9 @@ def execute_classification(good_variants, bad_variants, grey_variants, model, ou
     bad = pd.read_table(bad_variants)
     grey = pd.read_table(grey_variants)
 
-    pred = classification(good, bad, grey, model, user_features, threshold)
+    pred, prob = classification(good, bad, grey, model, user_features, threshold)
     grey['Good'] = pred
+    grey['Probability'] = prob
 
     predicted_good = grey[grey['Good'] == 1]
     predicted_bad = grey[grey['Good'] == 0]
