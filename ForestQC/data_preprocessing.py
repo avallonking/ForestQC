@@ -164,8 +164,8 @@ def preprocessing(data, user_feature_names):
     # data.loc[data['ABHom'].isnull(), 'ABHom'] = data['ABHom'].median()
     # data.loc[data['ABHet'].isnull(), 'ABHet'] = data['ABHet'].median()
     data.loc[data['GC'].isnull(), 'GC'] = data['GC'].median()
-    data = data[data['MAF'].notnull()]
     data.loc[:, 'Probability'] = np.nan
+    data = data[data['MAF'].notnull()]
     return data
 
 def print_thresholds(thresholds, type):

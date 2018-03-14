@@ -8,7 +8,7 @@ from ForestQC.get_ref_genome_GC import execute_compute_gc
 
 def parse_args():
     # parse arguments
-    parser = argparse.ArgumentParser(description='ForestQC: variant quality control based on random forest model')
+    parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(help='ForestQC command help', dest='command')
     subparsers.required = True
 
@@ -167,6 +167,9 @@ def main_compute_gc(**kwargs):
     execute_compute_gc(ref, out, window_size)
 
 def main():
+    print('ForestQC v1.1.2 by Jae Hoon Sul Lab')
+    print('--variant quality control based on random forest model')
+    print()
     command_functions = {'stat': main_stat, 'split': main_split, 'classify': main_classify,
                          'set_outlier': main_set_outlier, 'compute_gc': main_compute_gc}
     command, args = parse_args()
