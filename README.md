@@ -18,7 +18,7 @@ $ ForestQC stat -h
 ### Workflow
 ```example/example_output/example.script.sh``` provides step-by-step tutorial about how to run this software.
 
-Before doing the classification, we should set the Outlier_GQ and Outlier_DP. It would print out Outlier_DP and Outlier_GQ on the screen, which would be used as inputs in the next step. *Note that all vcf files in this analysis should be included.*
+Before doing the classification, we should set the thresholds for Outlier_GQ and Outlier_DP. It would print out Outlier_DP threshold and Outlier_GQ threshold on the screen, which would be used as inputs in the next step. *Note that all vcf files in this analysis should be included.*
 ```sh
 $ ForestQC set_outlier -i [vcf_file1] [vcf_file2] [...]
 ```
