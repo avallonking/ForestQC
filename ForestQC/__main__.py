@@ -74,6 +74,8 @@ def parse_args():
     set_outlier_parser_required.add_argument('-i', '--input', required=True, dest='file_list',
                                             help='input file(s). please separate the filenames with comma if there'
                                                  'are multiple files')
+    set_outlier_parser.add_argument('-m', '--mem', required=False, dest='mem', default='2g',
+                                    help='memory usage for external sort. default: 2G')
 
     # arguments for calculate GC content for reference genome
     compute_gc_parser = subparsers.add_parser('compute_gc', help='compute GC content help')
@@ -92,7 +94,8 @@ def parse_args():
 
 def main_set_outlier(**kwargs):
     file_list = kwargs['file_list'].split(',')
-    set_outlier(file_list)
+    mem = kwargs['mem']
+    set_outlier(file_list, 'temp.external_sort.out', mem)
 
 def main_stat(**kwargs):
     target_file = kwargs['target_file']
