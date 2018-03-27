@@ -220,7 +220,7 @@ def get_quartile(filename):
     return linecache.getline(filename, quartile_line).strip()
 
 
-def set_outlier(filenames, outfilename, block_size):
+def set_outlier(filenames, temp_dir, outfilename, block_size):
     # filenames should be a list of vcf files
     if block_size[-1].lower() == 'g':
         block_size = int(block_size[:-1]) * 1024 * 1024 * 1024
@@ -234,14 +234,14 @@ def set_outlier(filenames, outfilename, block_size):
         block_size = int(block_size)
 
     sorter = ExternalSort(block_size)
-    sorter.sort(filenames, outfilename)
+    sorter.sort(filenames, os.path.join(temp_dir, outfilename))
 
-    print('Outlier_DP threshold: {}'.format(get_quartile('dp.' + outfilename)))
-    print('Outlier_GQ threshold: {}'.format(get_quartile('gq.' + outfilename)))
-    os.remove('dp.' + outfilename)
-    os.remove('gq.' + outfilename)
+    print('Outlier_DP threshold: {}'.format(get_quartile(os.path.join(temp_dir, 'dp.' + outfilename))))
+    print('Outlier_GQ threshold: {}'.format(get_quartile(os.path.join(temp_dir, 'gq.' + outfilename))))
+    os.remove(os.path.join(temp_dir, 'dp.' + outfilename))
+    os.remove(os.path.join(temp_dir, 'gq.' + outfilename))
 
 # for testing only
 if __name__ == '__main__':
     filenames = sys.argv[1:]
-    set_outlier(filenames, 'test.out', '500k')
+    set_outlier(filenames, os.getcwd(), 'test.out', '500k')

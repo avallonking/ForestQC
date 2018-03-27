@@ -76,6 +76,8 @@ def parse_args():
                                                  'are multiple files')
     set_outlier_parser.add_argument('-m', '--mem', required=False, dest='mem', default='2g',
                                     help='memory usage for external sort. default: 2G')
+    set_outlier_parser.add_argument('-t', '--temp', required=False, dest='temp_dir', default=None,
+                                    help='directory to store intermediate files. default: current working directory')
 
     # arguments for calculate GC content for reference genome
     compute_gc_parser = subparsers.add_parser('compute_gc', help='compute GC content help')
@@ -95,7 +97,10 @@ def parse_args():
 def main_set_outlier(**kwargs):
     file_list = kwargs['file_list'].split(',')
     mem = kwargs['mem']
-    set_outlier(file_list, 'temp.external_sort.out', mem)
+    temp_dir = kwargs['temp_dir']
+    if temp_dir == None:
+        temp_dir = os.getcwd()
+    set_outlier(file_list, temp_dir, 'temp.external_sort.out', mem)
 
 def main_stat(**kwargs):
     target_file = kwargs['target_file']
@@ -170,7 +175,7 @@ def main_compute_gc(**kwargs):
     execute_compute_gc(ref, out, window_size)
 
 def main():
-    print('ForestQC v1.1.2 by Jae Hoon Sul Lab')
+    print('ForestQC v1.1.3 by Jae Hoon Sul Lab')
     print('--variant quality control based on random forest model')
     print()
     command_functions = {'stat': main_stat, 'split': main_split, 'classify': main_classify,

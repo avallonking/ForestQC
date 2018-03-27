@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/other.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/Classifiers.iml" afterPath="$PROJECT_DIR$/.idea/Classifiers.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/ForestQC/__main__.py" afterPath="$PROJECT_DIR$/ForestQC/__main__.py" />
       <change beforePath="$PROJECT_DIR$/ForestQC/setOutlier.py" afterPath="$PROJECT_DIR$/ForestQC/setOutlier.py" />
+      <change beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,99 +26,82 @@
     <favorites_list name="Classifiers" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.685836">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="__main__.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="455">
-                  <caret line="92" column="24" lean-forward="true" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="stat.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1298">
-                  <caret line="60" column="22" lean-forward="false" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#0#11#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="vcf_stat.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="7238">
-                  <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="setOutlier.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1914">
-                  <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#11#0" expanded="true" />
-                    <element signature="e#51#80#0" expanded="false" />
-                    <element signature="e#3679#4276#0" expanded="false" />
-                    <element signature="e#4309#5106#0" expanded="false" />
-                    <element signature="e#5139#5958#0" expanded="false" />
-                    <element signature="e#5993#7134#0" expanded="false" />
-                    <element signature="e#7519#8285#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="1430">
-                    <caret line="65" column="128" lean-forward="false" selection-start-line="65" selection-start-column="128" selection-end-line="65" selection-end-column="128" />
-                    <folding />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="setOutlier.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="88">
-                  <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#11#0" expanded="true" />
-                    <element signature="e#51#80#0" expanded="false" />
-                    <element signature="e#3679#4276#0" expanded="false" />
-                    <element signature="e#4309#5106#0" expanded="false" />
-                    <element signature="e#5139#5958#0" expanded="false" />
-                    <element signature="e#5993#7134#0" expanded="false" />
-                    <element signature="e#7252#7459#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="244">
+              <caret line="77" column="81" lean-forward="false" selection-start-line="77" selection-start-column="81" selection-end-line="77" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stat.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="60" column="22" lean-forward="false" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vcf_stat.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="508">
+              <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setOutlier.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="246" column="38" lean-forward="false" selection-start-line="246" selection-start-column="38" selection-end-line="246" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#51#80#0" expanded="false" />
+                <element signature="e#3679#4276#0" expanded="false" />
+                <element signature="e#4309#5106#0" expanded="false" />
+                <element signature="e#5139#5958#0" expanded="false" />
+                <element signature="e#5993#7134#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="1430">
+                <caret line="65" column="128" lean-forward="false" selection-start-line="65" selection-start-column="128" selection-end-line="65" selection-end-column="128" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -162,9 +143,9 @@
         <option value="$PROJECT_DIR$/ForestQC/data_preprocessing.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/ForestQC/classification.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/ForestQC/__main__.py" />
         <option value="$PROJECT_DIR$/ForestQC/setOutlier.py" />
+        <option value="$PROJECT_DIR$/ForestQC/__main__.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -174,10 +155,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="width" value="1440" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -400,17 +381,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1057" extended-state="1" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="0" y="0" width="310" height="677" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19022869" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23401535" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23785166" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16809729" sideWeight="0.490625" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16809729" sideWeight="0.490625" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -798,13 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/classification.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -830,26 +804,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1298">
-          <caret line="60" column="22" lean-forward="false" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7238">
-          <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="440">
@@ -867,18 +821,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
+    <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="92" column="24" lean-forward="true" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
-          <folding />
+        <state relative-caret-position="351">
+          <caret line="60" column="22" lean-forward="false" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1914">
-          <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+        <state relative-caret-position="420">
+          <caret line="246" column="38" lean-forward="false" selection-start-line="246" selection-start-column="38" selection-end-line="246" selection-end-column="38" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#51#80#0" expanded="false" />
@@ -886,8 +852,23 @@
             <element signature="e#4309#5106#0" expanded="false" />
             <element signature="e#5139#5958#0" expanded="false" />
             <element signature="e#5993#7134#0" expanded="false" />
-            <element signature="e#7519#8285#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="77" column="81" lean-forward="false" selection-start-line="77" selection-start-column="81" selection-end-line="77" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
