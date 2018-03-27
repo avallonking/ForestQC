@@ -41,15 +41,16 @@ import linecache
 class VCFProcessor(object):
     BLOCK_FILENAME_FORMAT = '{0}_block_{1}.dat'
 
-    def __init__(self, filenames):
+    def __init__(self, filenames, temp_dir):
         # filenames should be a list of vcf files
         self.filenames = filenames
+        self.temp_dir = temp_dir
         self.gq_block_filenames = []
         self.dp_block_filenames = []
 
     def write_block(self, data, _type, block_number):
         data.sort()
-        filename = self.BLOCK_FILENAME_FORMAT.format(_type, block_number)
+        filename = os.path.join(self.temp_dir, self.BLOCK_FILENAME_FORMAT.format(_type, block_number))
         file = open(filename, 'w')
         file.write('\n'.join(list(map(str, data))))
         file.close()
@@ -193,9 +194,9 @@ class ExternalSort(object):
     #         total_size += os.stat(filename).st_size
     #     return int(total_size / block_size) + 1
 
-    def sort(self, filenames, outfilename):
+    def sort(self, filenames, temp_dir, outfilename):
         # filenames is a list of vcf file(s)
-        vcf_processor = VCFProcessor(filenames)
+        vcf_processor = VCFProcessor(filenames, temp_dir)
         gq_block_num, dp_block_num = vcf_processor.get_gq_dp(self.block_size)
         gq_block_filenames, dp_block_filenames = vcf_processor.get_block_filenames()
 
@@ -206,8 +207,8 @@ class ExternalSort(object):
         dp_buffer_size = int(self.block_size / (dp_block_num + 1))
 
         # merge gq and dp separately
-        merger.merge(gq_block_filenames, 'gq.' + outfilename, gq_buffer_size)
-        merger.merge(dp_block_filenames, 'dp.' + outfilename, dp_buffer_size)
+        merger.merge(gq_block_filenames, os.path.join(temp_dir, 'gq.' + outfilename), gq_buffer_size)
+        merger.merge(dp_block_filenames, os.path.join(temp_dir, 'dp.' + outfilename), dp_buffer_size)
 
         vcf_processor.cleanup()
 
@@ -234,7 +235,7 @@ def set_outlier(filenames, temp_dir, outfilename, block_size):
         block_size = int(block_size)
 
     sorter = ExternalSort(block_size)
-    sorter.sort(filenames, os.path.join(temp_dir, outfilename))
+    sorter.sort(filenames, temp_dir, outfilename)
 
     print('Outlier_DP threshold: {}'.format(get_quartile(os.path.join(temp_dir, 'dp.' + outfilename))))
     print('Outlier_GQ threshold: {}'.format(get_quartile(os.path.join(temp_dir, 'gq.' + outfilename))))

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ForestQC/__main__.py" afterPath="$PROJECT_DIR$/ForestQC/__main__.py" />
       <change beforePath="$PROJECT_DIR$/ForestQC/setOutlier.py" afterPath="$PROJECT_DIR$/ForestQC/setOutlier.py" />
-      <change beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="352">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -71,18 +69,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setOutlier.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="setOutlier.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="246" column="38" lean-forward="false" selection-start-line="246" selection-start-column="38" selection-end-line="246" selection-end-column="38" />
+            <state relative-caret-position="508">
+              <caret line="198" column="56" lean-forward="false" selection-start-line="198" selection-start-column="56" selection-end-line="198" selection-end-column="56" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#51#80#0" expanded="false" />
-                <element signature="e#3679#4276#0" expanded="false" />
-                <element signature="e#4309#5106#0" expanded="false" />
-                <element signature="e#5139#5958#0" expanded="false" />
-                <element signature="e#5993#7134#0" expanded="false" />
+                <element signature="e#2147#3563#0" expanded="false" />
+                <element signature="e#3751#4348#0" expanded="false" />
+                <element signature="e#4381#5178#0" expanded="false" />
+                <element signature="e#5211#6030#0" expanded="false" />
+                <element signature="e#7392#7599#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -143,9 +142,9 @@
         <option value="$PROJECT_DIR$/ForestQC/data_preprocessing.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/ForestQC/classification.py" />
-        <option value="$PROJECT_DIR$/ForestQC/setOutlier.py" />
         <option value="$PROJECT_DIR$/ForestQC/__main__.py" />
         <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/ForestQC/setOutlier.py" />
       </list>
     </option>
   </component>
@@ -841,21 +840,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="246" column="38" lean-forward="false" selection-start-line="246" selection-start-column="38" selection-end-line="246" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#51#80#0" expanded="false" />
-            <element signature="e#3679#4276#0" expanded="false" />
-            <element signature="e#4309#5106#0" expanded="false" />
-            <element signature="e#5139#5958#0" expanded="false" />
-            <element signature="e#5993#7134#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
@@ -866,9 +850,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="352">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/setOutlier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="198" column="56" lean-forward="false" selection-start-line="198" selection-start-column="56" selection-end-line="198" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#51#80#0" expanded="false" />
+            <element signature="e#2147#3563#0" expanded="false" />
+            <element signature="e#3751#4348#0" expanded="false" />
+            <element signature="e#4381#5178#0" expanded="false" />
+            <element signature="e#5211#6030#0" expanded="false" />
+            <element signature="e#7392#7599#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
