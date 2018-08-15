@@ -8,6 +8,11 @@ To install the software. **This soft is compatible with OSX, 64-bit Linux and 64
 $ conda install forestqc -c avallonking
 ```
 
+To update the software.
+```sh
+$ conda update forestqc -c avallonking
+```
+
 After installation, you can check the usage 
 ```sh
 $ ForestQC -h
