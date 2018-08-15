@@ -175,7 +175,7 @@ def main_compute_gc(**kwargs):
     execute_compute_gc(ref, out, window_size)
 
 def main():
-    print('ForestQC v1.1.3 by Jae Hoon Sul Lab')
+    print('ForestQC v1.1.4 by Jae Hoon Sul Lab at UCLA')
     print('--variant quality control based on random forest model')
     print()
     command_functions = {'stat': main_stat, 'split': main_split, 'classify': main_classify,

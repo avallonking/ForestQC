@@ -4,12 +4,6 @@ import statistics
 from operator import itemgetter
 
 DP_GQ_START_IDX = 9
-GENOTYPE_IDX = 0
-GENOTYPE_DEPTH_IDX = 1
-DP_IDX = 2
-GQ_IDX = 3
-# DP_THRESHOLD = 34
-# GQ_THRESHOLD = 99
 
 # for PED file processing
 FAMILY_ID_IDX = 0
@@ -19,6 +13,16 @@ MOTHER_ID_IDX = 3
 SEX_IDX = 4
 PHENOTYPE_IDX = 5
 SAMPLE_ID_IDX = -1
+
+def get_idx(format_field):
+    # format field is the 8th entry in each line
+    idx = {k: v for v, k in enumerate(format_field.split(':'))}
+    gt_idx = idx['GT'] if 'GT' in idx else 'NA'
+    ad_idx = idx['AD'] if 'AD' in idx else 'NA'
+    dp_idx = idx['DP'] if 'DP' in idx else 'NA'
+    gq_idx = idx['GQ'] if 'GQ' in idx else 'NA'
+
+    return gt_idx, ad_idx, dp_idx, gq_idx
 
 def isHomozygous(genotype):
     if genotype[0] == genotype[-1]:
@@ -33,54 +37,54 @@ def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99, target_idx=None, ch
     outlier_dp_count = 0
     outlier_gq_count = 0
 
+    GENOTYPE_IDX, GENOTYPE_DEPTH_IDX, DP_IDX, GQ_IDX = get_idx(variant_info.split('\t')[8])
+
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
     if target_idx and chr == 'chrX':
       individual_info = itemgetter(*target_idx)(individual_info) 
 
     for idv in individual_info:
         idv_info = idv.split(':')
-        if len(idv_info) < 4:
-          continue
 
-        if idv_info[DP_IDX] != '.':
-          dp.append(float(idv_info[DP_IDX]))
-          if float(idv_info[DP_IDX]) < dp_threshold:
-            outlier_dp_count += 1
-          # if idv_info[DP_IDX] != '0':
-            # avg_dp.append(float(idv_info[DP_IDX]))
+        try: 
+            dp.append(float(idv_info[DP_IDX]))
+            if float(idv_info[DP_IDX]) < dp_threshold:
+                outlier_dp_count += 1
+        except:
+            pass
 
-        if idv_info[GQ_IDX] != '.':
-          gq.append(float(idv_info[GQ_IDX]))
-          if float(idv_info[GQ_IDX]) < gq_threshold:
-            outlier_gq_count += 1
-          # if idv_info[GQ_IDX] != '0':
-            # avg_gq.append(float(idv_info[GQ_IDX]))
+        try:
+            gq.append(float(idv_info[GQ_IDX]))
+            if float(idv_info[GQ_IDX]) < gq_threshold:
+                outlier_gq_count += 1
+        except:
+            pass
 
     if len(gq) > 1:
-      mean_gq = round(statistics.mean(gq), 5)
-      sd_gq = round(statistics.stdev(gq), 5)
-      outlier_gq = round((outlier_gq_count / len(gq)), 5)
+        mean_gq = round(statistics.mean(gq), 5)
+        sd_gq = round(statistics.stdev(gq), 5)
+        outlier_gq = round((outlier_gq_count / len(gq)), 5)
     elif len(gq) == 1:
-      mean_gq = gq[0]
-      sd_gq = 0
-      outlier_gq = outlier_gq_count
+        mean_gq = gq[0]
+        sd_gq = 0
+        outlier_gq = outlier_gq_count
     else:
-      mean_gq = 'NA'
-      sd_gq = 'NA'
-      outlier_gq = 'NA'
+        mean_gq = 'NA'
+        sd_gq = 'NA'
+        outlier_gq = 'NA'
 
     if len(dp) > 1:
-      mean_dp = round(statistics.mean(dp), 5)
-      sd_dp = round(statistics.stdev(dp), 5)
-      outlier_dp = round((outlier_dp_count) / len(dp), 5)
+        mean_dp = round(statistics.mean(dp), 5)
+        sd_dp = round(statistics.stdev(dp), 5)
+        outlier_dp = round((outlier_dp_count) / len(dp), 5)
     elif len(dp) == 1:
-      mean_dp = dp[0]
-      sd_dp = 0
-      outlier_dp = outlier_dp_count
+        mean_dp = dp[0]
+        sd_dp = 0
+        outlier_dp = outlier_dp_count
     else:
-      mean_dp = 'NA'
-      sd_dp = 'NA'
-      outlier_dp = 'NA'
+        mean_dp = 'NA'
+        sd_dp = 'NA'
+        outlier_dp = 'NA'
 
     return mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq
 
@@ -158,11 +162,16 @@ def getAB(variant_info, sample_level_AB=False, chr=None, target_idx=None):
     variantAB = {'abhet': [0, 0], 'abhom': [0, 0]}
     sample_idx = 1
 
+    GENOTYPE_IDX, GENOTYPE_DEPTH_IDX, DP_IDX, GQ_IDX = get_idx(variant_info.split('\t')[8])
+
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
     if target_idx and chr == 'chrX':
       individual_info = itemgetter(*target_idx)(individual_info)
 
     for idv in individual_info:
+        if GENOTYPE_IDX == 'NA' or GENOTYPE_DEPTH_IDX == 'NA':
+            continue
+
         genotype = idv.split(':')[GENOTYPE_IDX]
 
         if '.' in genotype:
@@ -199,12 +208,17 @@ def getMAF(variant_info, target_idx=None, chr=None):
     allele_info = {}
     freq = []
 
+    GENOTYPE_IDX, GENOTYPE_DEPTH_IDX, DP_IDX, GQ_IDX = get_idx(variant_info.split('\t')[8])
+
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
     if target_idx and chr == 'chrX':
       individual_info = itemgetter(*target_idx)(individual_info)
 
     for idv in individual_info:
-        genotype = idv.split(':')[GENOTYPE_IDX]
+        try:
+            genotype = idv.split(':')[GENOTYPE_IDX]
+        except TypeError:
+            continue
         for i in [0, -1]:
             if genotype[i] == '.':
                 continue
@@ -227,23 +241,32 @@ def getMissing(variant_info, chr=None, male_idx=None, target_idx=None):
     # get missing rate from a line of variant
     missing_allele = 0
 
+    GENOTYPE_IDX, GENOTYPE_DEPTH_IDX, DP_IDX, GQ_IDX = get_idx(variant_info.split('\t')[8])
+    
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
     if target_idx and chr == 'chrX':
-      individual_info = itemgetter(*target_idx)(individual_info) 
+        individual_info = itemgetter(*target_idx)(individual_info) 
 
     total_allele = len(individual_info) * 2
     for idv in individual_info:
-        genotype = idv.split(':')[GENOTYPE_IDX]
+        try:
+            genotype = idv.split(':')[GENOTYPE_IDX]
+        except TypeError:
+            continue
 
         for i in [0, -1]:
             missing_allele += genotype[i].count('.')
 
     if chr == 'chrX' and male_idx:
-      male_info = itemgetter(*male_idx)(individual_info)
-      for idv in male_info:
-        genotype = idv.split(':')[GENOTYPE_IDX]
-        if '.' not in genotype and not isHomozygous(genotype):
-          missing_allele += 1
+        male_info = itemgetter(*male_idx)(individual_info)
+        for idv in male_info:
+            try:
+                genotype = idv.split(':')[GENOTYPE_IDX]
+            except TypeError:
+                continue
+
+            if '.' not in genotype and not isHomozygous(genotype):
+                missing_allele += 1
 
     missing_rate = round(missing_allele / total_allele, 5)
     return missing_rate
@@ -298,7 +321,11 @@ def getHWE(variant_info, control_samples_idx=None, chr=None, target_idx=None):
     het_probs = []
     hwe = 0.0
 
+    GENOTYPE_IDX, GENOTYPE_DEPTH_IDX, DP_IDX, GQ_IDX = get_idx(variant_info.split('\t')[8])
+
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
+    if GENOTYPE_IDX == 'NA':
+        return 'NA'
 
     if control_samples_idx:
       female_control = list(set(control_samples_idx).intersection(target_idx))
@@ -408,7 +435,8 @@ def getFamilyRelation(ped_file, sample_list):
 def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None):
     # get mendel error rate of a variant from one line of variant information
     # sample_list is a list of sample names
-    if not relationship:
+    GENOTYPE_IDX, GENOTYPE_DEPTH_IDX, DP_IDX, GQ_IDX = get_idx(variant_info.split('\t')[8])
+    if not relationship or GENOTYPE_IDX == 'NA':
       return 'NA'
     if not male_list:
       male_list = []
