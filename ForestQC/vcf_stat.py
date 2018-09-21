@@ -444,7 +444,7 @@ def getMendel(variant_info, sample_list, relationship, chr=None, male_list=None)
     genotype_set = []
     mendel_error = 0
     individual_info = variant_info.split('\t')[DP_GQ_START_IDX:]
-    sample_size = len(individual_info)
+    sample_size = len(relationship)
 
     for idv in individual_info:
         genotype = idv.split(':')[GENOTYPE_IDX]
