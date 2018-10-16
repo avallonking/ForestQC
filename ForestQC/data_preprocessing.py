@@ -1,4 +1,4 @@
-# This program is for the preparation of traning set and test set. It divides the variants
+# This program is for the preparation of training set and test set. It divides the variants
 # dataset into 3 datasets containing good variants, bad variants and grey variants, respectively.
 
 import pandas as pd
@@ -155,15 +155,6 @@ def preprocessing(data, user_feature_names):
         assert len(columns) == data.shape[1], 'Missing names of user-defined features'
         data.columns = columns
 
-    data.loc[data['Mean_DP'].isnull(), 'Mean_DP'] = data['Mean_DP'].median()
-    data.loc[data['Mean_GQ'].isnull(), 'Mean_GQ'] = data['Mean_GQ'].median()
-    data.loc[data['SD_DP'].isnull(), 'SD_DP'] = data['SD_DP'].median()
-    data.loc[data['SD_GQ'].isnull(), 'SD_GQ'] = data['SD_GQ'].median()
-    data.loc[data['Outlier_DP'].isnull(), 'Outlier_DP'] = data['Outlier_DP'].median()
-    data.loc[data['Outlier_GQ'].isnull(), 'Outlier_GQ'] = data['Outlier_GQ'].median()
-    # data.loc[data['ABHom'].isnull(), 'ABHom'] = data['ABHom'].median()
-    # data.loc[data['ABHet'].isnull(), 'ABHet'] = data['ABHet'].median()
-    data.loc[data['GC'].isnull(), 'GC'] = data['GC'].median()
     data.loc[:, 'Probability'] = np.nan
     data = data[data['MAF'].notnull()]
     return data
@@ -197,16 +188,16 @@ def set_thresholds(thresholds_setting):
     #   outlier rare    Missing_Rate   threshold
     #   outlier common  Missing_Rate    threshold
 
-    good_thresholds = {'Mendel_Error': round(3 / 446, 5), 'Missing_Rate':0.005, 'HWE': 0.01,
+    good_thresholds = {'Mendel_Error': round(3 / 449, 5), 'Missing_Rate':0.005, 'HWE': 0.01,
                        'ABHet_deviation': 0.20}
     bad_thresholds = {'all': {'MAF': 0.03},
-                      'rare': {'Mendel_Error': round(3 / 446, 5), 'Missing_Rate': 0.02, 'HWE': 5e-3,
+                      'rare': {'Mendel_Error': round(3 / 449, 5), 'Missing_Rate': 0.02, 'HWE': 5e-3,
                       'ABHet_deviation': 0.25},
-                      'common': {'Mendel_Error': round(5 / 446, 5), 'Missing_Rate': 0.03, 'HWE': 5e-4,
+                      'common': {'Mendel_Error': round(5 / 449, 5), 'Missing_Rate': 0.03, 'HWE': 5e-4,
                       'ABHet_deviation': 0.25}
                      }
-    outlier_thresholds = {'rare': {'Mendel_Error': round(8 / 446, 5), 'Missing_Rate': 0.08, 'HWE': 1e-3},
-                          'common': {'Mendel_Error': round(10 / 446, 5), 'Missing_Rate': 0.10, 'HWE': 1e-8}
+    outlier_thresholds = {'rare': {'Mendel_Error': round(8 / 449, 5), 'Missing_Rate': 0.08, 'HWE': 1e-3},
+                          'common': {'Mendel_Error': round(10 / 449, 5), 'Missing_Rate': 0.10, 'HWE': 1e-8}
                           }
     try:
         with open(thresholds_setting, 'r') as t:
@@ -254,7 +245,7 @@ def execute_split(input_file, output_file, model, user_feature_names, thresholds
         data = pd.read_table(input_file, header=None)
     except pd.io.common.EmptyDataError:
         raise FileNotFoundError('No such file: ' + input_file + '\n')
-        exit(1)
+        # exit(1)
 
     print('Data processing...')
     data = preprocessing(data, user_feature_names)

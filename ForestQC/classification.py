@@ -11,11 +11,15 @@ import os
 def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
-    try:
-        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC'] + \
-                    user_features
-    except TypeError:
+    if user_features is not None:
+        _features = user_features
+    else:
         _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']
+    assert set(_features).issubset(labelled_data.columns), 'Selected features not found in the dataset'
+
+    labelled_data.fillna(labelled_data.median()[_features], inplace=True)
+    grey_variants.fillna(grey_variants.median()[_features], inplace=True)
+
     x, y = labelled_data.loc[:, _features].values, labelled_data.loc[:, 'Good'].values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20,random_state=1)
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
@@ -49,10 +53,14 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
 
-    try:
-        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC'] + user_features
-    except TypeError:
+    if user_features is not None:
+        _features = user_features
+    else:
         _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
+    assert set(_features).issubset(labelled_data.columns), 'Selected features not found in the dataset'
+
+    labelled_data.fillna(labelled_data.median()[_features], inplace=True)
+    grey_variants.fillna(grey_variants.median()[_features], inplace=True)
 
     x, y = labelled_data.loc[:, _features].values, labelled_data.loc[:, 'Good'].values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)

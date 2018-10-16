@@ -25,7 +25,7 @@ $ ForestQC stat -h
 
 Before doing the classification, we should set the thresholds for Outlier_GQ and Outlier_DP. It would print out Outlier_DP threshold and Outlier_GQ threshold on the screen, which would be used as inputs in the next step. *Note that all vcf files in this analysis should be included. **Please make sure the memory size (set with -m argument) smaller than the total size of input files and the memory limit of your system***
 ```sh
-$ ForestQC set_outlier -i [vcf_file1] [vcf_file2] [...]
+$ ForestQC set_outlier -m 1G -i [vcf_file1],[vcf_file2],[...]
 ```
 
 If you use other reference genome other than hg19, please use our script to generate a GC content table for your reference genome. Otherwise, we have prepared hg19 GC content table in ```examples/gc_content_hg19.tsv``` and you can directly use it.
@@ -43,19 +43,19 @@ First, we need to calculate ths statistics from vcf file. *It will output a file
  - If no HWE p-value file provided, HWE p-value would be computed by ForestQC. Or if ForestQC cannot find HWE p-value for some sites in the provided HWE p-value file, ForestQC would compute HWE p-value for those sites
 
 ```sh
-$ ForestQC stat -i [input_vcf] -o [output_filename] -c [gc_content_file] -g [gender_file(optional)] -p [ped_file (optional)] -d [discordant_genotype_file (optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP] -af [user_defined_features_file (optional)]
+$ ForestQC stat -i [input_vcf] -o [output_filename] -c [gc_content_file] -g [gender_file(optional)] -p [ped_file (optional)] -d [discordant_genotype_file (optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP] -as [user_defined_statistics_file (optional)]
 ```
 
-Second, we need to divide the dataset into good, bad and grey variants. *The output files would be three: good.xx, bad.xx and grey.xx.* **The output filename is only the suffix, that is, the latter part of the file name. All output files would be in the same folder with input files. Note that you don't have to merge the input file together. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
+Second, we need to divide the dataset into good, bad and gray variants. *The output files would be three: good.xx, bad.xx and grey.xx.* **The output filename is only the suffix, that is, the latter part of the file name. All output files would be in the same folder with input files. Note that you don't have to merge the input file together. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
 
 ```sh
-$ ForestQC split -i [input_file] -o [output_filename_suffix (optional)] -t [user_defined_threshold_file (optional)] -af [user_defined_features_names (if user-defined features added in last step, this is required)]
+$ ForestQC split -i [input_file] -o [output_filename_suffix (optional)] -t [user_defined_threshold_file (optional)] -as [user_defined_statistics_names (if user-defined statistics added in last step, this is required)]
 ```
 
-Third, we can train our random forest model and apply it on the classification of grey variants. *The output files would be predicted_good_xx and predictred_bad_xx.* **The output filename is only the suffix, that is, the latter part of the file name. All output files would be in the same folder with input files. Note that you *need* to merge all good variants into one file, all bad variants into one file and all grey variants into one file. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
+Third, we can train our random forest model and apply it on the classification of gray variants. *The output files would be predicted_good_xx and predictred_bad_xx.* **The output filename is only the suffix, that is, the latter part of the file name. All output files would be in the same folder with input files. Note that you *need* to merge all good variants into one file, all bad variants into one file and all grey variants into one file. Also, the model used in classification and splitting must be the same. Otherwise, you would get *ValueError***
 
 ```sh
-$ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [output_filename_suffix (optional)] -t [probability_threshold (optional)] -af [user_defined_features_names (optional)]
+$ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [output_filename_suffix (optional)] -t [probability_threshold (optional)] -f [selected_features_names (optional)]
 ```
 
 ### File format
