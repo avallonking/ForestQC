@@ -20,10 +20,18 @@ $ ForestQC -h
 $ ForestQC stat -h
 ```
 
+We provide example usages:
+```sh
+$ git clone git@github.com:avallonking/ForestQC.git
+$ cd ForestQC/examples/example_script_and_output/
+$ cat example.script.sh
+$ sh example.script.sh
+```
+
 ### Workflow
 ```example/example_output/example.script.sh``` provides step-by-step tutorial about how to run this software.
 
-Before doing the classification, we should set the thresholds for Outlier_GQ and Outlier_DP. It would print out Outlier_DP threshold and Outlier_GQ threshold on the screen, which would be used as inputs in the next step. *Note that all vcf files in this analysis should be included. **Please make sure the memory size (set with -m argument) smaller than the total size of input files and the memory limit of your system***
+Before doing the classification, we should set the thresholds for Outlier_GQ and Outlier_DP. It would print out Outlier_DP threshold and Outlier_GQ threshold on the screen, which would be used as inputs in the next step. *Idealy, all vcf files in this analysis should be included, but we suggest to use Chromosome 1 only to speed up the computation if the dataset is very large. **Please make sure the memory size (set with -m argument) smaller than the total size of input files and the memory limit of your system***
 ```sh
 $ ForestQC set_outlier -m 1G -i [vcf_file1],[vcf_file2],[...]
 ```
