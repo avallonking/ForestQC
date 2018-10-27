@@ -188,16 +188,16 @@ def set_thresholds(thresholds_setting):
     #   outlier rare    Missing_Rate   threshold
     #   outlier common  Missing_Rate    threshold
 
-    good_thresholds = {'Mendel_Error': round(3 / 449, 5), 'Missing_Rate':0.005, 'HWE': 0.01,
+    good_thresholds = {'Mendel_Error': round(3 / 67, 5), 'Missing_Rate':0.005, 'HWE': 0.01,
                        'ABHet_deviation': 0.20}
     bad_thresholds = {'all': {'MAF': 0.03},
-                      'rare': {'Mendel_Error': round(3 / 449, 5), 'Missing_Rate': 0.02, 'HWE': 5e-3,
+                      'rare': {'Mendel_Error': round(3 / 67, 5), 'Missing_Rate': 0.02, 'HWE': 5e-3,
                       'ABHet_deviation': 0.25},
-                      'common': {'Mendel_Error': round(5 / 449, 5), 'Missing_Rate': 0.03, 'HWE': 5e-4,
+                      'common': {'Mendel_Error': round(5 / 67, 5), 'Missing_Rate': 0.03, 'HWE': 5e-4,
                       'ABHet_deviation': 0.25}
                      }
-    outlier_thresholds = {'rare': {'Mendel_Error': round(8 / 449, 5), 'Missing_Rate': 0.08, 'HWE': 1e-3},
-                          'common': {'Mendel_Error': round(10 / 449, 5), 'Missing_Rate': 0.10, 'HWE': 1e-8}
+    outlier_thresholds = {'rare': {'Mendel_Error': round(8 / 67, 5), 'Missing_Rate': 0.08, 'HWE': 1e-3},
+                          'common': {'Mendel_Error': round(10 / 67, 5), 'Missing_Rate': 0.10, 'HWE': 1e-8}
                           }
     try:
         with open(thresholds_setting, 'r') as t:

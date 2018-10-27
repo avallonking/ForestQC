@@ -20,7 +20,7 @@ $ ForestQC -h
 $ ForestQC stat -h
 ```
 
-We provide example usages:
+We provide example usages. **Note that all example files are only for testing. Do not use them to analyze real data.**
 ```sh
 $ git clone git@github.com:avallonking/ForestQC.git
 $ cd ForestQC/examples/example_script_and_output/

@@ -16,7 +16,7 @@ SAMPLE_ID_IDX = -1
 
 def get_idx(format_field):
     # format field is the 8th entry in each line
-    idx = {k: v for v, k in enumerate(format_field.split(':'))}
+    idx = {k.strip('mutect_'): v for v, k in enumerate(format_field.split(':'))}
     gt_idx = idx['GT'] if 'GT' in idx else 'NA'
     ad_idx = idx['AD'] if 'AD' in idx else 'NA'
     dp_idx = idx['DP'] if 'DP' in idx else 'NA'
