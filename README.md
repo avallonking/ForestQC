@@ -66,6 +66,19 @@ Third, we can train our random forest model and apply it on the classification o
 $ ForestQC classify -g [good_variants] -b [bad_variants] -y [grey_variants] -o [output_filename_suffix (optional)] -t [probability_threshold (optional)] -f [selected_features_names (optional)]
 ```
 
+Fourth, to get the final sets of good variants and bad variants, we need to combine the variants predicted by the random forest model (step 3) and the variants separated by the filters (step 2).
+```sh
+$ cat [good_variants(from step 2)] [predicted_good_variants(from step 3)] > [total_good_variants]
+$ cat [bad_variants(from step 2)] [predicted_bad_variants(from step 3)] > [total_bad_variants]
+```
+
+Fifth, to get a VCF file containing the variants passing ForestQC, you can get the positions of bad variants and remove them from the original VCF file.
+```sh
+$ awk -F "\t" 'NR>1{print $2"\t"$3}' [total_bad_variants] > [bad_variants_positions]
+$ vcftools --gzvcf [original_gziped_vcf_file] --exclude-positions [bad_variants_positions] --recode --recode-INFO-all -c | gzip -c [output_vcf]
+```
+And [VCFtools](https://vcftools.github.io/) would need to be installed.
+
 ### File format
 **Note that all files are tab-separated. If you came across any *IndexError*, please check your input files and make sure they are all tab-separated.**
 #### Output file
