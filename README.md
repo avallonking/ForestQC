@@ -74,7 +74,11 @@ $ cat [bad_variants(from step 2)] [predicted_bad_variants(from step 3)] > [total
 
 Fifth, to get a VCF file containing the variants passing ForestQC, you can get the positions of bad variants and remove them from the original VCF file.
 ```sh
+# if chromosome names in the original VCF file are like "chr1", "chr2", etc.
 $ awk -F "\t" 'NR>1{print $2"\t"$3}' [total_bad_variants] > [bad_variants_positions]
+# if chromosome names in the original VCF file are like "1", "2", etc.
+$ awk -F "\t" 'NR>1{print $2"\t"$3}' [total_bad_variants] | sed 's/chr//' > [bad_variants_positions]
+# remove bad variants from the original VCF file
 $ vcftools --gzvcf [original_gziped_vcf_file] --exclude-positions [bad_variants_positions] --recode --recode-INFO-all -c | gzip -c [output_vcf]
 ```
 And [VCFtools](https://vcftools.github.io/) would need to be installed.
