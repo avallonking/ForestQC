@@ -121,7 +121,7 @@ chr3:122   0.20
 ```sh
 SNP_ID  HWE_p-value
 chr3:899   1.0
-cgr2:900   0.77
+chr2:900   0.77
 ```
 
 - User-defined features (tab-separated, data are calculated by users in advance. In practice, missing values will be imputed with the median of the sample)
