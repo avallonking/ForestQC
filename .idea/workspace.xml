@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ForestQC/__main__.py" afterPath="$PROJECT_DIR$/ForestQC/__main__.py" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/all.bad.variants.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/all.bad.variants.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/all.good.variants.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/all.good.variants.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/bad.example.result.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/bad.example.result.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/example.result.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/example.result.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/good.example.result.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/good.example.result.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/gray.example.result.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/gray.example.result.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/predicted_bad.variants.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/predicted_bad.variants.tsv" />
-      <change beforePath="$PROJECT_DIR$/examples/example_script_and_output/predicted_good.variants.tsv" afterPath="$PROJECT_DIR$/examples/example_script_and_output/predicted_good.variants.tsv" />
-      <change beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
+      <change beforePath="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" afterPath="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,11 +25,11 @@
     <favorites_list name="Classifiers" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="data_preprocessing.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ForestQC/data_preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
+            <state relative-caret-position="0">
               <caret line="180" column="0" lean-forward="false" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
               <folding>
                 <element signature="e#191#210#0" expanded="true" />
@@ -57,19 +48,22 @@
       <file leaf-file-name="vcf_stat.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+            <state relative-caret-position="5600">
+              <caret line="334" column="70" lean-forward="false" selection-start-line="334" selection-start-column="70" selection-end-line="334" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="203" column="38" lean-forward="true" selection-start-line="203" selection-start-column="38" selection-end-line="203" selection-end-column="38" />
-              <folding />
+            <state relative-caret-position="-885">
+              <caret line="33" column="57" lean-forward="false" selection-start-line="33" selection-start-column="57" selection-end-line="33" selection-end-column="57" />
+              <folding>
+                <element signature="e#9309#9338#0" expanded="false" />
+                <element signature="e#10453#10506#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,8 +71,18 @@
       <file leaf-file-name="stat.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="61" column="22" lean-forward="false" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
+            <state relative-caret-position="58">
+              <caret line="45" column="19" lean-forward="false" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="get_ref_genome_GC.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="31" column="24" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -88,7 +92,7 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="368">
+              <first_editor relative-caret-position="22">
                 <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
                 <folding />
               </first_editor>
@@ -135,7 +139,6 @@
         <option value="$PROJECT_DIR$/random_forest_classifier/scripts/main.py" />
         <option value="$PROJECT_DIR$/ForestQC/ti_tv_stat.py" />
         <option value="$PROJECT_DIR$/ForestQC/indel_ratio.py" />
-        <option value="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" />
         <option value="$PROJECT_DIR$/ForestQC/stat.py" />
         <option value="$PROJECT_DIR$/ForestQC/setOutlier.py" />
         <option value="$PROJECT_DIR$/setup.py" />
@@ -145,6 +148,7 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/ForestQC/vcf_stat.py" />
         <option value="$PROJECT_DIR$/ForestQC/__main__.py" />
+        <option value="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" />
       </list>
     </option>
   </component>
@@ -154,7 +158,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
@@ -190,12 +194,6 @@
               <item name="ForestQC" type="b2602c69:ProjectViewProjectNode" />
               <item name="ForestQC" type="462c0819:PsiDirectoryNode" />
               <item name="examples" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ForestQC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ForestQC" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="example_script_and_output" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ForestQC" type="b2602c69:ProjectViewProjectNode" />
@@ -391,7 +389,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -401,7 +399,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23273657" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41845495" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12660944" sideWeight="0.48575306" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12804006" sideWeight="0.48575306" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -745,13 +743,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -795,30 +786,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="20" column="67" lean-forward="false" selection-start-line="20" selection-start-column="67" selection-end-line="20" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="368">
-            <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/data_preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
+        <state relative-caret-position="0">
           <caret line="180" column="0" lean-forward="false" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
           <folding>
             <element signature="e#191#210#0" expanded="true" />
@@ -833,26 +806,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="61" column="22" lean-forward="false" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
-          <folding />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="22">
+            <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="67" lean-forward="false" selection-start-line="20" selection-start-column="67" selection-end-line="20" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/__main__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="203" column="38" lean-forward="true" selection-start-line="203" selection-start-column="38" selection-end-line="203" selection-end-column="38" />
+        <state relative-caret-position="-885">
+          <caret line="33" column="57" lean-forward="false" selection-start-line="33" selection-start-column="57" selection-end-line="33" selection-end-column="57" />
+          <folding>
+            <element signature="e#9309#9338#0" expanded="false" />
+            <element signature="e#10453#10506#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5600">
+          <caret line="334" column="70" lean-forward="false" selection-start-line="334" selection-start-column="70" selection-end-line="334" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="45" column="19" lean-forward="false" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="31" column="24" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
           <folding />
         </state>
       </provider>
