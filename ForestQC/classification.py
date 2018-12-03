@@ -8,13 +8,10 @@ import numpy as np
 import os
 
 # just a second choice
-def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_threshold):
+def random_forest_classifierA(labelled_data, grey_variants, _features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
-    if user_features is not None:
-        _features = user_features
-    else:
-        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']
+    _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']
     assert set(_features).issubset(labelled_data.columns), 'Selected features not found in the dataset'
 
     labelled_data.fillna(labelled_data.median()[_features], inplace=True)
@@ -24,15 +21,15 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20,random_state=1)
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
 
-    print('\nTraining model...')
+    print('\nTraining model...\n')
     rf.fit(x_train, y_train)
 
     weights = rf.feature_importances_
     print('Feature','Weight')
     for feature, weight in zip(_features, weights):
-      print(feature, weight)
+        print(feature, weight)
 
-    print('\nTesting model...')
+    print('\nTesting model...\n')
     y_test_pred, _ = predict_class(rf, x_test, prob_threshold)
     precision_recall = precision_recall_fscore_support(y_true=y_test,
                                                        y_pred=y_test_pred)
@@ -43,20 +40,16 @@ def random_forest_classifierA(labelled_data, grey_variants, user_features, prob_
     print('Sample size: ' + str(precision_recall[3]))
     
     x_pred = grey_variants.loc[:, _features].values
-    print('\nPredicting variants...')
+    print('\nPredicting variants...\n')
     y_pred, y_prob = predict_class(rf, x_pred, prob_threshold)
-    print('Done.\n')
 
     return y_pred, y_prob
 
-def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_threshold):
+def random_forest_classifierB(labelled_data, grey_variants, _features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
 
-    if user_features is not None:
-        _features = user_features
-    else:
-        _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
+    _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
     assert set(_features).issubset(labelled_data.columns), 'Selected features not found in the dataset'
 
     labelled_data.fillna(labelled_data.median()[_features], inplace=True)
@@ -65,13 +58,13 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_
     x, y = labelled_data.loc[:, _features].values, labelled_data.loc[:, 'Good'].values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
     rf = RandomForestClassifier(random_state=1, n_jobs=8, n_estimators=50)
-    print('\nTraining model...')
+    print('\nTraining model...\n')
     rf.fit(x_train, y_train)
 
     weights = rf.feature_importances_
     print('Feature','Weight')
     for feature, weight in zip(_features, weights):
-      print(feature, weight)
+        print(feature, weight)
 
     print('\nTesting model...')
     y_test_pred, _ = predict_class(rf, x_test, prob_threshold)
@@ -84,9 +77,8 @@ def random_forest_classifierB(labelled_data, grey_variants, user_features, prob_
     print('Sample size: ' + str(precision_recall[3]))
 
     x_pred = grey_variants.loc[:, _features].values
-    print('\nPredicting variants...')
+    print('\nPredicting variants...\n')
     y_pred, y_prob = predict_class(rf, x_pred, prob_threshold)
-    print('Done.')
 
     return y_pred, y_prob
 

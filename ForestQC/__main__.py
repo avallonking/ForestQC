@@ -71,7 +71,8 @@ def parse_args():
     # classify_parser.add_argument('-af', '--additional_features', dest='user_features', default=None, required=False,
     #                              help='names of additional user-defined features used in the model, '
     #                                   'can be a tab-separated text file or a comma-separated string.')
-    classify_parser.add_argument('-f', '--features', dest='features', default=None, required=False,
+    classify_parser.add_argument('-f', '--features', dest='features', default='Mean_DP,Mean_GQ,SD_DP,SD_GQ,Outlier_DP'
+                                                                              ',Outlier_GQ,GC', required=False,
                                  help='names of features to be used in the random forest model. it should be a '
                                       'comma-separated string [optional]. '
                                       'default: Mean_DP,Mean_GQ,SD_DP,SD_GQ,Outlier_DP,Outlier_GQ,GC')
@@ -166,11 +167,7 @@ def main_classify(**kwargs):
     features = kwargs['features']
     prob_threshold = kwargs['prob_threshold']
 
-    try:
-        features = features.strip().split(',')
-    except TypeError:
-        features = None
-
+    features = features.strip().split(',')
     # user_features_unprocessed = kwargs['user_features']
     # try:
     #     if os.path.isfile(user_features_unprocessed):
@@ -195,7 +192,7 @@ def main_compute_gc(**kwargs):
     execute_compute_gc(ref, out, window_size)
 
 def main():
-    print('ForestQC v1.1.5.1 by Jae Hoon Sul Lab at UCLA')
+    print('ForestQC v1.1.5.2 by Jae Hoon Sul Lab at UCLA')
     print('--variant quality control based on random forest model')
     print()
     command_functions = {'stat': main_stat, 'split': main_split, 'classify': main_classify,

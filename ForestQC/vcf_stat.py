@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import statistics
 from operator import itemgetter
@@ -89,16 +88,19 @@ def statDPGQ(variant_info, dp_threshold=34, gq_threshold=99, target_idx=None, ch
     return mean_dp, mean_gq, sd_dp, sd_gq, outlier_dp, outlier_gq
 
 def getGC_table(gc_file):
-  gc_table = pd.read_table(gc_file, header=None)
-  gc_table.columns = ['CHR', 'Start_Pos', 'GC']
-  chr_gc = {}
-  for i in set(gc_table.CHR):
-    chr_gc[i] = gc_table[gc_table.CHR == i]
-  return chr_gc
+    gc_table = pd.read_table(gc_file, header=None)
+    gc_table.columns = ['CHR', 'Start_Pos', 'GC']
+    chr_gc = {}
+    for i in set(gc_table.CHR):
+        chr_gc[i] = gc_table[gc_table.CHR == i]
+    return chr_gc
 
 def getGC(pos, gc_table, step=1000):
-  gc = gc_table.iloc[int(int(pos) / step), 2]
-  return gc
+    try:
+        gc = gc_table.iloc[int(int(pos) / step), 2]
+    except IndexError:
+        gc = 'NA'
+    return gc
 
 def computeAB(ref, alt):
     # calculate ABHom or ABHet

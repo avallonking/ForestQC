@@ -7,19 +7,17 @@
 # output:
 #   a dataframe, which has CHR, Start_Position and GC columns
 
-import numpy as np
-
-
 def computeGC(seq):
     try:
         gc = (seq.count('G') + seq.count('C')) / (seq.count('G') + seq.count('C') + seq.count('A') + seq.count('T'))
-        return gc
+        return round(gc, 5)
     except ZeroDivisionError:
-        return np.nan
+        return 'NA'
 
 
 def execute_compute_gc(ref, out, window_size):
     # get the reference genome
+    print('Computing')
     r = open(ref, 'r')
     o = open(out, 'w')
 
@@ -44,3 +42,4 @@ def execute_compute_gc(ref, out, window_size):
                 start_pos += window_size
     r.close()
     o.close()
+    print('Done')
