@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41459852-7299-4d8c-87de-83617c99f5bb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ForestQC/__main__.py" afterPath="$PROJECT_DIR$/ForestQC/__main__.py" />
       <change beforePath="$PROJECT_DIR$/ForestQC/classification.py" afterPath="$PROJECT_DIR$/ForestQC/classification.py" />
-      <change beforePath="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" afterPath="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" />
-      <change beforePath="$PROJECT_DIR$/ForestQC/vcf_stat.py" afterPath="$PROJECT_DIR$/ForestQC/vcf_stat.py" />
-      <change beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,10 +47,10 @@
       <file leaf-file-name="classification.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ForestQC/classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1328">
-              <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+            <state relative-caret-position="528">
+              <caret line="29" column="30" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
               <folding>
-                <element signature="e#4109#4761#0" expanded="false" />
+                <element signature="e#3956#4608#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -64,9 +59,11 @@
       <file leaf-file-name="vcf_stat.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
-              <folding />
+            <state relative-caret-position="163">
+              <caret line="164" column="18" lean-forward="true" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -163,8 +160,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/ForestQC/vcf_stat.py" />
         <option value="$PROJECT_DIR$/ForestQC/get_ref_genome_GC.py" />
-        <option value="$PROJECT_DIR$/ForestQC/classification.py" />
         <option value="$PROJECT_DIR$/ForestQC/__main__.py" />
+        <option value="$PROJECT_DIR$/ForestQC/classification.py" />
       </list>
     </option>
   </component>
@@ -457,7 +454,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7304">
           <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -483,7 +482,7 @@
         <state relative-caret-position="2530">
           <caret line="119" column="36" lean-forward="false" selection-start-line="119" selection-start-column="36" selection-end-line="119" selection-end-column="36" />
           <folding>
-            <element signature="e#4109#4761#0" expanded="false" />
+            <element signature="e#3956#4608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -536,7 +535,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7238">
           <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -545,7 +546,7 @@
         <state relative-caret-position="2530">
           <caret line="119" column="36" lean-forward="true" selection-start-line="119" selection-start-column="36" selection-end-line="119" selection-end-column="36" />
           <folding>
-            <element signature="e#4109#4761#0" expanded="false" />
+            <element signature="e#3956#4608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -578,7 +579,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7238">
           <caret line="332" column="16" lean-forward="false" selection-start-line="332" selection-start-column="16" selection-end-line="332" selection-end-column="16" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -604,7 +607,7 @@
         <state relative-caret-position="660">
           <caret line="34" column="50" lean-forward="true" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
           <folding>
-            <element signature="e#4109#4761#0" expanded="false" />
+            <element signature="e#3956#4608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -629,7 +632,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9790">
           <caret line="448" column="74" lean-forward="false" selection-start-line="448" selection-start-column="74" selection-end-line="448" selection-end-column="74" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -638,7 +643,7 @@
         <state relative-caret-position="330">
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#4109#4761#0" expanded="false" />
+            <element signature="e#3956#4608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -687,7 +692,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="946">
           <caret line="46" column="51" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="51" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -718,7 +725,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1012">
           <caret line="46" column="51" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="51" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -812,14 +821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/stat.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
@@ -864,12 +865,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ForestQC/vcf_stat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="164" column="18" lean-forward="true" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ForestQC/classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1328">
-          <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+        <state relative-caret-position="528">
+          <caret line="29" column="30" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
-            <element signature="e#4109#4761#0" expanded="false" />
+            <element signature="e#3956#4608#0" expanded="false" />
           </folding>
         </state>
       </provider>

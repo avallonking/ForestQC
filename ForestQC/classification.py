@@ -11,7 +11,7 @@ import os
 def random_forest_classifierA(labelled_data, grey_variants, _features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
-    _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','ABHet', 'ABHom', 'GC']
+    _features += ['ABHet', 'ABHom']
     assert set(_features).issubset(labelled_data.columns), 'Selected features not found in the dataset'
 
     labelled_data.fillna(labelled_data.median()[_features], inplace=True)
@@ -48,8 +48,6 @@ def random_forest_classifierA(labelled_data, grey_variants, _features, prob_thre
 def random_forest_classifierB(labelled_data, grey_variants, _features, prob_threshold):
     # input: a dataset that has balanced sample size of good and bad variants
     # output: predicted good or bad variants from grey variants
-
-    _features = ['Mean_DP','Mean_GQ','SD_DP','SD_GQ','Outlier_DP','Outlier_GQ','GC']
     assert set(_features).issubset(labelled_data.columns), 'Selected features not found in the dataset'
 
     labelled_data.fillna(labelled_data.median()[_features], inplace=True)
