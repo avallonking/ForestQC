@@ -3,7 +3,7 @@
 This classifier uses random forest model to identify good or bad variants from grey variants.
 
 ### Installation
-To install the software. **This soft is compatible with OSX, 64-bit Linux and 64-bit Windows systems.**
+To install the software. **This software is compatible with OSX, 64-bit Linux and 64-bit Windows systems.**
 ```sh
 $ conda install forestqc -c avallonking
 ```
