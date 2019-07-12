@@ -59,6 +59,16 @@ class VCFProcessor(object):
         elif _type == 'dp':
             self.dp_block_filenames.append(filename)
 
+    def get_idx(self, format_field):
+        # format field is the 8th entry in each line
+        idx = {k.strip('mutect_'): v for v, k in enumerate(format_field.split(':'))}
+        gt_idx = idx['GT'] if 'GT' in idx else 'NA'
+        ad_idx = idx['AD'] if 'AD' in idx else 'NA'
+        dp_idx = idx['DP'] if 'DP' in idx else 'NA'
+        gq_idx = idx['GQ'] if 'GQ' in idx else 'NA'
+
+        return gt_idx, ad_idx, dp_idx, gq_idx
+
     def get_block_filenames(self):
         return self.gq_block_filenames, self.dp_block_filenames
 
@@ -76,18 +86,17 @@ class VCFProcessor(object):
 
             for line in f:
                 if not line.startswith('#'):
+                    gt_idx, ad_idx, dp_idx, gq_idx = self.get_idx(line.split()[8])
                     info = line.split('\t')[9:]
                     for sample_info in info:
                         sample_info = sample_info.split(':')
-                        if len(sample_info) < 4:
-                            continue
                         try:
-                            gq.append(int(sample_info[3]))
-                        except ValueError:
+                            gq.append(int(sample_info[gq_idx]))
+                        except:
                             pass
                         try:
-                            dp.append(int(sample_info[2]))
-                        except ValueError:
+                            dp.append(int(sample_info[dp_idx]))
+                        except:
                             pass
 
                 if sys.getsizeof(gq) >= block_size:

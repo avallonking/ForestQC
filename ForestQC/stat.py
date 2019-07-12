@@ -45,6 +45,7 @@ def vcf_process(vcf_file, stat_file, gc_file, ped_file, discord_geno_dict, hwe_f
     print('Computing...')
     for line2 in f:
         if not line2.startswith('#'):
+            line2 = line2.strip()
             site_info = line2.split('\t')
             chr = site_info[0] if 'chr' in site_info[0].lower() else 'chr' + site_info[0]
             pos = site_info[1]
