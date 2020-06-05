@@ -54,7 +54,7 @@ First, we need to calculate ths statistics from vcf file. *It will output a file
 $ ForestQC stat -i [input_vcf] -o [output_filename] -c [gc_content_file] -g [gender_file(optional)] -p [ped_file (optional)] -d [discordant_genotype_file (optional)] -w [hwe_file(optional)] --gq [Outlier_GQ] --dp [Outlier_DP] -as [user_defined_statistics_file (optional)]
 ```
 
-Second, we need to divide the dataset into high-quality, low-quality and "undertermined" variants. *The output files would be three: good.xx, bad.xx and grey.xx.* **The output filename is only the suffix, that is, the latter part of the file name. All output files would be in the same folder with input files. Note that you don't have to merge the input file together. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
+Second, we need to divide the dataset into high-quality, low-quality and "undertermined" variants. *The output files would be three: good.xx (high-quality variants), bad.xx (low-quality variants) and grey.xx.* (variants with undetermined quality) **The output filename is only the suffix, that is, the latter part of the file name. All output files would be in the same folder with input files. Note that you don't have to merge the input file together. Also, the model used in classification and splitting must be the same. Or you would get *ValueError***
 
 ```sh
 $ ForestQC split -i [input_file] -o [output_filename_suffix (optional)] -t [user_defined_threshold_file (optional)] -as [user_defined_statistics_names (if user-defined statistics added in last step, this is required)]
