@@ -1,6 +1,6 @@
 # ForestQC
 
-This classifier uses random forest model to identify high-quality and low-quality variants from genetic variants detected from next-generation sequencing data.
+ForestQC uses a random forest classifier to identify high-quality and low-quality variants from genetic variants detected from next-generation sequencing data.
 
 ### Installation
 To install the software. **This software is compatible with OSX, 64-bit Linux and 64-bit Windows systems.**
