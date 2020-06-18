@@ -173,7 +173,7 @@ $ R
 ```
 
 ### Usage
-Sample usage is shown in ```./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh``` and ```./abnormal_sample_detection/scripts/outlier.detection.sh```. For simple usage, user can directly use these shell script for analysis on Hoffman2, but make sure to change some specific variables for your purpose. *Change the variables in these shell scripts:*
+Sample usage is shown in ```./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh``` and ```./abnormal_sample_detection/scripts/outlier.detection.sh```. For simple usage, user can directly use these shell script for analysis on Hoffman2 (SGE), but make sure to change some specific variables for your purpose. *Change the variables in these shell scripts:*
   - ```./abnormal_sample_detection/scripts/sample.dp.abhet.stat.sh```:
     - PATH for Hoffman2 log file (line 3)
     - Job array (line 6)
