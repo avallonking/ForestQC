@@ -181,6 +181,9 @@ def getAB(variant_info, sample_level_AB=False, chr=None, target_idx=None):
             continue
 
         allele_depth = idv.split(':')[GENOTYPE_DEPTH_IDX].split(',')
+        
+        if '.' in allele_depth:
+            continue
 
         if isHomozygous(genotype):
             sample_info = 'ABHom' + str(sample_idx)
