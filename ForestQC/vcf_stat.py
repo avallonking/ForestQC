@@ -96,7 +96,10 @@ def getGC_table(gc_file):
     return chr_gc
 
 def getGC(pos, gc_table):
-    step = gc_table.iloc[2,1] - gc_table.iloc[1,1]
+    if gc_table.shape[0] >= 2:
+        step = gc_table.iloc[1,1] - gc_table.iloc[0,1]
+    else:
+        step = int(pos) + 1
     try:
         gc = gc_table.iloc[int(int(pos) / step), 2]
     except IndexError:
