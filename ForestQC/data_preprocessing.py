@@ -85,8 +85,11 @@ def separateDataA(variants, thresholds_setting):
     bad['Good'] = 0
 
     # grey variants
-    grey = variants[~variants['RSID'].isin(good['RSID'])]
-    grey = grey[~grey['RSID'].isin(bad['RSID'])]
+    # grey = variants[~variants['RSID'].isin(good['RSID'])]
+    # grey = grey[~grey['RSID'].isin(bad['RSID'])]
+
+    grey = variants.append([good, bad])
+    grey = grey.drop_duplicates(subset=['RSID', 'CHR', 'POS', 'REF', 'ALT'], keep=False)
 
     return good, bad, grey
 
@@ -134,8 +137,11 @@ def separateDataB(variants, thresholds_setting):
     bad['Good'] = 0
 
     # grey variants
-    grey = variants[~variants['RSID'].isin(good['RSID'])]
-    grey = grey[~grey['RSID'].isin(bad['RSID'])]
+    # grey = variants[~variants['RSID'].isin(good['RSID'])]
+    # grey = grey[~grey['RSID'].isin(bad['RSID'])]
+
+    grey = variants.append([good, bad])
+    grey = grey.drop_duplicates(subset=['RSID', 'CHR', 'POS', 'REF', 'ALT'], keep=False)
 
     return good, bad, grey
 

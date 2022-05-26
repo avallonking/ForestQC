@@ -192,7 +192,7 @@ def main_compute_gc(**kwargs):
     execute_compute_gc(ref, out, window_size)
 
 def main():
-    print('ForestQC v1.1.5.6 by Jae Hoon Sul Lab at UCLA')
+    print('ForestQC v1.1.5.7 by Jae Hoon Sul Lab at UCLA')
     print('--Quality control on genetic variants from next-generation sequencing data using random forest')
     print()
     command_functions = {'stat': main_stat, 'split': main_split, 'classify': main_classify,
